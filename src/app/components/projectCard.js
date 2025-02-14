@@ -44,7 +44,7 @@ const ProjectCardWithPopup = ({
           onClick={closeModal}
         >
           <div
-            className="bg-white text-black p-6 rounded-lg w-11/12 max-w-2xl"
+            className="bg-white text-black p-6 rounded-lg w-11/12 max-w-2xl  max-h-[80vh] overflow-auto"
             onClick={(e) => e.stopPropagation()} // Prevents closing when clicking inside the modal
           >
             <div className="flex justify-between">

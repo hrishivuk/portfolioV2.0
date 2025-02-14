@@ -4,10 +4,10 @@ import axios from "axios";
 
 const Weather = () => {
   const [weather, setWeather] = useState(null);
-  const [location, setLocation] = useState("Dublin, IE"); // Default to Dublin
+  const [location, setLocation] = useState("Dublin, IE");
   const [loading, setLoading] = useState(true);
+  const [dateTime, setDateTime] = useState("");
 
-  // Fetch weather data for the default location (Dublin)
   useEffect(() => {
     const fetchWeather = async () => {
       const apiKey = "113a1e834fe3383411bfb784fad3d9a1";
@@ -21,13 +21,13 @@ const Weather = () => {
           ...data,
           main: {
             ...data.main,
-            temp: Math.round(data.main.temp), // Round temperature to whole number
-            temp_max: Math.round(data.main.temp_max), // Round max temp
-            temp_min: Math.round(data.main.temp_min), // Round min temp
+            temp: Math.round(data.main.temp),
+            temp_max: Math.round(data.main.temp_max),
+            temp_min: Math.round(data.main.temp_min),
           },
         });
 
-        setLocation(data.name); // Dynamically set the location name
+        setLocation(data.name);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching weather data:", error);
@@ -35,58 +35,51 @@ const Weather = () => {
       }
     };
 
-    // Call fetchWeather function
     fetchWeather();
   }, []);
 
-  // Determine the gradient color based on weather condition
-  const getBackgroundStyle = (condition) => {
-    switch (condition) {
-      case "Clear":
-        return "bg-gradient-to-b from-yellow-400 via-orange-400 to-red-500"; // Sunny
-      case "Clouds":
-        return "bg-gradient-to-b from-gray-300 via-gray-400 to-gray-600"; // Cloudy
-      case "Rain":
-        return "bg-gradient-to-b from-blue-400 via-blue-600 to-blue-800"; // Rainy
-      case "Snow":
-        return "bg-gradient-to-b from-white via-blue-200 to-blue-400"; // Snowy
-      case "Thunderstorm":
-        return "bg-gradient-to-b from-gray-700 via-purple-700 to-black"; // Thunderstorm
-      case "Drizzle":
-        return "bg-gradient-to-b from-blue-200 via-blue-300 to-blue-500"; // Light Rain
-      case "Mist":
-      case "Fog":
-        return "bg-gradient-to-b from-gray-200 via-gray-300 to-gray-500"; // Misty
-      case "Windy":
-        return "bg-gradient-to-b from-teal-300 via-teal-500 to-teal-700"; // Windy
-      default:
-        return "bg-gradient-to-b from-green-300 via-blue-300 to-purple-400"; // Default
-    }
-  };
+  useEffect(() => {
+    const updateDateTime = () => {
+      const now = new Date();
+      const options = {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      };
+      setDateTime(now.toLocaleDateString("en-US", options));
+    };
+
+    updateDateTime();
+    const interval = setInterval(updateDateTime, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <div
-      className={`w-full mx-auto p-3 rounded-[36px] shadow-md text-center text-white ${
-        weather ? getBackgroundStyle(weather.weather[0].main) : ""
-      }`}
-    >
+    <div className="w-full h-full max-w-sm mx-auto p-5 rounded-3xl shadow-lg bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-center">
       {loading ? (
-        <p className="text-gray-100">Loading weather data...</p>
+        <p className="text-gray-100">Fetching weather data...</p>
       ) : (
         weather && (
-          <div className="flex-col flex items-start gap-2">
-            <div className="flex gap-2 justify-between items-center w-full">
-              <img
-                src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}.png`}
-                alt={weather.weather[0].description}
-                className="w-8 h-8"
-              />
-              <p className="text-xl font-bold">{location}</p>
-            </div>
-            <p className="text-4xl font-bold">{weather.main.temp}°C</p>
-            <div className="flex gap-2">
-              <p className="text-lg">{weather.main.temp_max}°C</p>
-              <p className="text-lg">{weather.main.temp_min}°C</p>
+          <div className="flex flex-col items-center gap-3">
+            <h2 className="text-2xl font-semibold">{location}</h2>
+            <p className="text-sm">{dateTime}</p>
+            <img
+              src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
+              alt={weather.weather[0].description}
+              className="w-16 h-16"
+            />
+            <p className="text-5xl font-bold">{weather.main.temp}°C</p>
+            <p className="text-lg capitalize">
+              {weather.weather[0].description}
+            </p>
+            <div className="flex gap-4 text-sm">
+              <p>High: {weather.main.temp_max}°C</p>
+              <p>Low: {weather.main.temp_min}°C</p>
             </div>
           </div>
         )

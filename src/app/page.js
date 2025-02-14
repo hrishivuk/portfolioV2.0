@@ -1,8 +1,6 @@
 "use client";
-import DateTime from "./components/dateTime";
 import GridItem from "./components/gridItem";
 import Navbar from "./components/navbar";
-import QuoteCarousel from "./components/quoteCarousel";
 import TobyFace from "./components/tobyFace";
 import Weather from "./components/weather";
 import Typewriter from "typewriter-effect";
@@ -40,10 +38,10 @@ export default function Home() {
         <GridItem className="bg-light-purple ">
           <TobyFace className="h-full w-full rounded-3xl" />
         </GridItem>
-        <GridItem className="bg-light-blackFill grid grid-cols-2 grid-rows-2 gap-[15px] !p-0">
-          <DateTime className="w-full" />
-          <Weather className="w-full" />
-          <QuoteCarousel />
+        <GridItem className="bg-light-blackFill !p-0">
+          {/* <DateTime className="w-full" /> */}
+          <Weather className="w-full h-full rounded-3xl" />
+          {/* <QuoteCarousel /> */}
           {/* <div className="bg-white">hi</div> */}
         </GridItem>
         <GridItem className="bg-light-blackFill flex flex-col items-center justify-between">
