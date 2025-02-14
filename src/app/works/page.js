@@ -2,7 +2,7 @@ import FigmaEmbed from "../components/figmaEmbed";
 import Navbar from "../components/navbar";
 import ProjectCardWithPopup from "../components/projectCard";
 import flexsave from "../../../public/images/flexsave.png";
-import Brightspace from "../../../public/images/Brightspace.png";
+import Brightspace from "../../../public/images/brightspace.png";
 
 export default function Works() {
   const projects = [

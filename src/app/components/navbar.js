@@ -34,14 +34,14 @@ export default function Navbar() {
           works.
         </Link>
         <Link
-          href="/contact"
+          href="/aboutMe"
           className={
-            isActive("/contact")
+            isActive("/aboutMe")
               ? "text-white"
               : "text-gray-400 hover:text-white"
           }
         >
-          contact.
+          about me.
         </Link>
       </div>
     </nav>
