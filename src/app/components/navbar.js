@@ -34,9 +34,9 @@ export default function Navbar() {
           works.
         </Link>
         <Link
-          href="/aboutMe"
+          href="/aboutme"
           className={
-            isActive("/aboutMe")
+            isActive("/aboutme")
               ? "text-white"
               : "text-gray-400 hover:text-white"
           }
