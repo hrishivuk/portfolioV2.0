@@ -27,6 +27,34 @@ body {
   background-color: black; /* Replace with your desired color */
 }
 
+/* Dark mode styles */
+[data-theme="light"] {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+[data-theme="dark"] {
+  --background: #000000;
+  --foreground: #ededed;
+}
+
+[data-theme="light"] body {
+  background-color: #ffffff;
+  color: #171717;
+}
+
+[data-theme="dark"] body {
+  background-color: #000000;
+  color: #ededed;
+}
+
+/* Responsive typography */
+@media (max-width: 768px) {
+  .Typewriter {
+    font-size: 40px !important;
+  }
+}
+
 #eyes {
   position: absolute;
   top: 50%;

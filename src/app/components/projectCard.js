@@ -24,17 +24,32 @@ const ProjectCardWithPopup = ({
     <div>
       {/* Project Card */}
       <div
-        className="bg-light-blackFill text-white p-4 rounded-xl cursor-pointer hover:opacity-80 transition"
+        className="bg-light-blackFill dark:bg-light-grey rounded-[36px] overflow-hidden hover:transform hover:scale-105 transition-all duration-300 cursor-pointer"
         onClick={openModal}
       >
-        <Image
-          src={image}
-          alt={name}
-          className="rounded-lg object-cover h-[200px] object-top"
-        />
+        <div className="relative h-48 bg-gradient-to-br from-light-purple to-light-orange flex items-center justify-center">
+          <div className="text-4xl">
+            {category === "Design"
+              ? "🎨"
+              : category === "Development"
+              ? "💻"
+              : "🚀"}
+          </div>
+        </div>
 
-        <h2 className="text-lg font-bold mt-2">{name}</h2>
-        <p className="text-sm text-gray-400">{category}</p>
+        <div className="p-6">
+          <div className="flex items-center space-x-2 mb-3">
+            <span className="bg-light-purple/20 text-light-purple px-2 py-1 rounded-full text-xs font-medium">
+              {category}
+            </span>
+          </div>
+          <h2 className="text-lg font-bold text-white dark:text-black mb-3 line-clamp-2">
+            {name}
+          </h2>
+          <p className="text-light-text dark:text-gray-600 text-sm line-clamp-2">
+            {description}
+          </p>
+        </div>
       </div>
 
       {/* Modal (Popup) */}

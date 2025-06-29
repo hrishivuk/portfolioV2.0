@@ -1,4 +1,4 @@
-const GridItem = ({ size = 1, children, className }) => {
+const GridItem = ({ size = 1, children, className, ...props }) => {
   let colSpanClass;
 
   switch (size) {
@@ -16,7 +16,10 @@ const GridItem = ({ size = 1, children, className }) => {
   }
 
   return (
-    <div className={`${colSpanClass} p-[25px] rounded-[36px] ${className}`}>
+    <div
+      className={`${colSpanClass} p-[25px] rounded-[36px] ${className} focus:outline-none focus:ring-2 focus:ring-light-orange focus:ring-opacity-50 transition-all duration-200`}
+      {...props}
+    >
       {children}
     </div>
   );

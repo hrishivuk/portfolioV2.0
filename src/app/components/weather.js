@@ -10,23 +10,11 @@ const Weather = () => {
 
   useEffect(() => {
     const fetchWeather = async () => {
-      const apiKey = "113a1e834fe3383411bfb784fad3d9a1";
-      const url = `https://api.openweathermap.org/data/2.5/weather?q=Dublin,IE&appid=${apiKey}&units=metric`;
-
       try {
-        const response = await axios.get(url);
+        const response = await axios.get("/api/weather");
         const data = response.data;
 
-        setWeather({
-          ...data,
-          main: {
-            ...data.main,
-            temp: Math.round(data.main.temp),
-            temp_max: Math.round(data.main.temp_max),
-            temp_min: Math.round(data.main.temp_min),
-          },
-        });
-
+        setWeather(data);
         setLocation(data.name);
         setLoading(false);
       } catch (error) {
@@ -69,7 +57,7 @@ const Weather = () => {
             <h2 className="text-2xl font-semibold">{location}</h2>
             <p className="text-sm">{dateTime}</p>
             <img
-              src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
+              src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
               alt={weather.weather[0].description}
               className="w-16 h-16"
             />
