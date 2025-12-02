@@ -1,325 +1,371 @@
 "use client";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import Navbar from "../components/navbar";
-import GridItem from "../components/gridItem";
-import Image from "next/image";
-import angular from "../../../public/images/Skills/angular.svg";
-import figma from "../../../public/images/Skills/figma.svg";
-import framer_motion from "../../../public/images/Skills/framer_motion.svg";
-import js from "../../../public/images/Skills/js.svg";
-import nextjs from "../../../public/images/Skills/nextjs.svg";
-import photoshop from "../../../public/images/Skills/photoshop.svg";
-import react from "../../../public/images/Skills/react.svg";
-import tailwind from "../../../public/images/Skills/tailwind.svg";
-import typescript from "../../../public/images/Skills/typescript.svg";
-import git from "../../../public/images/Skills/git.svg";
-import nodejs from "../../../public/images/Skills/nodejs.svg";
+import { useLayout } from "../contexts/LayoutContext";
+import { useTheme } from "../contexts/ThemeContext";
+import TimelineSection from "../components/TimelineSection";
 
-export default function AboutMe() {
+export default function AboutMePage() {
+  const { maxWidth } = useLayout();
+  const { currentTheme } = useTheme();
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  // Initialize loading state
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoaded(true);
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <main className="min-h-screen bg-neutral-950">
-      <Navbar />
-
-      <div className="max-w-[1200px] mx-auto px-4 mt-10">
-        {/* Header Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-12"
+    <main
+      className="min-h-screen relative"
+      style={{ 
+        backgroundColor: currentTheme === "ghostMouse" ? "transparent" : "var(--bg-primary)",
+        zIndex: 1
+      }}
+    >
+      {/* Content */}
+      <div className="relative z-10">
+        {/* Hero Section */}
+        <section 
+          className="h-screen flex items-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative"
+          style={{
+            backgroundColor: currentTheme === "ghostMouse" ? "rgba(10, 10, 10, 0.3)" : "transparent"
+          }}
         >
-          <motion.h1
-            className="text-4xl md:text-6xl font-bold text-neutral-100 mb-4"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            About Me
-          </motion.h1>
-          <motion.p
-            className="text-lg md:text-xl text-neutral-300 max-w-2xl mx-auto"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-          >
-            Learn more about my journey, skills, and passion for creating
-            exceptional digital experiences.
-          </motion.p>
-        </motion.div>
-
-        {/* Main Content Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="bg-gradient-to-br from-neutral-800 to-neutral-900 rounded-[36px] p-8 md:p-12 mb-12 shadow-2xl"
-        >
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          <div className="mx-auto relative z-10" style={{ maxWidth }}>
             <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
+              className="text-center"
+              initial={{ opacity: 0, y: 30 }}
+              animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
             >
-              <div className="relative w-64 h-64 mx-auto lg:mx-0 mb-6 lg:mb-0">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary-500 to-accent-600 rounded-full animate-pulse"></div>
-                <div className="relative w-full h-full bg-neutral-800 rounded-full flex items-center justify-center border-4 border-neutral-700">
-                  <span className="text-6xl">👨‍💻</span>
+              <motion.h1
+                className="text-6xl lg:text-7xl xl:text-8xl font-black leading-tight tracking-tight mb-8"
+                style={{ color: "var(--text-primary)" }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={
+                  isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
+                }
+                transition={{ delay: 0.2, duration: 0.6, ease: "easeOut" }}
+              >
+                ABOUT ME
+              </motion.h1>
+
+              <motion.p
+                className="text-xl lg:text-2xl max-w-4xl mx-auto leading-relaxed"
+                style={{ color: "var(--text-secondary)" }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={
+                  isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
+                }
+                transition={{ delay: 0.4, duration: 0.6, ease: "easeOut" }}
+              >
+                I'm a creative thinker who finds solutions to problems people
+                usually don't see. I understand how humans work with things and
+                create better ways for them to understand.
+              </motion.p>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* My Story Section */}
+        <section 
+          className="py-16 lg:py-24 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative"
+          style={{
+            backgroundColor: currentTheme === "ghostMouse" ? "rgba(10, 10, 10, 0.3)" : "transparent"
+          }}
+        >
+          <div className="mx-auto relative z-10" style={{ maxWidth }}>
+            <motion.div
+              className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center"
+              initial={{ opacity: 0, y: 30 }}
+              animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+              transition={{ delay: 0.6, duration: 0.8, ease: "easeOut" }}
+            >
+              {/* Left - Image Placeholder */}
+              <motion.div
+                className="relative"
+                initial={{ opacity: 0, x: -30 }}
+                animate={
+                  isLoaded ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }
+                }
+                transition={{ delay: 0.8, duration: 0.6, ease: "easeOut" }}
+              >
+                <div
+                  className="w-full h-96 lg:h-[500px] rounded-2xl border"
+                  style={{
+                    backgroundColor: "var(--bg-secondary)",
+                    borderColor: "var(--border-primary)",
+                  }}
+                >
+                  <div className="flex items-center justify-center h-full">
+                    <p
+                      className="text-lg font-medium"
+                      style={{ color: "var(--text-muted)" }}
+                    >
+                      [Your Photo Here]
+                    </p>
+                  </div>
                 </div>
+              </motion.div>
 
-                {/* Floating Elements */}
-                <motion.div
-                  className="absolute -top-4 -right-4 w-8 h-8 bg-primary-500 rounded-full"
-                  animate={{ y: [0, -10, 0] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                />
-                <motion.div
-                  className="absolute -bottom-2 -left-2 w-6 h-6 bg-accent-500 rounded-full"
-                  animate={{ y: [0, 10, 0] }}
-                  transition={{ duration: 2.5, repeat: Infinity }}
-                />
-                <motion.div
-                  className="absolute top-1/2 -right-8 w-4 h-4 bg-success-500 rounded-full"
-                  animate={{ x: [0, 10, 0] }}
-                  transition={{ duration: 3, repeat: Infinity }}
-                />
-              </div>
-            </motion.div>
+              {/* Right - Story Content */}
+              <motion.div
+                className="space-y-6"
+                initial={{ opacity: 0, x: 30 }}
+                animate={
+                  isLoaded ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }
+                }
+                transition={{ delay: 1.0, duration: 0.6, ease: "easeOut" }}
+              >
+                <h2
+                  className="text-4xl lg:text-5xl font-bold mb-6"
+                  style={{ color: "var(--text-primary)" }}
+                >
+                  My Story
+                </h2>
 
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 1.0 }}
-            >
-              <h2 className="text-3xl font-bold text-neutral-100 mb-6">
-                Frontend Developer & Designer
-              </h2>
-              <div className="space-y-4 text-neutral-300 leading-relaxed">
-                <p>
-                  I'm a passionate Frontend Developer and UI/UX Designer based
-                  in Dublin, Ireland. With a strong foundation in modern web
-                  technologies and a keen eye for design, I create digital
-                  experiences that are both beautiful and functional.
-                </p>
-                <p>
-                  My journey in tech began with a fascination for how design and
-                  code could work together to solve real-world problems. I
-                  specialize in React, Next.js, and modern JavaScript
-                  frameworks, while also bringing creative design solutions to
-                  life through tools like Figma and Adobe Creative Suite.
-                </p>
-                <p>
-                  When I'm not coding or designing, you'll find me exploring
-                  Dublin's vibrant tech scene, experimenting with new
-                  technologies, or working on personal projects that push the
-                  boundaries of what's possible on the web.
-                </p>
-              </div>
-
-              <div className="mt-8 flex flex-wrap gap-3">
-                {[
-                  "React",
-                  "Next.js",
-                  "TypeScript",
-                  "JavaScript",
-                  "HTML5",
-                  "CSS3",
-                  "Tailwind CSS",
-                  "Figma",
-                  "Node.js",
-                  "Git",
-                ].map((skill, index) => (
-                  <motion.span
-                    key={skill}
-                    className="px-4 py-2 bg-neutral-700 text-neutral-200 rounded-full text-sm font-medium shadow-md"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.3, delay: 1.2 + index * 0.1 }}
-                    whileHover={{ scale: 1.05, backgroundColor: "#374151" }}
+                <div className="space-y-4">
+                  <p
+                    className="text-lg leading-relaxed"
+                    style={{ color: "var(--text-secondary)" }}
                   >
-                    {skill}
-                  </motion.span>
-                ))}
-              </div>
+                    I'm not your regular developer. I see things differently and
+                    approach problems from angles that others might miss. My
+                    journey started with curiosity about how things work and
+                    evolved into a passion for making them work better.
+                  </p>
+
+                  <p
+                    className="text-lg leading-relaxed"
+                    style={{ color: "var(--text-secondary)" }}
+                  >
+                    Currently pursuing my MSc in Creative Digital Media and UX
+                    at Technological University Dublin, I'm expanding my
+                    knowledge in emerging technologies and design methodologies.
+                    My goal is to build something that everyone will want and
+                    use to make life better.
+                  </p>
+
+                  <p
+                    className="text-lg leading-relaxed"
+                    style={{ color: "var(--text-secondary)" }}
+                  >
+                    I believe in the power of human-centered design and creative
+                    problem-solving. Every project is an opportunity to create
+                    something meaningful that resonates with people on a deeper
+                    level.
+                  </p>
+                </div>
+              </motion.div>
             </motion.div>
           </div>
-        </motion.div>
+        </section>
 
-        {/* Stats Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.4 }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12"
+        {/* Skills & Expertise Section */}
+        <section 
+          className="py-16 lg:py-24 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative"
+          style={{
+            backgroundColor: currentTheme === "ghostMouse" ? "rgba(10, 10, 10, 0.3)" : "transparent"
+          }}
         >
-          <motion.div
-            className="bg-neutral-800 rounded-[36px] p-8 text-center shadow-lg"
-            whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
-          >
+          <div className="mx-auto relative z-10" style={{ maxWidth }}>
             <motion.div
-              className="text-4xl font-bold text-primary-400 mb-2"
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 0.6, delay: 1.6 }}
+              className="text-center mb-16"
+              initial={{ opacity: 0, y: 20 }}
+              animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ delay: 1.2, duration: 0.6, ease: "easeOut" }}
             >
-              3+
-            </motion.div>
-            <h3 className="text-xl font-bold text-neutral-100 mb-4">
-              Years Experience
-            </h3>
-            <p className="text-neutral-400">
-              Building digital products and honing my craft in frontend
-              development
-            </p>
-          </motion.div>
-
-          <motion.div
-            className="bg-neutral-800 rounded-[36px] p-8 text-center shadow-lg"
-            whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
-          >
-            <motion.div
-              className="text-4xl font-bold text-accent-400 mb-2"
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 0.6, delay: 1.8 }}
-            >
-              15+
-            </motion.div>
-            <h3 className="text-xl font-bold text-neutral-100 mb-4">
-              Projects Completed
-            </h3>
-            <p className="text-neutral-400">
-              From concept to deployment, delivering solutions that matter
-            </p>
-          </motion.div>
-
-          <motion.div
-            className="bg-neutral-800 rounded-[36px] p-8 text-center shadow-lg"
-            whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
-          >
-            <motion.div
-              className="text-4xl font-bold text-success-400 mb-2"
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 0.6, delay: 2.0 }}
-            >
-              100%
-            </motion.div>
-            <h3 className="text-xl font-bold text-neutral-100 mb-4">
-              Client Satisfaction
-            </h3>
-            <p className="text-neutral-400">
-              Committed to exceeding expectations on every project
-            </p>
-          </motion.div>
-        </motion.div>
-
-        {/* Education & Experience Timeline */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 2.2 }}
-          className="bg-neutral-800 rounded-[36px] p-8 mb-12 shadow-lg"
-        >
-          <h3 className="text-2xl font-bold text-neutral-100 mb-8 text-center">
-            My Journey
-          </h3>
-
-          <div className="space-y-8">
-            <motion.div
-              className="flex items-start space-x-4"
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 2.4 }}
-            >
-              <div className="flex-shrink-0 w-4 h-4 bg-primary-500 rounded-full mt-2"></div>
-              <div>
-                <h4 className="text-lg font-semibold text-neutral-100">
-                  Frontend Developer
-                </h4>
-                <p className="text-accent-400 font-medium">Present - 2022</p>
-                <p className="text-neutral-400 mt-2">
-                  Developing modern web applications with React, Next.js, and
-                  TypeScript. Focus on creating responsive, accessible, and
-                  performant user interfaces.
-                </p>
-              </div>
-            </motion.div>
-
-            <motion.div
-              className="flex items-start space-x-4"
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 2.6 }}
-            >
-              <div className="flex-shrink-0 w-4 h-4 bg-accent-500 rounded-full mt-2"></div>
-              <div>
-                <h4 className="text-lg font-semibold text-neutral-100">
-                  UI/UX Design Specialization
-                </h4>
-                <p className="text-accent-400 font-medium">2022 - 2021</p>
-                <p className="text-neutral-400 mt-2">
-                  Completed comprehensive training in user experience design,
-                  design thinking methodologies, and modern design tools.
-                </p>
-              </div>
-            </motion.div>
-
-            <motion.div
-              className="flex items-start space-x-4"
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 2.8 }}
-            >
-              <div className="flex-shrink-0 w-4 h-4 bg-success-500 rounded-full mt-2"></div>
-              <div>
-                <h4 className="text-lg font-semibold text-neutral-100">
-                  Computer Science Education
-                </h4>
-                <p className="text-accent-400 font-medium">2021 - 2019</p>
-                <p className="text-neutral-400 mt-2">
-                  Built a strong foundation in programming fundamentals,
-                  algorithms, and software development principles.
-                </p>
-              </div>
-            </motion.div>
-          </div>
-        </motion.div>
-
-        {/* Call to Action */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 3.0 }}
-          className="text-center mb-12"
-        >
-          <div className="bg-gradient-to-r from-primary-600 to-accent-600 rounded-[36px] p-8 shadow-2xl">
-            <h3 className="text-2xl font-bold text-white mb-4">
-              Let's Work Together
-            </h3>
-            <p className="text-white/90 mb-6 max-w-md mx-auto">
-              Ready to bring your ideas to life? I'm always excited to
-              collaborate on meaningful projects.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <motion.button
-                onClick={() => (window.location.href = "/contact")}
-                className="bg-white text-primary-600 hover:bg-neutral-100 px-8 py-3 rounded-lg font-medium transition-all duration-300 shadow-lg"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+              <h2
+                className="text-4xl lg:text-5xl font-bold mb-6"
+                style={{ color: "var(--text-primary)" }}
               >
-                Get in Touch
-              </motion.button>
-              <motion.button
-                onClick={() => (window.location.href = "/works")}
-                className="border-2 border-white text-white hover:bg-white hover:text-primary-600 px-8 py-3 rounded-lg font-medium transition-all duration-300"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                Skills & Expertise
+              </h2>
+              <p
+                className="text-xl max-w-3xl mx-auto"
+                style={{ color: "var(--text-secondary)" }}
               >
-                View My Work
-              </motion.button>
+                A blend of technical skills and creative thinking that helps me
+                bring ideas to life
+              </p>
+            </motion.div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {/* Frontend Development */}
+              <motion.div
+                className="p-8 rounded-2xl border transition-all duration-300 hover:scale-105"
+                style={{
+                  backgroundColor: "var(--bg-secondary)",
+                  borderColor: "var(--border-primary)",
+                }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={
+                  isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
+                }
+                transition={{ delay: 1.4, duration: 0.6, ease: "easeOut" }}
+              >
+                <div
+                  className="w-12 h-12 rounded-lg mb-6 flex items-center justify-center"
+                  style={{ backgroundColor: "var(--accent-primary)" }}
+                >
+                  <span className="text-white font-bold text-xl">F</span>
+                </div>
+                <h3
+                  className="text-2xl font-bold mb-4"
+                  style={{ color: "var(--text-primary)" }}
+                >
+                  Frontend Development
+                </h3>
+                <p
+                  className="text-base leading-relaxed mb-6"
+                  style={{ color: "var(--text-secondary)" }}
+                >
+                  Building responsive, interactive web experiences with React,
+                  Next.js, and modern web technologies.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    "React",
+                    "Next.js",
+                    "JavaScript",
+                    "TypeScript",
+                    "Tailwind CSS",
+                  ].map((skill) => (
+                    <span
+                      key={skill}
+                      className="px-3 py-1 rounded-full text-sm font-medium border"
+                      style={{
+                        backgroundColor: "var(--bg-primary)",
+                        borderColor: "var(--border-primary)",
+                        color: "var(--text-primary)",
+                      }}
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </motion.div>
+
+              {/* Android Development */}
+              <motion.div
+                className="p-8 rounded-2xl border transition-all duration-300 hover:scale-105"
+                style={{
+                  backgroundColor: "var(--bg-secondary)",
+                  borderColor: "var(--border-primary)",
+                }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={
+                  isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
+                }
+                transition={{ delay: 1.6, duration: 0.6, ease: "easeOut" }}
+              >
+                <div
+                  className="w-12 h-12 rounded-lg mb-6 flex items-center justify-center"
+                  style={{ backgroundColor: "var(--accent-secondary)" }}
+                >
+                  <span className="text-white font-bold text-xl">A</span>
+                </div>
+                <h3
+                  className="text-2xl font-bold mb-4"
+                  style={{ color: "var(--text-primary)" }}
+                >
+                  Android Development
+                </h3>
+                <p
+                  className="text-base leading-relaxed mb-6"
+                  style={{ color: "var(--text-secondary)" }}
+                >
+                  Creating mobile applications that provide seamless user
+                  experiences on Android devices.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    "Kotlin",
+                    "Java",
+                    "Android Studio",
+                    "Material Design",
+                    "Firebase",
+                  ].map((skill) => (
+                    <span
+                      key={skill}
+                      className="px-3 py-1 rounded-full text-sm font-medium border"
+                      style={{
+                        backgroundColor: "var(--bg-primary)",
+                        borderColor: "var(--border-primary)",
+                        color: "var(--text-primary)",
+                      }}
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </motion.div>
+
+              {/* UX Design */}
+              <motion.div
+                className="p-8 rounded-2xl border transition-all duration-300 hover:scale-105"
+                style={{
+                  backgroundColor: "var(--bg-secondary)",
+                  borderColor: "var(--border-primary)",
+                }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={
+                  isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
+                }
+                transition={{ delay: 1.8, duration: 0.6, ease: "easeOut" }}
+              >
+                <div
+                  className="w-12 h-12 rounded-lg mb-6 flex items-center justify-center"
+                  style={{ backgroundColor: "var(--text-primary)" }}
+                >
+                  <span className="text-white font-bold text-xl">U</span>
+                </div>
+                <h3
+                  className="text-2xl font-bold mb-4"
+                  style={{ color: "var(--text-primary)" }}
+                >
+                  UX Design
+                </h3>
+                <p
+                  className="text-base leading-relaxed mb-6"
+                  style={{ color: "var(--text-secondary)" }}
+                >
+                  Designing user-centered experiences that are intuitive,
+                  accessible, and delightful to use.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    "Figma",
+                    "User Research",
+                    "Wireframing",
+                    "Prototyping",
+                    "Usability Testing",
+                  ].map((skill) => (
+                    <span
+                      key={skill}
+                      className="px-3 py-1 rounded-full text-sm font-medium border"
+                      style={{
+                        backgroundColor: "var(--bg-primary)",
+                        borderColor: "var(--border-primary)",
+                        color: "var(--text-primary)",
+                      }}
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </motion.div>
             </div>
           </div>
-        </motion.div>
+        </section>
+
+        {/* Timeline Section */}
+        <TimelineSection />
       </div>
     </main>
   );

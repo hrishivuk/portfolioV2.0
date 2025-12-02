@@ -1,0 +1,111 @@
+"use client";
+import { createContext, useContext, useState, useEffect } from "react";
+
+const ThemeContext = createContext();
+
+export function ThemeProvider({ children }) {
+  const [currentTheme, setCurrentTheme] = useState("ghostMouse");
+  const [showThemeArrow, setShowThemeArrow] = useState(true);
+
+  // Theme definitions
+  const themes = {
+    ghostMouse: {
+      name: "Ghost Mouse",
+      bgPrimary: "#0a0a0a",
+      bgSecondary: "#1a1a1a",
+      textPrimary: "#ffffff",
+      textSecondary: "#e0e0e0",
+      textMuted: "#a0a0a0",
+    },
+    forestGreen: {
+      name: "Forest Green",
+      bgPrimary: "#275f55",
+      bgSecondary: "#1e4a42",
+      textPrimary: "#e6ebdd",
+      textSecondary: "#d4dcc8",
+      textMuted: "#c2cdb3",
+    },
+    periwinkleOlive: {
+      name: "Periwinkle Olive",
+      bgPrimary: "#7f8ac3",
+      bgSecondary: "#6f7bb0",
+      textPrimary: "#292a24",
+      textSecondary: "#34352e",
+      textMuted: "#3f4038",
+    },
+    warmOrange: {
+      name: "Warm Orange",
+      bgPrimary: "#d97706",
+      bgSecondary: "#b45309",
+      textPrimary: "#f8f6f3",
+      textSecondary: "#f0ebe6",
+      textMuted: "#e5ddd6",
+    },
+    electricBlue: {
+      name: "Electric Blue",
+      bgPrimary: "#1e40af",
+      bgSecondary: "#1d4ed8",
+      textPrimary: "#fef3c7",
+      textSecondary: "#fde68a",
+      textMuted: "#fcd34d",
+    },
+    deepPurple: {
+      name: "Deep Purple",
+      bgPrimary: "#4c1d95",
+      bgSecondary: "#5b21b6",
+      textPrimary: "#e0e7ff",
+      textSecondary: "#c7d2fe",
+      textMuted: "#a5b4fc",
+    },
+  };
+
+  // Update CSS variables when theme changes
+  useEffect(() => {
+    const theme = themes[currentTheme];
+    document.documentElement.style.setProperty("--bg-primary", theme.bgPrimary);
+    document.documentElement.style.setProperty(
+      "--bg-secondary",
+      theme.bgSecondary
+    );
+    document.documentElement.style.setProperty(
+      "--text-primary",
+      theme.textPrimary
+    );
+    document.documentElement.style.setProperty(
+      "--text-secondary",
+      theme.textSecondary
+    );
+    document.documentElement.style.setProperty("--text-muted", theme.textMuted);
+  }, [currentTheme]);
+
+  // Handle scroll detection for theme arrow
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const heroHeight = window.innerHeight;
+      setShowThemeArrow(scrollY < heroHeight * 0.1);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const value = {
+    currentTheme,
+    setCurrentTheme,
+    themes,
+    showThemeArrow,
+  };
+
+  return (
+    <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
+  );
+}
+
+export function useTheme() {
+  const context = useContext(ThemeContext);
+  if (!context) {
+    throw new Error("useTheme must be used within a ThemeProvider");
+  }
+  return context;
+}

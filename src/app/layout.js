@@ -1,5 +1,8 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, DynaPuff } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "./contexts/ThemeContext";
+import { LayoutProvider } from "./contexts/LayoutContext";
+import GlobalGhostMouseBackground from "./components/GlobalGhostMouseBackground";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -9,6 +12,12 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+const dynaPuff = DynaPuff({
+  variable: "--font-dynapuff",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata = {
@@ -39,9 +48,14 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-neutral-950 text-neutral-100`}
+        className={`${geistSans.variable} ${geistMono.variable} ${dynaPuff.variable} antialiased bg-neutral-950 text-neutral-100`}
       >
-        {children}
+        <ThemeProvider>
+          <LayoutProvider>
+            <GlobalGhostMouseBackground />
+            {children}
+          </LayoutProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
