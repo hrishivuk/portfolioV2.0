@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST(request) {
   try {
     const body = await request.json();
@@ -33,6 +31,9 @@ export async function POST(request) {
         if (!contactEmail) {
           throw new Error("CONTACT_EMAIL or RESEND_FROM_EMAIL environment variable is not set");
         }
+
+        // Initialize Resend only when needed (not at module level)
+        const resend = new Resend(process.env.RESEND_API_KEY);
 
         await resend.emails.send({
           from: process.env.RESEND_FROM_EMAIL || "Portfolio <onboarding@resend.dev>",
