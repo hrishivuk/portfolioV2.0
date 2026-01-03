@@ -94,8 +94,8 @@ export default function AboutMePage() {
                 }
                 transition={{ delay: 0.4, duration: 0.6, ease: "easeOut" }}
               >
-                I'm a creative thinker who finds solutions to problems people
-                usually don't see. I understand how humans work with things and
+                I&apos;m a creative thinker who finds solutions to problems people
+                usually don&apos;t see. I understand how humans work with things and
                 create better ways for them to understand.
               </motion.p>
             </motion.div>
@@ -257,7 +257,7 @@ export default function AboutMePage() {
                     className="text-lg leading-relaxed"
                     style={{ color: "var(--text-secondary)" }}
                   >
-                    I'm not your regular developer. I see things differently and
+                    I&apos;m not your regular developer. I see things differently and
                     approach problems from angles that others might miss. My
                     journey started with curiosity about how things work and
                     evolved into a passion for making them work better.
@@ -268,7 +268,7 @@ export default function AboutMePage() {
                     style={{ color: "var(--text-secondary)" }}
                   >
                     Currently pursuing my MSc in Creative Digital Media and UX
-                    at Technological University Dublin, I'm expanding my
+                    at Technological University Dublin, I&apos;m expanding my
                     knowledge in emerging technologies and design methodologies.
                     My goal is to build something that everyone will want and
                     use to make life better.

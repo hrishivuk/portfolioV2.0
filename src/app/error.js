@@ -1,5 +1,6 @@
 "use client";
 import { useEffect } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import Navbar from "./components/navbar";
 import { useTheme } from "./contexts/ThemeContext";
@@ -58,8 +59,8 @@ export default function Error({ error, reset }) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4, duration: 0.6 }}
               >
-                We encountered an unexpected error. Don't worry, this has been
-                logged and we'll look into it.
+                We encountered an unexpected error. Don&apos;t worry, this has been
+                logged and we&apos;ll look into it.
               </motion.p>
 
               <motion.div
@@ -79,7 +80,7 @@ export default function Error({ error, reset }) {
                 >
                   Try Again
                 </button>
-                <a
+                <Link
                   href="/"
                   className="px-6 py-3 rounded-lg border font-medium transition-all duration-300 hover:scale-105"
                   style={{
@@ -89,7 +90,7 @@ export default function Error({ error, reset }) {
                   }}
                 >
                   Go Home
-                </a>
+                </Link>
               </motion.div>
             </motion.div>
           </div>

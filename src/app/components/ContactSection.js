@@ -101,15 +101,15 @@ export default function ContactSection({ isLoaded }) {
                   className="text-xl font-bold mb-2"
                   style={{ color: "var(--text-primary)" }}
                 >
-                  Let's Work Together
+                  Let&apos;s Work Together
                 </h3>
                 <p
                   className="text-sm lg:text-base leading-relaxed"
                   style={{ color: "var(--text-secondary)" }}
                 >
-                  I'm always interested in new opportunities and creative
+                  I&apos;m always interested in new opportunities and creative
                   projects. Whether you have a question or just want to say hi,
-                  I'll try my best to get back to you!
+                  I&apos;ll try my best to get back to you!
                 </p>
               </div>
 
@@ -267,7 +267,7 @@ export default function ContactSection({ isLoaded }) {
                   }}
                 >
                   <p className="text-sm font-medium">
-                    ✓ Message sent successfully! I'll get back to you soon.
+                    ✓ Message sent successfully! I&apos;ll get back to you soon.
                   </p>
                 </motion.div>
               )}

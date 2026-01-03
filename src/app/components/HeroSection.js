@@ -74,8 +74,6 @@ export default function HeroSection({ isLoaded }) {
   return (
     <div className="min-h-screen flex flex-col justify-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative overflow-hidden snap-start">
       {/* Background Animation */}
-      {selectedBackground === "gradient" && <GradientBackground />}
-      {selectedBackground === "animated" && <AnimatedBackground />}
       {selectedBackground === "ghostMouse" && (
         <GhostMouseBackground intensity="full" />
       )}
@@ -102,7 +100,7 @@ export default function HeroSection({ isLoaded }) {
                     }
                     transition={{ delay: 0.2, duration: 0.6, ease: "easeOut" }}
                   >
-                    Hi! I'm
+                    Hi! I&apos;m
                   </motion.span>
                   <motion.span
                     className="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl 2xl:text-[12rem] font-black leading-[0.85] tracking-tight"

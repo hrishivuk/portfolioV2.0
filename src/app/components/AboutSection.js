@@ -74,10 +74,10 @@ export default function AboutSection({ isLoaded }) {
                 className="text-base lg:text-lg leading-relaxed mb-6"
                 style={{ color: "var(--text-secondary)" }}
               >
-                I'm a creative thinker who finds solutions to problems people
-                usually don't see. I understand how humans work with things and
+                I&apos;m a creative thinker who finds solutions to problems people
+                usually don&apos;t see. I understand how humans work with things and
                 create better ways for them to understand. Not your regular
-                developer – I'm building something everyone will want and use to
+                developer – I&apos;m building something everyone will want and use to
                 make life better.
               </p>
               <div className="flex flex-wrap gap-3">
