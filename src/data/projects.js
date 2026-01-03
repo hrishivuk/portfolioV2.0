@@ -1,7 +1,6 @@
-"use client";
-
 // Central project data used by the Works list page and individual project pages.
 // Update this file with your real case-study content.
+// Note: This is a data file, not a component, so "use client" is not needed.
 
 export const projects = [
   {

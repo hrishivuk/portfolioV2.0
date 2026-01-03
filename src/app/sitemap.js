@@ -37,13 +37,15 @@ export default async function sitemap() {
     },
   ];
 
-  // Dynamic project routes
-  const projectRoutes = projects.map((project) => ({
-    url: `${baseUrl}/works/${project.id}`,
-    lastModified: new Date(),
-    changeFrequency: "monthly",
-    priority: 0.8,
-  }));
+  // Dynamic project routes - safely handle projects array
+  const projectRoutes = Array.isArray(projects) && projects.length > 0
+    ? projects.map((project) => ({
+        url: `${baseUrl}/works/${project.id}`,
+        lastModified: new Date(),
+        changeFrequency: "monthly",
+        priority: 0.8,
+      }))
+    : [];
 
   return [...routes, ...projectRoutes];
 }
