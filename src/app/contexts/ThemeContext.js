@@ -25,22 +25,6 @@ export function ThemeProvider({ children }) {
       textSecondary: "#d4dcc8",
       textMuted: "#c2cdb3",
     },
-    periwinkleOlive: {
-      name: "Periwinkle Olive",
-      bgPrimary: "#7f8ac3",
-      bgSecondary: "#6f7bb0",
-      textPrimary: "#292a24",
-      textSecondary: "#34352e",
-      textMuted: "#3f4038",
-    },
-    warmOrange: {
-      name: "Warm Orange",
-      bgPrimary: "#d97706",
-      bgSecondary: "#b45309",
-      textPrimary: "#f8f6f3",
-      textSecondary: "#f0ebe6",
-      textMuted: "#e5ddd6",
-    },
     electricBlue: {
       name: "Electric Blue",
       bgPrimary: "#1e40af",
@@ -59,9 +43,17 @@ export function ThemeProvider({ children }) {
     },
   };
 
+  // Reset theme if current theme doesn't exist (safety check)
+  useEffect(() => {
+    if (!themes[currentTheme]) {
+      setCurrentTheme("ghostMouse");
+    }
+  }, []);
+
   // Update CSS variables when theme changes
   useEffect(() => {
     const theme = themes[currentTheme];
+    if (!theme) return;
     document.documentElement.style.setProperty("--bg-primary", theme.bgPrimary);
     document.documentElement.style.setProperty(
       "--bg-secondary",

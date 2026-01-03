@@ -8,6 +8,9 @@ export function LayoutProvider({ children }) {
 
   // Calculate dynamic max width based on viewport
   useEffect(() => {
+    // Guard against SSR - only run on client
+    if (typeof window === "undefined") return;
+
     const updateMaxWidth = () => {
       const viewportWidth = window.innerWidth;
 

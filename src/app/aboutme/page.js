@@ -35,7 +35,7 @@ export default function AboutMePage() {
 
   return (
     <main
-      className="min-h-screen relative"
+      className="h-screen relative overflow-hidden snap-y snap-mandatory overflow-y-scroll"
       style={{
         backgroundColor:
           currentTheme === "ghostMouse" ? "transparent" : "var(--bg-primary)",
@@ -58,7 +58,7 @@ export default function AboutMePage() {
 
         {/* Hero Section */}
         <section
-          className="h-screen flex items-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative"
+          className="min-h-screen flex items-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative snap-start"
           style={{
             backgroundColor:
               currentTheme === "ghostMouse"
@@ -104,7 +104,7 @@ export default function AboutMePage() {
 
         {/* My Story Section */}
         <section
-          className="py-16 lg:py-24 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative"
+          className="min-h-screen flex items-center py-16 lg:py-24 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative snap-start"
           style={{
             backgroundColor:
               currentTheme === "ghostMouse"
@@ -119,7 +119,7 @@ export default function AboutMePage() {
               animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ delay: 0.6, duration: 0.8, ease: "easeOut" }}
             >
-              {/* Left - Image Placeholder */}
+              {/* Left - Terminal Window */}
               <motion.div
                 className="relative"
                 initial={{ opacity: 0, x: -30 }}
@@ -129,19 +129,109 @@ export default function AboutMePage() {
                 transition={{ delay: 0.8, duration: 0.6, ease: "easeOut" }}
               >
                 <div
-                  className="w-full h-96 lg:h-[500px] rounded-2xl border"
+                  className="w-full h-96 lg:h-[500px] rounded-2xl border overflow-hidden"
                   style={{
-                    backgroundColor: "var(--bg-secondary)",
+                    backgroundColor: "#0a0a0a",
                     borderColor: "var(--border-primary)",
                   }}
                 >
-                  <div className="flex items-center justify-center h-full">
-                    <p
-                      className="text-lg font-medium"
-                      style={{ color: "var(--text-muted)" }}
+                  {/* Terminal Header */}
+                  <div
+                    className="flex items-center gap-2 px-4 py-3 border-b"
+                    style={{
+                      borderColor: "rgba(255, 255, 255, 0.1)",
+                      backgroundColor: "rgba(0, 0, 0, 0.3)",
+                    }}
+                  >
+                    <div className="flex gap-1.5">
+                      <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
+                      <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                      <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
+                    </div>
+                    <span
+                      className="text-xs ml-2 font-mono"
+                      style={{ color: "rgba(255, 255, 255, 0.5)" }}
                     >
-                      [Your Photo Here]
-                    </p>
+                      about-me.ts
+                    </span>
+                  </div>
+
+                  {/* Terminal Content */}
+                  <div className="p-6 h-full overflow-auto font-mono text-sm">
+                    <div className="space-y-4">
+                      {/* whoami */}
+                      <div>
+                        <span
+                          className="text-green-400"
+                          style={{ color: "#4ade80" }}
+                        >
+                          {"> "}
+                        </span>
+                        <span style={{ color: "#e5e7eb" }}>whoami</span>
+                      </div>
+                      <div style={{ color: "#e5e7eb" }} className="ml-4">
+                        Hrishikesh Varma
+                      </div>
+
+                      {/* role */}
+                      <div className="mt-4">
+                        <span
+                          className="text-green-400"
+                          style={{ color: "#4ade80" }}
+                        >
+                          {"> "}
+                        </span>
+                        <span style={{ color: "#e5e7eb" }}>role</span>
+                      </div>
+                      <div style={{ color: "#e5e7eb" }} className="ml-4">
+                        Frontend Developer × UX Designer
+                      </div>
+
+                      {/* current_focus */}
+                      <div className="mt-4">
+                        <span
+                          className="text-green-400"
+                          style={{ color: "#4ade80" }}
+                        >
+                          {"> "}
+                        </span>
+                        <span style={{ color: "#e5e7eb" }}>current_focus</span>
+                      </div>
+                      <div style={{ color: "#e5e7eb" }} className="ml-4">
+                        Creative Digital Media & UX
+                      </div>
+
+                      {/* belief */}
+                      <div className="mt-4">
+                        <span
+                          className="text-green-400"
+                          style={{ color: "#4ade80" }}
+                        >
+                          {"> "}
+                        </span>
+                        <span style={{ color: "#e5e7eb" }}>belief</span>
+                      </div>
+                      <div style={{ color: "#e5e7eb" }} className="ml-4">
+                        Good design is invisible
+                      </div>
+
+                      {/* Cursor */}
+                      <div className="mt-4">
+                        <span
+                          className="text-green-400"
+                          style={{ color: "#4ade80" }}
+                        >
+                          {"> "}
+                        </span>
+                        <span
+                          className="inline-block w-2 h-4 animate-pulse"
+                          style={{
+                            backgroundColor: "#4ade80",
+                            marginLeft: "2px",
+                          }}
+                        ></span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -201,7 +291,7 @@ export default function AboutMePage() {
 
         {/* Skills & Expertise Section */}
         <section
-          className="py-16 lg:py-24 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative"
+          className="min-h-screen flex flex-col justify-center py-16 lg:py-24 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative snap-start"
           style={{
             backgroundColor:
               currentTheme === "ghostMouse"
@@ -574,8 +664,6 @@ export default function AboutMePage() {
           </div>
         </section>
 
-        {/* Extra bottom spacing for smoother scroll */}
-        <div className="h-24 md:h-32 lg:h-40" />
       </div>
     </main>
   );

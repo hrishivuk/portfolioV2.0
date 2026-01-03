@@ -5,8 +5,6 @@
  * This makes importing backgrounds easier and keeps them organized.
  */
 
-export { default as AnimatedBackground } from "./AnimatedBackground";
-export { default as GradientBackground } from "./GradientBackground";
 export { default as GhostMouseBackground } from "./GhostMouseBackground";
 
 // Add new background components here as they are created

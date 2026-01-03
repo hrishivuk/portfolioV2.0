@@ -29,7 +29,9 @@ export async function GET() {
     const res = await fetch(url);
 
     if (!res.ok) {
-      console.error("Weather API error:", res.status, res.statusText);
+      if (process.env.NODE_ENV === "development") {
+        console.error("Weather API error:", res.status, res.statusText);
+      }
       // Return a graceful fallback instead of an error status
       return NextResponse.json({
         name: "Dublin",
@@ -43,7 +45,9 @@ export async function GET() {
     const data = await res.json();
     return NextResponse.json(data);
   } catch (error) {
-    console.error("Weather API request failed:", error);
+    if (process.env.NODE_ENV === "development") {
+      console.error("Weather API request failed:", error);
+    }
     // Final safety fallback
     return NextResponse.json({
       name: "Dublin",

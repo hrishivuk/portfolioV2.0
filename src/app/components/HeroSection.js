@@ -3,11 +3,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useLayout } from "../contexts/LayoutContext";
 import { useTheme } from "../contexts/ThemeContext";
-import {
-  AnimatedBackground,
-  GradientBackground,
-  GhostMouseBackground,
-} from "./backgrounds";
+import { GhostMouseBackground } from "./backgrounds";
 
 export default function HeroSection({ isLoaded }) {
   const { maxWidth } = useLayout();
@@ -48,7 +44,9 @@ export default function HeroSection({ isLoaded }) {
       try {
         const res = await fetch("/api/weather", { cache: "no-store" });
         if (!res.ok) {
-          console.error("Failed to fetch weather. Status:", res.status);
+          if (process.env.NODE_ENV === "development") {
+            console.error("Failed to fetch weather. Status:", res.status);
+          }
           return;
         }
 
@@ -62,7 +60,9 @@ export default function HeroSection({ isLoaded }) {
           icon: data?.weather?.[0]?.icon,
         });
       } catch (error) {
-        console.error("Error fetching weather:", error);
+        if (process.env.NODE_ENV === "development") {
+          console.error("Error fetching weather:", error);
+        }
       } finally {
         setIsWeatherLoading(false);
       }
@@ -147,7 +147,8 @@ export default function HeroSection({ isLoaded }) {
                   href="https://linkedin.com/in/hrishikesh-varma"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 hover:bg-white/20 transition-all duration-200 group"
+                  className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 hover:bg-white/20 transition-all duration-200 group focus:outline-none focus:ring-2 focus:ring-white/50"
+                  aria-label="Visit LinkedIn profile"
                 >
                   <svg
                     className="w-4 h-4 sm:w-5 sm:h-5"
@@ -161,7 +162,8 @@ export default function HeroSection({ isLoaded }) {
                   href="https://twitter.com/hrishikesh"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 hover:bg-white/20 transition-all duration-200 group"
+                  className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 hover:bg-white/20 transition-all duration-200 group focus:outline-none focus:ring-2 focus:ring-white/50"
+                  aria-label="Visit Twitter profile"
                 >
                   <svg
                     className="w-4 h-4 sm:w-5 sm:h-5"
@@ -175,7 +177,8 @@ export default function HeroSection({ isLoaded }) {
                   href="https://github.com/hrishikesh-varma"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 hover:bg-white/20 transition-all duration-200 group"
+                  className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 hover:bg-white/20 transition-all duration-200 group focus:outline-none focus:ring-2 focus:ring-white/50"
+                  aria-label="Visit GitHub profile"
                 >
                   <svg
                     className="w-4 h-4 sm:w-5 sm:h-5"

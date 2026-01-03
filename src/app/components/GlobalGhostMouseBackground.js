@@ -24,8 +24,6 @@ export default function GlobalGhostMouseBackground() {
     return null;
   }
 
-  console.log("GlobalGhostMouseBackground: Rendering with theme:", currentTheme);
-
   // Determine intensity based on page
   const getIntensity = () => {
     // Full intensity for home page (hero section gets priority)

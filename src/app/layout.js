@@ -20,6 +20,9 @@ const dynaPuff = DynaPuff({
   weight: ["400", "500", "600", "700"],
 });
 
+// Get site URL from environment variable or use default
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://hrishikeshvarma.dev";
+
 export const metadata = {
   title: "Hrishikesh Varma - Frontend Developer & UX Designer",
   description:
@@ -28,19 +31,29 @@ export const metadata = {
     "Frontend Developer, UX Designer, React, Next.js, Dublin, Web Development, UI Design",
   authors: [{ name: "Hrishikesh Varma" }],
   creator: "Hrishikesh Varma",
+  metadataBase: new URL(siteUrl),
   openGraph: {
     title: "Hrishikesh Varma - Frontend Developer & UX Designer",
     description:
-      "Frontend Developer & Creative Digital Media enthusiast based in Dublin",
-    url: "https://your-domain.com",
+      "Frontend Developer & Creative Digital Media enthusiast based in Dublin. Specializing in React, Next.js, UI/UX design, and creating intuitive digital experiences.",
+    url: siteUrl,
     siteName: "Hrishikesh Varma Portfolio",
     type: "website",
+    images: [
+      {
+        url: `${siteUrl}/og-image.png`,
+        width: 1200,
+        height: 630,
+        alt: "Hrishikesh Varma - Frontend Developer & UX Designer Portfolio",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Hrishikesh Varma - Frontend Developer & UX Designer",
     description:
       "Frontend Developer & Creative Digital Media enthusiast based in Dublin",
+    images: [`${siteUrl}/og-image.png`],
   },
 };
 

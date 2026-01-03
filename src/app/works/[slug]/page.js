@@ -62,9 +62,7 @@ export default function ProjectDetailPage() {
         className="min-h-screen flex items-center justify-center"
         style={{
           backgroundColor:
-            currentTheme === "ghostMouse"
-              ? "transparent"
-              : "var(--bg-primary)",
+            currentTheme === "ghostMouse" ? "transparent" : "var(--bg-primary)",
         }}
       >
         <div className="text-center px-4">
@@ -114,11 +112,12 @@ export default function ProjectDetailPage() {
 
         {/* Hero Section - Above the fold, minimal */}
         <section
-          className="min-h-screen flex items-center pt-20 pb-12 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16"
+          className="min-h-screen flex items-center pb-12 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16"
           style={{
             backgroundColor: isGhostTheme
               ? "rgba(10, 10, 10, 0.3)"
               : "transparent",
+            paddingTop: "70px",
           }}
         >
           <div className="mx-auto w-full" style={{ maxWidth }}>
@@ -326,25 +325,58 @@ export default function ProjectDetailPage() {
                 >
                   {featureScreens[0]?.alt || "Key user flows and functionality"}
                 </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {featureScreens.map((shot) => (
-                    <div
-                      key={shot.src}
-                      className="rounded-3xl border overflow-hidden bg-[var(--bg-primary)] flex items-center justify-center mx-auto"
-                      style={{
-                        borderColor: "var(--border-primary)",
-                        aspectRatio: "9 / 19",
-                        maxWidth: 260,
-                      }}
-                    >
-                      <img
-                        src={shot.src}
-                        alt={shot.alt}
-                        className="h-full w-auto object-cover"
-                      />
-                    </div>
-                  ))}
-                </div>
+                {/* Check if screenshots are desktop views (by checking if they contain desktop-related keywords or count) */}
+                {featureScreens.length === 2 &&
+                (featureScreens.some(
+                  (s) => s.src.includes("games") || s.src.includes("cover")
+                ) ||
+                  featureScreens.some(
+                    (s) =>
+                      !s.src.includes("responsive") &&
+                      !s.src.includes("dashboard")
+                  )) ? (
+                  // Desktop views side by side - using object-contain to show full image
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    {featureScreens.map((shot) => (
+                      <div
+                        key={shot.src}
+                        className="rounded-3xl border overflow-hidden bg-[var(--bg-primary)] flex items-center justify-center"
+                        style={{
+                          borderColor: "var(--border-primary)",
+                          minHeight: "400px",
+                          maxHeight: "600px",
+                        }}
+                      >
+                        <img
+                          src={shot.src}
+                          alt={shot.alt}
+                          className="w-full h-full object-contain"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  // Mobile views in grid
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {featureScreens.map((shot) => (
+                      <div
+                        key={shot.src}
+                        className="rounded-3xl border overflow-hidden bg-[var(--bg-primary)] flex items-center justify-center mx-auto"
+                        style={{
+                          borderColor: "var(--border-primary)",
+                          aspectRatio: "9 / 19",
+                          maxWidth: 260,
+                        }}
+                      >
+                        <img
+                          src={shot.src}
+                          alt={shot.alt}
+                          className="h-full w-auto object-cover"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                )}
               </motion.div>
             )}
 
@@ -432,11 +464,16 @@ export default function ProjectDetailPage() {
             >
               <button
                 onClick={() => setShowDeepDive(!showDeepDive)}
-                className="w-full flex items-center justify-between p-4 rounded-xl border transition-all duration-300 hover:scale-[1.01]"
+                className="w-full flex items-center justify-between p-4 rounded-xl border transition-all duration-300 hover:scale-[1.01] focus:outline-none focus:ring-2 focus:ring-offset-2"
                 style={{
                   backgroundColor: "var(--bg-secondary)",
                   borderColor: "var(--border-primary)",
+                  "--tw-ring-color": "rgba(255, 255, 255, 0.5)",
                 }}
+                aria-label={
+                  showDeepDive ? "Hide process details" : "Show process details"
+                }
+                aria-expanded={showDeepDive}
               >
                 <span
                   className="text-lg font-bold"
@@ -512,5 +549,3 @@ export default function ProjectDetailPage() {
     </main>
   );
 }
-
-

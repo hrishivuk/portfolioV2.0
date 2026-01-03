@@ -23,7 +23,9 @@ export default function GhostMouseBackground({ intensity = "full" }) {
   const mouseRef = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
-    console.log("GhostMouseBackground: Initializing with intensity:", intensity);
+    if (process.env.NODE_ENV === "development") {
+      console.log("GhostMouseBackground: Initializing with intensity:", intensity);
+    }
     let container, camera, scene, renderer;
     let uniforms;
     let rtTexture, rtTexture2;
@@ -185,7 +187,9 @@ export default function GhostMouseBackground({ intensity = "full" }) {
       await loadThreeJS();
 
       if (!window.THREE) {
-        console.error("Three.js failed to load");
+        if (process.env.NODE_ENV === "development") {
+          console.error("Three.js failed to load");
+        }
         return;
       }
 
@@ -193,7 +197,9 @@ export default function GhostMouseBackground({ intensity = "full" }) {
 
       container = containerRef.current;
       if (!container) {
-        console.error("Container not found");
+        if (process.env.NODE_ENV === "development") {
+          console.error("Container not found");
+        }
         return;
       }
 
@@ -225,7 +231,9 @@ export default function GhostMouseBackground({ intensity = "full" }) {
       const intensityValue =
         intensity === "full" ? 1.0 : intensity === "subtle" ? 0.3 : 0.1;
       
-      console.log("GhostMouseBackground: Intensity value set to:", intensityValue);
+      if (process.env.NODE_ENV === "development") {
+        console.log("GhostMouseBackground: Intensity value set to:", intensityValue);
+      }
 
       uniforms = {
         u_time: { type: "f", value: 1.0 },
@@ -237,7 +245,9 @@ export default function GhostMouseBackground({ intensity = "full" }) {
         u_intensity: { type: "f", value: intensityValue },
       };
       
-      console.log("GhostMouseBackground: Renderer initialized, container:", container);
+      if (process.env.NODE_ENV === "development") {
+        console.log("GhostMouseBackground: Renderer initialized, container:", container);
+      }
 
       const material = new THREE.ShaderMaterial({
         uniforms: uniforms,

@@ -90,11 +90,17 @@ export default function Navbar({
           <div className="relative" ref={dropdownRef}>
             <button
               onClick={() => setShowThemeSwitcher(!showThemeSwitcher)}
-              className="flex items-center space-x-2 text-neutral-400 hover:text-white transition-colors"
+              className="flex items-center space-x-2 text-neutral-400 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-white/50 rounded"
+              aria-label="Toggle theme selector"
+              aria-expanded={showThemeSwitcher}
+              aria-haspopup="true"
             >
               <div
                 className="w-4 h-4 rounded-full border-2 border-current"
-                style={{ backgroundColor: themes[currentTheme].bgPrimary }}
+                style={{
+                  backgroundColor:
+                    themes?.[currentTheme]?.bgPrimary || "#0a0a0a",
+                }}
               ></div>
               <span className="text-sm">theme</span>
             </button>

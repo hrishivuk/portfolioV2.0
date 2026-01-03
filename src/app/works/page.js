@@ -37,13 +37,22 @@ export default function WorksPage() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const categories = [
-    "All",
+  // Define category order
+  const categoryOrder = [
     "Frontend Development",
     "Android Development",
     "UX Design",
     "Creative Digital Media",
   ];
+
+  // Get unique categories from projects and order them
+  const uniqueCategories = [
+    ...new Set(projects.map((project) => project.category)),
+  ];
+  const orderedCategories = categoryOrder.filter((cat) =>
+    uniqueCategories.includes(cat)
+  );
+  const categories = ["All", ...orderedCategories];
 
   const filteredProjects =
     selectedCategory === "All"
@@ -52,7 +61,7 @@ export default function WorksPage() {
 
   return (
     <main
-      className="min-h-screen relative"
+      className="h-screen relative overflow-hidden snap-y snap-mandatory overflow-y-scroll"
       style={{
         backgroundColor:
           currentTheme === "ghostMouse" ? "transparent" : "var(--bg-primary)",
@@ -75,7 +84,7 @@ export default function WorksPage() {
 
         {/* Hero Section */}
         <section
-          className="h-screen flex items-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative"
+          className="min-h-screen flex items-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative snap-start"
           style={{
             backgroundColor:
               currentTheme === "ghostMouse"
@@ -120,7 +129,7 @@ export default function WorksPage() {
 
         {/* Projects Section */}
         <section
-          className="py-16 lg:py-24 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative"
+          className="min-h-screen flex flex-col justify-center py-16 lg:py-24 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative snap-start"
           style={{
             backgroundColor:
               currentTheme === "ghostMouse"
@@ -140,7 +149,7 @@ export default function WorksPage() {
                 <button
                   key={category}
                   onClick={() => setSelectedCategory(category)}
-                  className={`px-6 py-3 rounded-full text-sm font-medium border transition-all duration-300 ${
+                  className={`px-6 py-3 rounded-full text-sm font-medium border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 ${
                     selectedCategory === category
                       ? "scale-105"
                       : "hover:scale-105"
@@ -157,7 +166,10 @@ export default function WorksPage() {
                       ? "rgba(255,255,255,0.16)"
                       : "var(--border-primary)",
                     color: "var(--text-primary)",
+                    "--tw-ring-color": "rgba(255, 255, 255, 0.5)",
                   }}
+                  aria-label={`Filter projects by ${category}`}
+                  aria-pressed={selectedCategory === category}
                 >
                   {category}
                 </button>

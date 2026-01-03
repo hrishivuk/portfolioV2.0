@@ -14,7 +14,7 @@ export const projects = [
       "A mobile app that helps football coaches and players manage their entire club environment in one place — from onboarding and squads, to match preparation and performance reviews.",
     description:
       "CoachCanvas replaces scattered WhatsApp groups, spreadsheets, and ad-hoc tools with a structured system that still feels simple for non-technical coaches and players. It focuses on clear information hierarchy, multi-role onboarding, club creation and management, and state-aware navigation that always takes users to the right place based on their role and status.",
-    image: "/images/coachcanvas.png",
+    image: "/images/coachcanvas/coachcanvas.png",
     technologies: [
       "React Native",
       "TypeScript",
@@ -47,22 +47,22 @@ export const projects = [
     ],
     screenshots: [
       {
-        src: "/images/coachcanvas-loading.png",
+        src: "/images/coachcanvas/coachcanvas-loading.png",
         alt: "CoachCanvas onboarding and loading experience",
         placement: "overview",
       },
       {
-        src: "/images/coachcanvas-home.png",
+        src: "/images/coachcanvas/coachcanvas-home.png",
         alt: "CoachCanvas manager and player home screens",
         placement: "features",
       },
       {
-        src: "/images/coachcanvas-MH.png",
+        src: "/images/coachcanvas/coachcanvas-MH.png",
         alt: "CoachCanvas match history and stats screens",
         placement: "features",
       },
       {
-        src: "/images/coachcanvas-formation.png",
+        src: "/images/coachcanvas/coachcanvas-formation.png",
         alt: "CoachCanvas formation and lineup management screens",
         placement: "process",
       },
@@ -78,7 +78,7 @@ export const projects = [
       "A 5-day university UI/UX design project: conceptualized a flexible savings app from scratch and delivered a complete mobile interface design focused on making saving feel approachable and motivating.",
     description:
       "FlexSave was a rapid design sprint completed during university coursework. The challenge was to identify a real user problem, ideate a solution, and design a complete mobile app interface—all within 5 days. I chose to tackle the rigid, overwhelming nature of traditional budgeting apps by designing a savings companion that feels lightweight and flexible. The design emphasizes clear progress visualization, simple goal creation, and a mobile-first experience that makes saving feel achievable rather than restrictive.",
-    image: "/images/flexsave.png",
+    image: "/images/flexsave/flexsave.png",
     technologies: [
       "Figma",
       "UI Design",
@@ -140,7 +140,7 @@ export const projects = [
       "A UX case study and interactive prototype focused on simplifying student workflows, improving visual hierarchy, and reducing friction in daily tasks.",
     description:
       "Brightspace explores how a student portal can feel calmer and more focused. The concept reorganizes key actions like checking deadlines, modules, and messages into a clearer, more visual structure.",
-    image: "/images/brightspace.png",
+    image: "/images/brightspace/brightspace.png",
     technologies: ["Figma", "Prototyping", "User Research", "UI Design"],
     liveUrl: "",
     githubUrl: "",
@@ -166,7 +166,7 @@ export const projects = [
       "An experimental portfolio with theme switching, animated backgrounds, and scroll-snapped sections designed to feel playful yet minimal.",
     description:
       "This portfolio is both a playground and a personal brand piece. It experiments with animated backgrounds, a Ghost Mouse theme, and glassmorphism while still keeping the content focused and readable.",
-    image: "/images/logo.png",
+    image: "/images/portfolio/portfolio.png",
     technologies: ["Next.js", "React", "Framer Motion", "Tailwind CSS"],
     liveUrl: "",
     githubUrl: "",
@@ -180,6 +180,58 @@ export const projects = [
       "Theme switching with a playful Ghost Mouse experience.",
       "Scroll-snapped home sections for a slide-like feel.",
       "Reusable layout and theme contexts for consistent spacing and color.",
+    ],
+  },
+  {
+    id: "findaside-football-planner",
+    title: "Findaside – Football Match Planner",
+    category: "Frontend Development",
+    year: "2024",
+    featured: false,
+    summary:
+      "A freelance web application that helps hosts organize football matches, manage player registrations, handle payments, and coordinate teams—all in one platform.",
+    description:
+      "Findaside is a football match planning platform built for hosts who organize regular games. Hosts can create accounts, book turfs externally, and then create match events in the app. Players can join matches, form teams (Team A and Team B), and manage payments either through the app or in-person with status updates. The app also enables hosts to share player lists directly to WhatsApp groups, streamlining communication and coordination for local football communities.",
+    image: "/images/findaside/findaside.png",
+    technologies: ["React", "JavaScript", "CSS", "Frontend Development"],
+    liveUrl: "",
+    githubUrl: "",
+    role: "Frontend Developer (Freelance)",
+    responsibilities: [
+      "Built the complete frontend interface using React for match creation, player management, and team formation.",
+      "Implemented user authentication and account management flows for hosts and players.",
+      "Designed and developed match listing, player registration, and team selection interfaces.",
+      "Created payment tracking UI that supports both in-app and in-person payment status updates.",
+      "Built WhatsApp integration feature for sharing player lists to external groups.",
+    ],
+    highlights: [
+      "Streamlined match organization workflow from turf booking to team formation.",
+      "Flexible payment system supporting both digital and cash payments with status tracking.",
+      "WhatsApp integration that bridges the app with existing communication channels.",
+      "Team formation feature allowing players to organize into Team A and Team B before matches.",
+      "Clean, intuitive interface that makes match planning accessible for non-technical hosts.",
+    ],
+    screenshots: [
+      {
+        src: "/images/findaside/fs-dashboard.png",
+        alt: "Findaside dashboard - mobile responsive view",
+        placement: "overview",
+      },
+      {
+        src: "/images/findaside/fs-responsive.png",
+        alt: "Findaside responsive mobile interface",
+        placement: "overview",
+      },
+      {
+        src: "/images/findaside/fs-cover.png",
+        alt: "Findaside match creation and team management - desktop view",
+        placement: "features",
+      },
+      {
+        src: "/images/findaside/fs-games.png",
+        alt: "Findaside games listing and match management - desktop view",
+        placement: "features",
+      },
     ],
   },
   {
