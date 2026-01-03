@@ -6,10 +6,7 @@ export default function AboutSection({ isLoaded }) {
   const { maxWidth } = useLayout();
 
   return (
-    <section
-      className="h-screen flex items-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16"
-      style={{ scrollSnapAlign: "start" }}
-    >
+    <section className="min-h-screen flex items-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 snap-start">
       <div className="mx-auto" style={{ maxWidth }}>
         <motion.div
           className="flex flex-col lg:flex-row gap-12 lg:gap-16"

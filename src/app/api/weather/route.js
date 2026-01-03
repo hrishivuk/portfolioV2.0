@@ -1,53 +1,58 @@
+"use server";
+
 import { NextResponse } from "next/server";
 
-export async function GET() {
-  const apiKey =
-    process.env.WEATHER_API_KEY || process.env.NEXT_PUBLIC_WEATHER_API_KEY;
+// Simple weather proxy for the hero card.
+// Uses OpenWeather API if OPENWEATHER_API_KEY is set,
+// otherwise falls back to a static stub so the UI never breaks.
 
-  // Check if API key exists
+export async function GET() {
+  const apiKey = process.env.OPENWEATHER_API_KEY;
+  const defaultCity = process.env.WEATHER_CITY || "Dublin,IE";
+
+  // Fallback static payload if no API key is configured
   if (!apiKey) {
-    console.error("Weather API key is missing");
-    return NextResponse.json(
-      { error: "Weather API key not configured" },
-      { status: 500 }
-    );
+    return NextResponse.json({
+      name: "Dublin",
+      sys: { country: "IE" },
+      main: { temp: 14 },
+      weather: [{ main: "Clouds", icon: "03d" }],
+      _fallback: true,
+    });
   }
 
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=Dublin,IE&appid=${apiKey}&units=metric`;
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(
+    defaultCity
+  )}&appid=${apiKey}&units=metric`;
 
   try {
-    const response = await fetch(url);
+    const res = await fetch(url);
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    if (!res.ok) {
+      console.error("Weather API error:", res.status, res.statusText);
+      // Return a graceful fallback instead of an error status
+      return NextResponse.json({
+        name: "Dublin",
+        sys: { country: "IE" },
+        main: { temp: 14 },
+        weather: [{ main: "Clouds", icon: "03d" }],
+        _fallback: true,
+      });
     }
 
-    const data = await response.json();
-
-    // Check if the API returned an error
-    if (data.cod && data.cod !== 200) {
-      throw new Error(data.message || "Weather API returned an error");
-    }
-
-    const weatherData = {
-      ...data,
-      main: {
-        ...data.main,
-        temp: Math.round(data.main.temp),
-        temp_max: Math.round(data.main.temp_max),
-        temp_min: Math.round(data.main.temp_min),
-      },
-    };
-
-    return NextResponse.json(weatherData);
+    const data = await res.json();
+    return NextResponse.json(data);
   } catch (error) {
-    console.error("Error fetching weather data:", error);
-    return NextResponse.json(
-      {
-        error: "Failed to fetch weather data",
-        details: error.message,
-      },
-      { status: 500 }
-    );
+    console.error("Weather API request failed:", error);
+    // Final safety fallback
+    return NextResponse.json({
+      name: "Dublin",
+      sys: { country: "IE" },
+      main: { temp: 14 },
+      weather: [{ main: "Clouds", icon: "03d" }],
+      _fallback: true,
+    });
   }
 }
+
+

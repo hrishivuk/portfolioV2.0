@@ -14,58 +14,78 @@ export default function TimelineSection() {
 
   const timelineData = [
     {
-      date: "Sept 2024",
-      period: "Current",
+      date: "Dec 2025",
+      period: "Completed",
       company: "Technological University Dublin",
       role: "MSc Creative Digital Media & UX",
       type: "Education",
       description:
-        "Mastering the intersection of technology and human-centered design. Exploring emerging technologies and design methodologies.",
+        "Started my MSc in Sept 2024. Began my final major project in June 2025 and completed it in Dec 2025, focusing on the intersection of creative media, UX, and technology.",
     },
     {
-      date: "Jan 2024",
-      period: "Recent",
-      company: "Freelance Projects",
-      role: "Frontend Developer",
+      date: "Jan 2025",
+      period: "2025",
+      company: "Freelance – Dublin, Ireland",
+      role: "UI & UX Designer / Developer (Contract)",
       type: "Work",
       description:
-        "Building responsive web applications and mobile interfaces for various clients using React and modern web technologies.",
+        "Working on freelance contract projects in Dublin, designing and building UI and UX for digital products alongside my masters.",
     },
     {
-      date: "2023",
-      period: "Past",
-      company: "Personal Projects",
-      role: "Android Developer",
+      date: "Sept 2024",
+      period: "2024",
+      company: "Technological University Dublin",
+      role: "Started MSc Creative Digital Media & UX",
+      type: "Education",
+      description:
+        "Moved to Dublin and began my MSc in Creative Digital Media and UX at TUD, focusing on human-centered design and creative technologies.",
+    },
+    {
+      date: "Aug 2024",
+      period: "2024",
+      company: "Freelance – Kochi, India",
+      role: "Frontend Developer & Designer",
       type: "Work",
       description:
-        "Developing mobile applications and exploring Android development for my final university project.",
+        "Started freelancing in Kochi after Experion, collaborating with clients to design and develop frontend experiences.",
+    },
+    {
+      date: "May 2023 – Aug 2024",
+      period: "2023–2024",
+      company: "Experion Technologies, Kerala, India",
+      role: "Associate Frontend Developer",
+      type: "Work",
+      description:
+        "Joined Experion full time as an Associate Frontend Developer, building production-ready interfaces and refining my skills in modern frontend technologies.",
+    },
+    {
+      date: "Dec 2022 – May 2023",
+      period: "2022–2023",
+      company: "Experion Technologies, Kerala, India",
+      role: "Frontend Developer Intern",
+      type: "Work",
+      description:
+        "Started my industry journey as an intern at Experion, working with real-world projects and learning professional development workflows.",
     },
     {
       date: "2022",
-      period: "Past",
-      company: "University Studies",
-      role: "Computer Science Student",
+      period: "Graduated",
+      company: "B.Tech Computer Science Engineering",
+      role: "Undergraduate Studies",
       type: "Education",
       description:
-        "Building foundation in computer science, programming fundamentals, and software development principles.",
-    },
-    {
-      date: "2021",
-      period: "Past",
-      company: "Learning Journey",
-      role: "Self-Taught Developer",
-      type: "Education",
-      description:
-        "Started learning web development, exploring HTML, CSS, JavaScript, and discovering my passion for creating digital experiences.",
+        "Completed my B.Tech in Computer Science Engineering, building a strong foundation in programming, problem-solving, and software engineering.",
     },
   ];
 
   // Update active index based on scroll progress
   useEffect(() => {
     const unsubscribe = scrollYProgress.onChange((latest) => {
+      // Use rounded progress so the last item reliably becomes active
+      const maxIndex = timelineData.length - 1;
       const newIndex = Math.min(
-        Math.floor(latest * timelineData.length),
-        timelineData.length - 1
+        maxIndex,
+        Math.max(0, Math.round(latest * maxIndex))
       );
       setActiveIndex(newIndex);
     });
@@ -77,10 +97,13 @@ export default function TimelineSection() {
     <section
       ref={containerRef}
       className="py-16 lg:py-24 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative"
-      style={{ 
+      style={{
         minHeight: "200vh",
-        backgroundColor: currentTheme === "ghostMouse" ? "rgba(10, 10, 10, 0.3)" : "transparent",
-        zIndex: 10
+        backgroundColor:
+          currentTheme === "ghostMouse"
+            ? "rgba(10, 10, 10, 0.3)"
+            : "transparent",
+        zIndex: 10,
       }}
     >
       <div className="max-w-6xl mx-auto relative z-10">

@@ -44,59 +44,48 @@ export default function Navbar({
           hrishi.
         </Link>
 
-        {/* Desktop Navigation */}
+      {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-8">
-          <Link
-            href="/"
-            className={
-              isActive("/")
+        <Link
+          href="/"
+          className={
+            isActive("/")
                 ? "text-white"
                 : "text-neutral-400 hover:text-white transition-colors"
-            }
-          >
-            home.
-          </Link>
-          <Link
-            href="/works"
-            className={
-              isActive("/works")
+          }
+        >
+          home.
+        </Link>
+        <Link
+          href="/works"
+          className={
+            isActive("/works")
                 ? "text-white"
                 : "text-neutral-400 hover:text-white transition-colors"
-            }
-          >
-            works.
-          </Link>
-          <Link
-            href="/aboutme"
-            className={
-              isActive("/aboutme")
+          }
+        >
+          works.
+        </Link>
+        <Link
+          href="/aboutme"
+          className={
+            isActive("/aboutme")
                 ? "text-white"
                 : "text-neutral-400 hover:text-white transition-colors"
-            }
-          >
-            about me.
-          </Link>
-          <Link
-            href="/blog"
-            className={
-              isActive("/blog")
+          }
+        >
+          about me.
+        </Link>
+        <Link
+          href="/blog"
+          className={
+            isActive("/blog")
                 ? "text-white"
                 : "text-neutral-400 hover:text-white transition-colors"
-            }
-          >
-            blog.
-          </Link>
-          <Link
-            href="/contact"
-            className={
-              isActive("/contact")
-                ? "text-white"
-                : "text-neutral-400 hover:text-white transition-colors"
-            }
-          >
-            contact.
-          </Link>
-
+          }
+        >
+          blog.
+        </Link>
           {/* Theme Switcher */}
           <div className="relative" ref={dropdownRef}>
             <button
@@ -260,7 +249,7 @@ export default function Navbar({
                   onClick={() => setShowMobileMenu(false)}
                 >
                   hrishi.
-                </Link>
+        </Link>
 
                 {/* Close Button */}
                 <button
@@ -272,18 +261,18 @@ export default function Navbar({
                     <div className="w-5 h-0.5 bg-white -rotate-45 -translate-y-0.5 transition-all duration-300"></div>
                   </div>
                 </button>
-              </div>
+      </div>
 
               {/* Navigation Links */}
               <div className="flex-1 flex flex-col justify-center px-8 pt-20">
                 <nav className="space-y-6">
-                  <motion.div
+        <motion.div
                     initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
+          animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2, duration: 0.4, ease: "easeOut" }}
-                  >
-                    <Link
-                      href="/"
+        >
+            <Link
+              href="/"
                       onClick={() => setShowMobileMenu(false)}
                       className="group flex items-center space-x-6 py-3 px-4 rounded-xl transition-all duration-300 hover:scale-105"
                       style={{
@@ -303,15 +292,15 @@ export default function Navbar({
                       >
                         HOME
                       </span>
-                    </Link>
+            </Link>
                   </motion.div>
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3, duration: 0.4, ease: "easeOut" }}
                   >
-                    <Link
-                      href="/works"
+            <Link
+              href="/works"
                       onClick={() => setShowMobileMenu(false)}
                       className="group flex items-center space-x-6 py-3 px-4 rounded-xl transition-all duration-300 hover:scale-105"
                       style={{
@@ -331,15 +320,15 @@ export default function Navbar({
                       >
                         WORKS
                       </span>
-                    </Link>
+            </Link>
                   </motion.div>
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4, duration: 0.4, ease: "easeOut" }}
                   >
-                    <Link
-                      href="/aboutme"
+            <Link
+              href="/aboutme"
                       onClick={() => setShowMobileMenu(false)}
                       className="group flex items-center space-x-6 py-3 px-4 rounded-xl transition-all duration-300 hover:scale-105"
                       style={{
@@ -359,15 +348,15 @@ export default function Navbar({
                       >
                         ABOUT
                       </span>
-                    </Link>
+            </Link>
                   </motion.div>
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5, duration: 0.4, ease: "easeOut" }}
                   >
-                    <Link
-                      href="/blog"
+            <Link
+              href="/blog"
                       onClick={() => setShowMobileMenu(false)}
                       className="group flex items-center space-x-6 py-3 px-4 rounded-xl transition-all duration-300 hover:scale-105"
                       style={{
@@ -387,7 +376,7 @@ export default function Navbar({
                       >
                         BLOG
                       </span>
-                    </Link>
+            </Link>
                   </motion.div>
                 </nav>
               </div>
@@ -455,11 +444,11 @@ export default function Navbar({
                       </button>
                     ))}
                   </div>
-                </div>
+          </div>
               </motion.div>
             </motion.div>
-          </motion.div>
-        )}
+        </motion.div>
+      )}
       </AnimatePresence>
     </>
   );

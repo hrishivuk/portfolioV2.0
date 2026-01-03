@@ -37,12 +37,10 @@ export default function Home() {
 
   return (
     <main
-      className="min-h-screen relative overflow-hidden"
+      className="h-screen relative overflow-hidden snap-y snap-mandatory overflow-y-scroll"
       style={{
-        backgroundColor: currentTheme === "ghostMouse" ? "transparent" : "var(--bg-primary)",
-        scrollSnapType: "y mandatory",
-        overflowY: "scroll",
-        height: "100vh",
+        backgroundColor:
+          currentTheme === "ghostMouse" ? "transparent" : "var(--bg-primary)",
       }}
     >
       {/* Content */}

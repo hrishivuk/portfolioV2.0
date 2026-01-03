@@ -25,6 +25,10 @@ export default function HeroSection({ isLoaded }) {
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
 
+  // Lightweight weather state for location card
+  const [weather, setWeather] = useState(null);
+  const [isWeatherLoading, setIsWeatherLoading] = useState(true);
+
   // Role rotation effect
   useEffect(() => {
     const interval = setInterval(() => {
@@ -38,11 +42,37 @@ export default function HeroSection({ isLoaded }) {
     return () => clearInterval(interval);
   }, [roles.length]);
 
+  // Fetch current weather from /api/weather for the location card
+  useEffect(() => {
+    const fetchWeather = async () => {
+      try {
+        const res = await fetch("/api/weather", { cache: "no-store" });
+        if (!res.ok) {
+          console.error("Failed to fetch weather. Status:", res.status);
+          return;
+        }
+
+        const data = await res.json();
+
+        setWeather({
+          name: data?.name,
+          country: data?.sys?.country,
+          temp: Math.round(data?.main?.temp),
+          description: data?.weather?.[0]?.main,
+          icon: data?.weather?.[0]?.icon,
+        });
+      } catch (error) {
+        console.error("Error fetching weather:", error);
+      } finally {
+        setIsWeatherLoading(false);
+      }
+    };
+
+    fetchWeather();
+  }, []);
+
   return (
-    <div
-      className="h-screen flex flex-col justify-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative overflow-hidden"
-      style={{ scrollSnapAlign: "start" }}
-    >
+    <div className="min-h-screen flex flex-col justify-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative overflow-hidden snap-start">
       {/* Background Animation */}
       {selectedBackground === "gradient" && <GradientBackground />}
       {selectedBackground === "animated" && <AnimatedBackground />}
@@ -177,7 +207,7 @@ export default function HeroSection({ isLoaded }) {
               animate={isLoaded ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
               transition={{ delay: 1.0, duration: 0.8, ease: "easeOut" }}
             >
-              {/* Location Card (Top) */}
+              {/* Location Card (Top) - now includes live weather */}
               <motion.div
                 className="bg-white/5 backdrop-blur-sm rounded-2xl p-4 sm:p-5 md:p-6 border border-white/10"
                 initial={{ opacity: 0, y: 20 }}
@@ -186,18 +216,64 @@ export default function HeroSection({ isLoaded }) {
                 }
                 transition={{ delay: 1.2, duration: 0.6, ease: "easeOut" }}
               >
-                <div className="flex items-center mb-4">
-                  <div className="w-3 h-3 bg-orange-500 rounded-full mr-3"></div>
-                  <h3 className="text-sm font-medium text-gray-300 uppercase tracking-wider">
-                    Location
-                  </h3>
+                <div className="flex items-center justify-between mb-4 gap-3">
+                  <div className="flex items-center">
+                    <div className="w-3 h-3 bg-orange-500 rounded-full mr-3" />
+                    <div className="flex flex-col">
+                      <span className="text-[11px] sm:text-xs font-medium uppercase tracking-[0.18em] text-gray-400">
+                        Currently in
+                      </span>
+                      <span
+                        className="text-sm sm:text-base md:text-lg font-semibold"
+                        style={{ color: "var(--text-primary)" }}
+                      >
+                        {weather?.name && weather?.country
+                          ? `${weather.name}, ${weather.country}`
+                          : "Dublin, IE"}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Weather summary */}
+                  <div className="flex items-center gap-2">
+                    {!isWeatherLoading && weather?.icon ? (
+                      <img
+                        src={`https://openweathermap.org/img/wn/${weather.icon}@2x.png`}
+                        alt={weather.description || "Weather icon"}
+                        className="w-8 h-8 sm:w-9 sm:h-9"
+                      />
+                    ) : (
+                      <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full border border-white/20 flex items-center justify-center text-[10px] text-gray-400">
+                        ...
+                      </div>
+                    )}
+                    <div className="text-right">
+                      <div
+                        className="text-xl sm:text-2xl md:text-3xl font-semibold leading-none"
+                        style={{ color: "var(--text-primary)" }}
+                      >
+                        {!isWeatherLoading && weather?.temp
+                          ? `${weather.temp}°C`
+                          : "--°C"}
+                      </div>
+                      <div
+                        className="text-[11px] sm:text-xs capitalize mt-1"
+                        style={{ color: "var(--text-muted)" }}
+                      >
+                        {!isWeatherLoading && weather?.description
+                          ? weather.description
+                          : "Loading weather"}
+                      </div>
+                    </div>
+                  </div>
                 </div>
+
                 <p
-                  className="text-sm sm:text-base md:text-lg lg:text-lg xl:text-xl leading-relaxed font-normal text-left"
+                  className="text-[11px] sm:text-xs md:text-sm leading-relaxed font-normal text-left mt-1"
                   style={{ color: "var(--text-secondary)" }}
                 >
-                  Based in Dublin. Currently pursuing MSc in Creative Digital
-                  Media and UX in TUD.
+                  MSc Creative Digital Media & UX at TUD · Building thoughtful
+                  interfaces from Dublin.
                 </p>
               </motion.div>
 
@@ -210,19 +286,56 @@ export default function HeroSection({ isLoaded }) {
                 }
                 transition={{ delay: 1.4, duration: 0.6, ease: "easeOut" }}
               >
-                <div className="flex items-center mb-4">
-                  <div className="w-3 h-3 bg-blue-500 rounded-full mr-3"></div>
-                  <h3 className="text-sm font-medium text-gray-300 uppercase tracking-wider">
-                    Experience
-                  </h3>
+                <div className="flex items-center justify-between mb-4 gap-3">
+                  <div className="flex items-center">
+                    <div className="w-3 h-3 bg-blue-500 rounded-full mr-3" />
+                    <div className="flex flex-col">
+                      <span className="text-[11px] sm:text-xs font-medium uppercase tracking-[0.18em] text-gray-400">
+                        Experience
+                      </span>
+                      <span
+                        className="text-sm sm:text-base md:text-lg font-semibold"
+                        style={{ color: "var(--text-primary)" }}
+                      >
+                        3+ years shipping for web & mobile
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="text-right">
+                    <div
+                      className="text-xl sm:text-2xl md:text-3xl font-semibold leading-none"
+                      style={{ color: "var(--text-primary)" }}
+                    >
+                      3+
+                    </div>
+                    <div
+                      className="text-[11px] sm:text-xs mt-1"
+                      style={{ color: "var(--text-muted)" }}
+                    >
+                      years building interfaces
+                    </div>
+                  </div>
                 </div>
+
+                <div className="flex flex-wrap gap-2 mt-1">
+                  {["Frontend", "Android", "UX"].map((label) => (
+                    <span
+                      key={label}
+                      className="px-2.5 py-1 rounded-full text-[11px] sm:text-xs font-medium bg-white/5 border border-white/10"
+                      style={{ color: "var(--text-secondary)" }}
+                    >
+                      {label}
+                    </span>
+                  ))}
+                </div>
+
                 <p
-                  className="text-sm sm:text-base md:text-lg lg:text-lg xl:text-xl leading-relaxed font-normal text-left"
+                  className="text-[11px] sm:text-xs md:text-sm leading-relaxed font-normal text-left mt-3"
                   style={{ color: "var(--text-secondary)" }}
                 >
-                  Over 3 years of experience in frontend development,
-                  specializing in React.js, modern web technologies, and
-                  creating responsive user interfaces.
+                  From Experion to freelance work in Kochi & Dublin, focusing on
+                  thoughtful product experiences.
                 </p>
               </motion.div>
             </motion.div>

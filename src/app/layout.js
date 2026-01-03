@@ -53,7 +53,7 @@ export default function RootLayout({ children }) {
         <ThemeProvider>
           <LayoutProvider>
             <GlobalGhostMouseBackground />
-            {children}
+        {children}
           </LayoutProvider>
         </ThemeProvider>
       </body>
