@@ -64,16 +64,16 @@ export default function ContactSection({ isLoaded }) {
   };
 
   return (
-    <section className="min-h-screen flex items-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 snap-start">
-      <div className="mx-auto" style={{ maxWidth }}>
+    <section className="min-h-screen flex items-start md:items-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 snap-start pt-24 md:pt-28 pb-12">
+      <div className="mx-auto w-full" style={{ maxWidth }}>
         <motion.div
-          className="flex flex-col lg:flex-row gap-12 lg:gap-16"
+          className="flex flex-col lg:flex-row gap-8 md:gap-12 lg:gap-16 py-8 md:py-12"
           initial={{ opacity: 0, y: 30 }}
           animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ delay: 2.0, duration: 0.8, ease: "easeOut" }}
         >
           {/* Left Side - Title and Contact Info */}
-          <div className="lg:w-1/2 flex flex-col justify-center">
+          <div className="lg:w-1/2 w-full flex flex-col justify-center">
             <motion.h2
               className="text-6xl lg:text-7xl xl:text-8xl font-black leading-tight tracking-tight mb-8"
               style={{ color: "var(--text-primary)" }}
@@ -138,7 +138,7 @@ export default function ContactSection({ isLoaded }) {
           </div>
 
           {/* Right Side - Contact Form */}
-          <div className="lg:w-1/2">
+          <div className="lg:w-1/2 w-full">
             <motion.form
               onSubmit={handleSubmit}
               className="space-y-6"
@@ -147,7 +147,7 @@ export default function ContactSection({ isLoaded }) {
               transition={{ delay: 2.6, duration: 0.6, ease: "easeOut" }}
             >
               {/* Name Field */}
-              <div>
+              <div className="relative z-10">
                 <label
                   htmlFor="name"
                   className="block text-sm font-medium mb-2"
@@ -162,7 +162,7 @@ export default function ContactSection({ isLoaded }) {
                   value={formData.name}
                   onChange={handleInputChange}
                   required
-                  className="w-full px-4 py-3 rounded-lg border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-opacity-50"
+                  className="w-full px-4 py-3 rounded-lg border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-opacity-50 relative z-10"
                   style={{
                     backgroundColor: "var(--bg-secondary)",
                     borderColor: "var(--border-primary)",
