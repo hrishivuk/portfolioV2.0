@@ -52,13 +52,19 @@ export default function HeroSection({ isLoaded }) {
 
         const data = await res.json();
 
-        setWeather({
-          name: data?.name,
-          country: data?.sys?.country,
-          temp: Math.round(data?.main?.temp),
-          description: data?.weather?.[0]?.main,
-          icon: data?.weather?.[0]?.icon,
-        });
+        // Only set weather if it's not a fallback
+        if (!data?._fallback) {
+          setWeather({
+            name: data?.name,
+            country: data?.sys?.country,
+            temp: Math.round(data?.main?.temp),
+            description: data?.weather?.[0]?.main,
+            icon: data?.weather?.[0]?.icon,
+          });
+        } else {
+          // If fallback, set weather to null so it doesn't display
+          setWeather(null);
+        }
       } catch (error) {
         if (process.env.NODE_ENV === "development") {
           console.error("Error fetching weather:", error);
@@ -142,7 +148,7 @@ export default function HeroSection({ isLoaded }) {
                 transition={{ delay: 0.8, duration: 0.6, ease: "easeOut" }}
               >
                 <a
-                  href="https://linkedin.com/in/hrishikesh-varma"
+                  href="https://www.linkedin.com/in/hrishivuk/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 hover:bg-white/20 transition-all duration-200 group focus:outline-none focus:ring-2 focus:ring-white/50"
@@ -157,7 +163,7 @@ export default function HeroSection({ isLoaded }) {
                   </svg>
                 </a>
                 <a
-                  href="https://twitter.com/hrishikesh"
+                  href="https://twitter.com/hrishikesh49657"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 hover:bg-white/20 transition-all duration-200 group focus:outline-none focus:ring-2 focus:ring-white/50"
@@ -172,7 +178,7 @@ export default function HeroSection({ isLoaded }) {
                   </svg>
                 </a>
                 <a
-                  href="https://github.com/hrishikesh-varma"
+                  href="https://github.com/hrishivuk"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 hover:bg-white/20 transition-all duration-200 group focus:outline-none focus:ring-2 focus:ring-white/50"
@@ -187,8 +193,9 @@ export default function HeroSection({ isLoaded }) {
                   </svg>
                 </a>
                 <a
-                  href="mailto:hrishikesh@example.com"
+                  href="mailto:officialhrishivuk@gmail.com"
                   className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 hover:bg-white/20 transition-all duration-200 group"
+                  aria-label="Send email"
                 >
                   <svg
                     className="w-4 h-4 sm:w-5 sm:h-5"
@@ -287,18 +294,18 @@ export default function HeroSection({ isLoaded }) {
                 }
                 transition={{ delay: 1.4, duration: 0.6, ease: "easeOut" }}
               >
-                <div className="flex items-center justify-between mb-4 gap-3">
-                  <div className="flex items-center">
-                    <div className="w-3 h-3 bg-blue-500 rounded-full mr-3" />
+                <div className="flex items-start justify-between mb-4 gap-3">
+                  <div className="flex items-start">
+                    <div className="w-3 h-3 bg-blue-500 rounded-full mr-3 flex-shrink-0 mt-1" />
                     <div className="flex flex-col">
                       <span className="text-[11px] sm:text-xs font-medium uppercase tracking-[0.18em] text-gray-400">
-                        Experience
+                        Experience in
                       </span>
                       <span
                         className="text-sm sm:text-base md:text-lg font-semibold"
                         style={{ color: "var(--text-primary)" }}
                       >
-                        3+ years shipping for web & mobile
+                        Building web apps
                       </span>
                     </div>
                   </div>
@@ -308,19 +315,19 @@ export default function HeroSection({ isLoaded }) {
                       className="text-xl sm:text-2xl md:text-3xl font-semibold leading-none"
                       style={{ color: "var(--text-primary)" }}
                     >
-                      3+
+                      2+
                     </div>
                     <div
                       className="text-[11px] sm:text-xs mt-1"
                       style={{ color: "var(--text-muted)" }}
                     >
-                      years building interfaces
+                      years
                     </div>
                   </div>
                 </div>
 
                 <div className="flex flex-wrap gap-2 mt-1">
-                  {["Frontend", "Android", "UX"].map((label) => (
+                  {["React", "Next.js", "Figma"].map((label) => (
                     <span
                       key={label}
                       className="px-2.5 py-1 rounded-full text-[11px] sm:text-xs font-medium bg-white/5 border border-white/10"
@@ -335,8 +342,8 @@ export default function HeroSection({ isLoaded }) {
                   className="text-[11px] sm:text-xs md:text-sm leading-relaxed font-normal text-left mt-3"
                   style={{ color: "var(--text-secondary)" }}
                 >
-                  From Experion to freelance work in Kochi & Dublin, focusing on
-                  thoughtful product experiences.
+                  From startups to established companies, building responsive
+                  web applications that users love.
                 </p>
               </motion.div>
             </motion.div>

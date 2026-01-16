@@ -1,7 +1,7 @@
 import { projects } from "../data/projects";
 
 export default async function sitemap() {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://hrishikeshvarma.dev";
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://hrishivuk.com";
 
   // Static routes
   const routes = [

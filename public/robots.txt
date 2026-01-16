@@ -3,6 +3,6 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://hrishikeshvarma.dev/sitemap.xml
+Sitemap: https://hrishivuk.com/sitemap.xml
 
 

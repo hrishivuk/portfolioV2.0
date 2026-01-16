@@ -21,7 +21,7 @@ const dynaPuff = DynaPuff({
 });
 
 // Get site URL from environment variable or use default
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://hrishikeshvarma.dev";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://hrishivuk.com";
 
 export const metadata = {
   title: "Hrishikesh Varma - Frontend Developer & UX Designer",
