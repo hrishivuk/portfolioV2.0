@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react";
 import { useTheme } from "./contexts/ThemeContext";
 import Navbar from "./components/navbar";
-import ScrollIndicator from "./components/ScrollIndicator";
 import HeroSection from "./components/HeroSection";
 import AboutSection from "./components/AboutSection";
 import FeaturedWorks from "./components/FeaturedWorks";
@@ -11,7 +10,6 @@ import ContactSection from "./components/ContactSection";
 export default function Home() {
   const { currentTheme, setCurrentTheme, themes, showThemeArrow } = useTheme();
   const [isLoaded, setIsLoaded] = useState(false);
-  const [showScrollIndicator, setShowScrollIndicator] = useState(true);
 
   // Initialize loading state
   useEffect(() => {
@@ -22,40 +20,22 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, []);
 
-  // Handle scroll detection for scroll indicator
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const heroHeight = window.innerHeight;
-      // Show scroll indicator only on the first section (hero)
-      setShowScrollIndicator(scrollY < heroHeight * 0.5);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   return (
     <main
-      className="h-screen relative overflow-hidden snap-y snap-mandatory overflow-y-scroll"
+      className="relative overflow-x-hidden"
       style={{
         backgroundColor:
           currentTheme === "ghostMouse" ? "transparent" : "var(--bg-primary)",
       }}
     >
       {/* Content */}
-      <div className="relative z-10">
+      <div className="relative z-10 w-full overflow-x-hidden">
         <Navbar
           currentTheme={currentTheme}
           setCurrentTheme={setCurrentTheme}
           themes={themes}
           showThemeArrow={showThemeArrow}
-        />
-
-        {/* Scroll Indicator */}
-        <ScrollIndicator
-          showScrollIndicator={showScrollIndicator}
-          isLoaded={isLoaded}
         />
 
         {/* Hero Section */}

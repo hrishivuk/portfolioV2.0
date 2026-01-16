@@ -122,7 +122,7 @@ export default function TimelineSection() {
             My Journey
           </h2>
           <p
-            className="text-xl max-w-3xl mx-auto"
+            className="text-base sm:text-lg md:text-xl max-w-3xl mx-auto"
             style={{ color: "var(--text-secondary)" }}
           >
             A timeline of my education and professional development
@@ -209,7 +209,7 @@ export default function TimelineSection() {
                         }`}
                       >
                         <span
-                          className={`text-sm font-medium px-3 py-1 rounded-full ${
+                          className={`text-[10px] sm:text-xs md:text-sm font-medium px-2 sm:px-2.5 md:px-3 py-0.5 sm:py-1 rounded-full ${
                             item.type === "Education"
                               ? "bg-blue-500/20 text-blue-400"
                               : "bg-green-500/20 text-green-400"
@@ -218,7 +218,7 @@ export default function TimelineSection() {
                           {item.type}
                         </span>
                         <h3
-                          className={`text-2xl font-bold mt-3 mb-2 ${
+                          className={`text-lg sm:text-xl md:text-2xl font-bold mt-3 mb-2 ${
                             isActive ? "text-white" : "text-gray-300"
                           }`}
                           style={{
@@ -230,7 +230,7 @@ export default function TimelineSection() {
                           {item.company}
                         </h3>
                         <p
-                          className="text-lg font-medium mb-2"
+                          className="text-sm sm:text-base md:text-lg font-medium mb-2"
                           style={{
                             color: isActive
                               ? "var(--accent-primary)"
@@ -240,7 +240,7 @@ export default function TimelineSection() {
                           {item.role}
                         </p>
                         <p
-                          className="text-sm leading-relaxed"
+                          className="text-xs sm:text-sm leading-relaxed"
                           style={{ color: "var(--text-secondary)" }}
                         >
                           {item.description}
@@ -283,7 +283,7 @@ export default function TimelineSection() {
                     }`}
                   >
                     <motion.div
-                      className="text-3xl font-bold"
+                      className="text-2xl sm:text-3xl font-bold"
                       style={{
                         color: isActive
                           ? "var(--text-primary)"
@@ -303,7 +303,7 @@ export default function TimelineSection() {
                       {item.date}
                     </motion.div>
                     <motion.div
-                      className="text-sm font-medium mt-2"
+                      className="text-xs sm:text-sm font-medium mt-2"
                       style={{
                         color: isActive
                           ? "var(--accent-primary)"

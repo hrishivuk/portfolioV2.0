@@ -64,10 +64,10 @@ export default function ContactSection({ isLoaded }) {
   };
 
   return (
-    <section className="min-h-screen flex items-start md:items-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 snap-start pt-24 md:pt-28 pb-12">
+    <section className="min-h-screen flex items-start md:items-center px-3 sm:px-4 md:px-6 lg:px-8 xl:px-12 pt-20 sm:pt-24 md:pt-28 pb-8 sm:pb-12">
       <div className="mx-auto w-full" style={{ maxWidth }}>
         <motion.div
-          className="flex flex-col lg:flex-row gap-8 md:gap-12 lg:gap-16 py-8 md:py-12"
+          className="flex flex-col lg:flex-row gap-6 sm:gap-8 md:gap-12 lg:gap-16 py-6 sm:py-8 md:py-12"
           initial={{ opacity: 0, y: 30 }}
           animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ delay: 2.0, duration: 0.8, ease: "easeOut" }}
@@ -75,7 +75,7 @@ export default function ContactSection({ isLoaded }) {
           {/* Left Side - Title and Contact Info */}
           <div className="lg:w-1/2 w-full flex flex-col justify-center">
             <motion.h2
-              className="text-6xl lg:text-7xl xl:text-8xl font-black leading-tight tracking-tight mb-8"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black leading-tight tracking-tight mb-6 sm:mb-8"
               style={{ color: "var(--text-primary)" }}
               initial={{ opacity: 0, y: 20 }}
               animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -85,26 +85,26 @@ export default function ContactSection({ isLoaded }) {
             </motion.h2>
 
             <motion.div
-              className="space-y-6"
+              className="space-y-4 sm:space-y-5 md:space-y-6"
               initial={{ opacity: 0, y: 20 }}
               animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ delay: 2.4, duration: 0.6, ease: "easeOut" }}
             >
               <div
-                className="p-6 rounded-2xl border"
+                className="p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl border"
                 style={{
                   backgroundColor: "var(--bg-secondary)",
                   borderColor: "var(--border-primary)",
                 }}
               >
                 <h3
-                  className="text-xl font-bold mb-2"
+                  className="text-lg sm:text-xl font-bold mb-2 sm:mb-3"
                   style={{ color: "var(--text-primary)" }}
                 >
                   Let&apos;s Work Together
                 </h3>
                 <p
-                  className="text-sm lg:text-base leading-relaxed"
+                  className="text-xs sm:text-sm md:text-base leading-relaxed"
                   style={{ color: "var(--text-secondary)" }}
                 >
                   I&apos;m always interested in new opportunities and creative
@@ -114,20 +114,20 @@ export default function ContactSection({ isLoaded }) {
               </div>
 
               <div
-                className="p-6 rounded-2xl border"
+                className="p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl border"
                 style={{
                   backgroundColor: "var(--bg-secondary)",
                   borderColor: "var(--border-primary)",
                 }}
               >
                 <h3
-                  className="text-xl font-bold mb-2"
+                  className="text-lg sm:text-xl font-bold mb-2 sm:mb-3"
                   style={{ color: "var(--text-primary)" }}
                 >
                   Quick Response
                 </h3>
                 <p
-                  className="text-sm lg:text-base leading-relaxed"
+                  className="text-xs sm:text-sm md:text-base leading-relaxed"
                   style={{ color: "var(--text-secondary)" }}
                 >
                   I typically respond within 24 hours. For urgent inquiries,
@@ -141,7 +141,7 @@ export default function ContactSection({ isLoaded }) {
           <div className="lg:w-1/2 w-full">
             <motion.form
               onSubmit={handleSubmit}
-              className="space-y-6"
+              className="space-y-4 sm:space-y-5 md:space-y-6"
               initial={{ opacity: 0, y: 20 }}
               animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ delay: 2.6, duration: 0.6, ease: "easeOut" }}
@@ -150,7 +150,7 @@ export default function ContactSection({ isLoaded }) {
               <div className="relative z-10">
                 <label
                   htmlFor="name"
-                  className="block text-sm font-medium mb-2"
+                  className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2"
                   style={{ color: "var(--text-primary)" }}
                 >
                   Name *
@@ -162,7 +162,7 @@ export default function ContactSection({ isLoaded }) {
                   value={formData.name}
                   onChange={handleInputChange}
                   required
-                  className="w-full px-4 py-3 rounded-lg border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-opacity-50 relative z-10"
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-opacity-50 relative z-10 touch-manipulation"
                   style={{
                     backgroundColor: "var(--bg-secondary)",
                     borderColor: "var(--border-primary)",
@@ -177,7 +177,7 @@ export default function ContactSection({ isLoaded }) {
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium mb-2"
+                  className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2"
                   style={{ color: "var(--text-primary)" }}
                 >
                   Email *
@@ -189,7 +189,7 @@ export default function ContactSection({ isLoaded }) {
                   value={formData.email}
                   onChange={handleInputChange}
                   required
-                  className="w-full px-4 py-3 rounded-lg border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-opacity-50"
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-opacity-50 touch-manipulation"
                   style={{
                     backgroundColor: "var(--bg-secondary)",
                     borderColor: "var(--border-primary)",
@@ -204,7 +204,7 @@ export default function ContactSection({ isLoaded }) {
               <div>
                 <label
                   htmlFor="subject"
-                  className="block text-sm font-medium mb-2"
+                  className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2"
                   style={{ color: "var(--text-primary)" }}
                 >
                   Subject *
@@ -216,7 +216,7 @@ export default function ContactSection({ isLoaded }) {
                   value={formData.subject}
                   onChange={handleInputChange}
                   required
-                  className="w-full px-4 py-3 rounded-lg border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-opacity-50"
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-opacity-50 touch-manipulation"
                   style={{
                     backgroundColor: "var(--bg-secondary)",
                     borderColor: "var(--border-primary)",
@@ -231,7 +231,7 @@ export default function ContactSection({ isLoaded }) {
               <div>
                 <label
                   htmlFor="message"
-                  className="block text-sm font-medium mb-2"
+                  className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2"
                   style={{ color: "var(--text-primary)" }}
                 >
                   Message *
@@ -242,8 +242,8 @@ export default function ContactSection({ isLoaded }) {
                   value={formData.message}
                   onChange={handleInputChange}
                   required
-                  rows={6}
-                  className="w-full px-4 py-3 rounded-lg border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-opacity-50 resize-vertical"
+                  rows={5}
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-opacity-50 resize-vertical touch-manipulation"
                   style={{
                     backgroundColor: "var(--bg-secondary)",
                     borderColor: "var(--border-primary)",
@@ -266,7 +266,7 @@ export default function ContactSection({ isLoaded }) {
                     color: "#4ade80",
                   }}
                 >
-                  <p className="text-sm font-medium">
+                  <p className="text-xs sm:text-sm font-medium">
                     ✓ Message sent successfully! I&apos;ll get back to you soon.
                   </p>
                 </motion.div>
@@ -283,7 +283,7 @@ export default function ContactSection({ isLoaded }) {
                     color: "#f87171",
                   }}
                 >
-                  <p className="text-sm font-medium">
+                  <p className="text-xs sm:text-sm font-medium">
                     ✗ Something went wrong. Please try again or email me directly.
                   </p>
                 </motion.div>
@@ -293,14 +293,13 @@ export default function ContactSection({ isLoaded }) {
               <motion.button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full px-6 py-4 rounded-lg border transition-all duration-300 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full px-4 sm:px-5 md:px-6 py-3 sm:py-3.5 md:py-4 rounded-lg border transition-all duration-300 text-sm sm:text-base font-medium disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation min-h-[44px]"
                 style={{
                   backgroundColor: "var(--bg-secondary)",
                   borderColor: "var(--border-primary)",
                   color: "var(--text-primary)",
                 }}
-                whileHover={!isSubmitting ? { scale: 1.02 } : {}}
-                whileTap={!isSubmitting ? { scale: 0.98 } : {}}
+                whileTap={!isSubmitting ? { scale: 0.95 } : {}}
               >
                 {isSubmitting ? (
                   <span className="flex items-center justify-center gap-2">

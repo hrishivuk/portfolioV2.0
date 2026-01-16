@@ -36,11 +36,11 @@ export default function Navbar({
   return (
     <>
       <nav
-        className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 flex justify-between items-center bg-neutral-900 text-lg px-6 md:px-8 py-4 rounded-[36px] w-[calc(100%-2rem)] shadow-lg backdrop-blur-sm"
+        className="fixed top-2 sm:top-4 left-1/2 transform -translate-x-1/2 z-50 flex justify-between items-center bg-neutral-900 text-sm sm:text-base md:text-lg px-3 sm:px-4 md:px-6 lg:px-8 py-2 sm:py-3 md:py-4 rounded-2xl sm:rounded-[28px] md:rounded-[36px] w-[calc(100%-1rem)] sm:w-[calc(100%-1.5rem)] md:w-[calc(100%-2rem)] shadow-lg backdrop-blur-sm"
         style={{ maxWidth }}
       >
         {/* Brand */}
-        <Link href="/" className="font-bold text-white">
+        <Link href="/" className="font-bold text-white text-sm sm:text-base md:text-lg">
           hrishi.
         </Link>
 
@@ -185,10 +185,11 @@ export default function Navbar({
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-white p-2"
+          className="md:hidden text-white p-2 -mr-1 touch-manipulation"
           onClick={() => setShowMobileMenu(!showMobileMenu)}
+          aria-label="Toggle mobile menu"
         >
-          <div className="w-6 h-6 flex flex-col justify-center items-center">
+          <div className="w-5 h-5 sm:w-6 sm:h-6 flex flex-col justify-center items-center">
             <div
               className={`w-5 h-0.5 bg-white transition-all duration-300 ${
                 showMobileMenu ? "rotate-45 translate-y-1" : "-translate-y-1"
@@ -245,7 +246,7 @@ export default function Navbar({
             >
               {/* Top Navbar - Exact same as main navbar */}
               <div
-                className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 flex justify-between items-center bg-neutral-900 text-lg px-6 py-4 rounded-[36px] w-[calc(100%-2rem)] shadow-lg backdrop-blur-sm"
+                className="fixed top-2 sm:top-4 left-1/2 transform -translate-x-1/2 z-50 flex justify-between items-center bg-neutral-900 text-sm sm:text-base md:text-lg px-3 sm:px-4 md:px-6 lg:px-8 py-2 sm:py-3 md:py-4 rounded-2xl sm:rounded-[28px] md:rounded-[36px] w-[calc(100%-1rem)] sm:w-[calc(100%-1.5rem)] md:w-[calc(100%-2rem)] shadow-lg backdrop-blur-sm"
                 style={{ maxWidth }}
               >
                 {/* Brand */}
@@ -270,8 +271,8 @@ export default function Navbar({
       </div>
 
               {/* Navigation Links */}
-              <div className="flex-1 flex flex-col justify-center px-8 pt-20">
-                <nav className="space-y-6">
+              <div className="flex-1 flex flex-col justify-center px-4 sm:px-6 md:px-8 pt-16 sm:pt-20">
+                <nav className="space-y-3 sm:space-y-4 md:space-y-6">
         <motion.div
                     initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -280,20 +281,20 @@ export default function Navbar({
             <Link
               href="/"
                       onClick={() => setShowMobileMenu(false)}
-                      className="group flex items-center space-x-6 py-3 px-4 rounded-xl transition-all duration-300 hover:scale-105"
+                      className="group flex items-center space-x-3 sm:space-x-4 md:space-x-6 py-3 sm:py-4 px-3 sm:px-4 rounded-lg sm:rounded-xl transition-all duration-300 active:scale-95 touch-manipulation min-h-[44px]"
                       style={{
                         backgroundColor: "var(--bg-secondary)",
                         border: "1px solid var(--border-primary)",
                       }}
                     >
                       <span
-                        className="text-2xl font-bold"
+                        className="text-lg sm:text-xl md:text-2xl font-bold"
                         style={{ color: "var(--text-secondary)" }}
                       >
                         01
                       </span>
                       <span
-                        className="text-3xl font-bold transition-colors duration-300"
+                        className="text-xl sm:text-2xl md:text-3xl font-bold transition-colors duration-300"
                         style={{ color: "var(--text-primary)" }}
                       >
                         HOME
@@ -308,20 +309,20 @@ export default function Navbar({
             <Link
               href="/works"
                       onClick={() => setShowMobileMenu(false)}
-                      className="group flex items-center space-x-6 py-3 px-4 rounded-xl transition-all duration-300 hover:scale-105"
+                      className="group flex items-center space-x-3 sm:space-x-4 md:space-x-6 py-3 sm:py-4 px-3 sm:px-4 rounded-lg sm:rounded-xl transition-all duration-300 active:scale-95 touch-manipulation min-h-[44px]"
                       style={{
                         backgroundColor: "var(--bg-secondary)",
                         border: "1px solid var(--border-primary)",
                       }}
                     >
                       <span
-                        className="text-2xl font-bold"
+                        className="text-lg sm:text-xl md:text-2xl font-bold"
                         style={{ color: "var(--text-secondary)" }}
                       >
                         02
                       </span>
                       <span
-                        className="text-3xl font-bold transition-colors duration-300"
+                        className="text-xl sm:text-2xl md:text-3xl font-bold transition-colors duration-300"
                         style={{ color: "var(--text-primary)" }}
                       >
                         WORKS
@@ -336,20 +337,20 @@ export default function Navbar({
             <Link
               href="/aboutme"
                       onClick={() => setShowMobileMenu(false)}
-                      className="group flex items-center space-x-6 py-3 px-4 rounded-xl transition-all duration-300 hover:scale-105"
+                      className="group flex items-center space-x-3 sm:space-x-4 md:space-x-6 py-3 sm:py-4 px-3 sm:px-4 rounded-lg sm:rounded-xl transition-all duration-300 active:scale-95 touch-manipulation min-h-[44px]"
                       style={{
                         backgroundColor: "var(--bg-secondary)",
                         border: "1px solid var(--border-primary)",
                       }}
                     >
                       <span
-                        className="text-2xl font-bold"
+                        className="text-lg sm:text-xl md:text-2xl font-bold"
                         style={{ color: "var(--text-secondary)" }}
                       >
                         03
                       </span>
                       <span
-                        className="text-3xl font-bold transition-colors duration-300"
+                        className="text-xl sm:text-2xl md:text-3xl font-bold transition-colors duration-300"
                         style={{ color: "var(--text-primary)" }}
                       >
                         ABOUT
@@ -364,20 +365,20 @@ export default function Navbar({
             <Link
               href="/blog"
                       onClick={() => setShowMobileMenu(false)}
-                      className="group flex items-center space-x-6 py-3 px-4 rounded-xl transition-all duration-300 hover:scale-105"
+                      className="group flex items-center space-x-3 sm:space-x-4 md:space-x-6 py-3 sm:py-4 px-3 sm:px-4 rounded-lg sm:rounded-xl transition-all duration-300 active:scale-95 touch-manipulation min-h-[44px]"
                       style={{
                         backgroundColor: "var(--bg-secondary)",
                         border: "1px solid var(--border-primary)",
                       }}
                     >
                       <span
-                        className="text-2xl font-bold"
+                        className="text-lg sm:text-xl md:text-2xl font-bold"
                         style={{ color: "var(--text-secondary)" }}
                       >
                         04
                       </span>
                       <span
-                        className="text-3xl font-bold transition-colors duration-300"
+                        className="text-xl sm:text-2xl md:text-3xl font-bold transition-colors duration-300"
                         style={{ color: "var(--text-primary)" }}
                       >
                         BLOG
@@ -389,35 +390,35 @@ export default function Navbar({
 
               {/* Theme Switcher */}
               <motion.div
-                className="px-8 py-6"
+                className="px-4 sm:px-6 md:px-8 py-4 sm:py-6"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6, duration: 0.4, ease: "easeOut" }}
               >
                 <div
-                  className="mb-6 p-4 rounded-xl"
+                  className="mb-4 sm:mb-6 p-3 sm:p-4 rounded-lg sm:rounded-xl"
                   style={{
                     backgroundColor: "var(--bg-secondary)",
                     border: "1px solid var(--border-primary)",
                   }}
                 >
                   <h3
-                    className="text-lg font-semibold mb-4 text-center"
+                    className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-center"
                     style={{ color: "var(--text-primary)" }}
                   >
                     Choose Theme
                   </h3>
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-2 gap-2 sm:gap-3">
                     {Object.entries(themes).map(([key, theme]) => (
                       <button
                         key={key}
                         onClick={() => {
                           setCurrentTheme(key);
                         }}
-                        className={`p-3 rounded-lg border-2 transition-all duration-300 hover:scale-105 ${
+                        className={`p-2 sm:p-3 rounded-lg border-2 transition-all duration-300 active:scale-95 touch-manipulation min-h-[44px] ${
                           currentTheme === key
                             ? "border-current"
-                            : "border-transparent hover:border-current"
+                            : "border-transparent active:border-current"
                         }`}
                         style={{
                           borderColor:

@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { useLayout } from "../contexts/LayoutContext";
 import { useTheme } from "../contexts/ThemeContext";
 import Navbar from "../components/navbar";
-import ScrollIndicator from "../components/ScrollIndicator";
 import Link from "next/link";
 import { projects } from "../../data/projects";
 
@@ -13,7 +12,6 @@ export default function WorksPage() {
   const { currentTheme, setCurrentTheme, themes, showThemeArrow } = useTheme();
   const [isLoaded, setIsLoaded] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const [showScrollIndicator, setShowScrollIndicator] = useState(true);
   const isGhostTheme = currentTheme === "ghostMouse";
 
   // Initialize loading state
@@ -25,17 +23,6 @@ export default function WorksPage() {
     return () => clearTimeout(timer);
   }, []);
 
-  // Show scroll indicator only near the top hero section
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const heroHeight = window.innerHeight;
-      setShowScrollIndicator(scrollY < heroHeight * 0.5);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   // Define category order
   const categoryOrder = [
@@ -61,7 +48,7 @@ export default function WorksPage() {
 
   return (
     <main
-      className="h-screen relative overflow-hidden snap-y snap-mandatory overflow-y-scroll"
+      className="relative overflow-x-hidden"
       style={{
         backgroundColor:
           currentTheme === "ghostMouse" ? "transparent" : "var(--bg-primary)",
@@ -77,14 +64,10 @@ export default function WorksPage() {
           showThemeArrow={showThemeArrow}
         />
 
-        <ScrollIndicator
-          showScrollIndicator={showScrollIndicator}
-          isLoaded={isLoaded}
-        />
 
         {/* Hero Section */}
         <section
-          className="min-h-screen flex items-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative snap-start"
+          className="min-h-screen flex items-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative"
           style={{
             backgroundColor:
               currentTheme === "ghostMouse"
@@ -100,7 +83,7 @@ export default function WorksPage() {
               transition={{ duration: 0.8, ease: "easeOut" }}
             >
               <motion.h1
-                className="text-6xl lg:text-7xl xl:text-8xl font-black leading-tight tracking-tight mb-8"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black leading-tight tracking-tight mb-6 sm:mb-8"
                 style={{ color: "var(--text-primary)" }}
                 initial={{ opacity: 0, y: 20 }}
                 animate={
@@ -112,7 +95,7 @@ export default function WorksPage() {
               </motion.h1>
 
               <motion.p
-                className="text-xl lg:text-2xl max-w-4xl mx-auto leading-relaxed"
+                className="text-sm sm:text-base md:text-lg lg:text-xl max-w-4xl mx-auto leading-relaxed"
                 style={{ color: "var(--text-secondary)" }}
                 initial={{ opacity: 0, y: 20 }}
                 animate={
@@ -129,7 +112,7 @@ export default function WorksPage() {
 
         {/* Projects Section */}
         <section
-          className="min-h-screen flex flex-col justify-center py-16 lg:py-24 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative snap-start"
+          className="min-h-screen flex flex-col justify-center py-16 lg:py-24 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative"
           style={{
             backgroundColor:
               currentTheme === "ghostMouse"
@@ -149,7 +132,7 @@ export default function WorksPage() {
                 <button
                   key={category}
                   onClick={() => setSelectedCategory(category)}
-                  className={`px-6 py-3 rounded-full text-sm font-medium border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 ${
+                  className={`px-4 sm:px-5 md:px-6 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-medium border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 touch-manipulation min-h-[44px] ${
                     selectedCategory === category
                       ? "scale-105"
                       : "hover:scale-105"
@@ -233,7 +216,7 @@ export default function WorksPage() {
                         <div className="flex-1 flex flex-col">
                           <div className="mb-2">
                             <span
-                              className="text-xs font-medium px-3 py-1 rounded-full border inline-block"
+                              className="text-[10px] sm:text-xs font-medium px-2 sm:px-2.5 md:px-3 py-0.5 sm:py-1 rounded-full border inline-block"
                               style={{
                                 backgroundColor: "var(--bg-primary)",
                                 borderColor: "var(--border-primary)",
@@ -245,7 +228,7 @@ export default function WorksPage() {
                           </div>
 
                           <h3
-                            className="text-lg lg:text-xl font-bold mb-2"
+                            className="text-base sm:text-lg md:text-xl font-bold mb-2"
                             style={{ color: "var(--text-primary)" }}
                           >
                             {project.title}
@@ -253,7 +236,7 @@ export default function WorksPage() {
 
                           {/* One-liner (summary) */}
                           <p
-                            className="text-sm leading-relaxed mb-3 flex-1"
+                            className="text-xs sm:text-sm leading-relaxed mb-3 flex-1"
                             style={{ color: "var(--text-secondary)" }}
                           >
                             {project.summary}

@@ -8,7 +8,6 @@ import Navbar from "../../components/navbar";
 import { useTheme } from "../../contexts/ThemeContext";
 import { useLayout } from "../../contexts/LayoutContext";
 import { projects } from "../../../data/projects";
-import ScrollIndicator from "../../components/ScrollIndicator";
 
 export default function ProjectDetailPage() {
   const params = useParams();
@@ -16,7 +15,6 @@ export default function ProjectDetailPage() {
   const { currentTheme, setCurrentTheme, themes, showThemeArrow } = useTheme();
   const { maxWidth } = useLayout();
   const [isLoaded, setIsLoaded] = useState(false);
-  const [showScrollIndicator, setShowScrollIndicator] = useState(true);
   const [showDeepDive, setShowDeepDive] = useState(false);
 
   const project = useMemo(
@@ -44,17 +42,6 @@ export default function ProjectDetailPage() {
     return () => clearTimeout(timer);
   }, []);
 
-  // Show scroll indicator only near the top hero section
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const heroHeight = window.innerHeight;
-      setShowScrollIndicator(scrollY < heroHeight * 0.5);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   if (!project) {
     return (
@@ -67,7 +54,7 @@ export default function ProjectDetailPage() {
       >
         <div className="text-center px-4">
           <p
-            className="text-xl mb-4"
+            className="text-base sm:text-lg mb-4"
             style={{ color: "var(--text-secondary)" }}
           >
             Project not found.
@@ -105,10 +92,6 @@ export default function ProjectDetailPage() {
           showThemeArrow={showThemeArrow}
         />
 
-        <ScrollIndicator
-          showScrollIndicator={showScrollIndicator}
-          isLoaded={isLoaded}
-        />
 
         {/* Hero Section - Above the fold, minimal */}
         <section
@@ -144,7 +127,7 @@ export default function ProjectDetailPage() {
                 </button>
 
                 <h1
-                  className="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight tracking-tight mb-4"
+                  className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-tight tracking-tight mb-4"
                   style={{ color: "var(--text-primary)" }}
                 >
                   {project.title}
@@ -152,7 +135,7 @@ export default function ProjectDetailPage() {
 
                 <div className="flex flex-wrap items-center gap-3 mb-4">
                   <span
-                    className="text-xs font-medium px-3 py-1 rounded-full border"
+                    className="text-[10px] sm:text-xs font-medium px-2 sm:px-2.5 md:px-3 py-0.5 sm:py-1 rounded-full border"
                     style={{
                       backgroundColor: "var(--bg-secondary)",
                       borderColor: "var(--border-primary)",
@@ -163,7 +146,7 @@ export default function ProjectDetailPage() {
                   </span>
                   {project.year && (
                     <span
-                      className="text-xs font-medium px-3 py-1 rounded-full border"
+                      className="text-[10px] sm:text-xs font-medium px-2 sm:px-2.5 md:px-3 py-0.5 sm:py-1 rounded-full border"
                       style={{
                         backgroundColor: "var(--bg-secondary)",
                         borderColor: "var(--border-primary)",
@@ -177,7 +160,7 @@ export default function ProjectDetailPage() {
 
                 {project.role && (
                   <p
-                    className="text-sm mb-4"
+                    className="text-xs sm:text-sm mb-4"
                     style={{ color: "var(--text-muted)" }}
                   >
                     {project.role}
@@ -185,7 +168,7 @@ export default function ProjectDetailPage() {
                 )}
 
                 <p
-                  className="text-base sm:text-lg leading-relaxed max-w-2xl"
+                  className="text-sm sm:text-base md:text-lg leading-relaxed max-w-2xl"
                   style={{ color: "var(--text-secondary)" }}
                 >
                   {project.summary}
@@ -241,7 +224,7 @@ export default function ProjectDetailPage() {
               transition={{ delay: 0.2, duration: 0.6, ease: "easeOut" }}
             >
               <h2
-                className="text-2xl md:text-3xl font-bold mb-6"
+                  className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 sm:mb-6"
                 style={{ color: "var(--text-primary)" }}
               >
                 What I did & why it mattered
@@ -272,7 +255,7 @@ export default function ProjectDetailPage() {
                 transition={{ delay: 0.3, duration: 0.6, ease: "easeOut" }}
               >
                 <h3
-                  className="text-xl md:text-2xl font-bold mb-4"
+                  className="text-lg sm:text-xl md:text-2xl font-bold mb-3 sm:mb-4"
                   style={{ color: "var(--text-primary)" }}
                 >
                   Onboarding
@@ -314,7 +297,7 @@ export default function ProjectDetailPage() {
                 transition={{ delay: 0.4, duration: 0.6, ease: "easeOut" }}
               >
                 <h3
-                  className="text-xl md:text-2xl font-bold mb-4"
+                  className="text-lg sm:text-xl md:text-2xl font-bold mb-3 sm:mb-4"
                   style={{ color: "var(--text-primary)" }}
                 >
                   Core flows & features
@@ -389,7 +372,7 @@ export default function ProjectDetailPage() {
                 transition={{ delay: 0.5, duration: 0.6, ease: "easeOut" }}
               >
                 <h3
-                  className="text-xl md:text-2xl font-bold mb-4"
+                  className="text-lg sm:text-xl md:text-2xl font-bold mb-3 sm:mb-4"
                   style={{ color: "var(--text-primary)" }}
                 >
                   Flows & process
@@ -431,7 +414,7 @@ export default function ProjectDetailPage() {
                 transition={{ delay: 0.6, duration: 0.6, ease: "easeOut" }}
               >
                 <h3
-                  className="text-xl md:text-2xl font-bold mb-4"
+                  className="text-lg sm:text-xl md:text-2xl font-bold mb-3 sm:mb-4"
                   style={{ color: "var(--text-primary)" }}
                 >
                   Tech & Tools

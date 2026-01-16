@@ -78,27 +78,27 @@ export default function HeroSection({ isLoaded }) {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col justify-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative overflow-hidden snap-start">
+    <div className="min-h-screen flex flex-col justify-center px-3 sm:px-4 md:px-6 lg:px-8 xl:px-12 relative overflow-hidden overflow-x-hidden">
       {/* Background Animation */}
       {selectedBackground === "ghostMouse" && (
         <GhostMouseBackground intensity="full" />
       )}
       {/* Main Content */}
-      <div className="flex-1 flex items-center justify-center py-8 sm:py-12 md:py-16 lg:py-20 pt-20 sm:pt-24 md:pt-28 lg:pt-32 relative z-10">
-        <div className="w-full mx-auto" style={{ maxWidth }}>
+      <div className="flex-1 flex items-center justify-center py-6 sm:py-8 md:py-12 lg:py-16 xl:py-20 pt-16 sm:pt-20 md:pt-24 lg:pt-28 relative z-10 w-full overflow-x-hidden">
+        <div className="w-full mx-auto max-w-full" style={{ maxWidth }}>
           {/* New Layout: Left content + Right boxes */}
           <motion.div
-            className="flex flex-col lg:flex-row gap-8 sm:gap-12 md:gap-16 lg:gap-20 xl:gap-24 h-full mx-auto"
+            className="flex flex-col lg:flex-row gap-6 sm:gap-8 md:gap-12 lg:gap-16 xl:gap-20 h-full mx-auto w-full max-w-full"
             initial={{ opacity: 0, y: 30 }}
             animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             {/* Left Side - Name and Roles */}
-            <div className="flex-1 flex flex-col justify-center">
-              <div className="mb-6 lg:mb-8">
-                <h1 className="leading-none text-left">
+            <div className="flex-1 flex flex-col justify-center w-full min-w-0 overflow-hidden">
+              <div className="mb-4 sm:mb-6 lg:mb-8 w-full min-w-0">
+                <h1 className="leading-none text-left w-full min-w-0">
                   <motion.span
-                    className="block text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-normal tracking-wide mb-1 sm:mb-2"
+                    className="block text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-normal tracking-wide mb-1 sm:mb-2 break-words"
                     style={{ color: "var(--text-secondary)" }}
                     initial={{ opacity: 0, y: 20 }}
                     animate={
@@ -109,7 +109,7 @@ export default function HeroSection({ isLoaded }) {
                     Hi! I&apos;m
                   </motion.span>
                   <motion.span
-                    className="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl 2xl:text-[12rem] font-black leading-[0.85] tracking-tight"
+                    className="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-black leading-[0.85] tracking-tight break-words overflow-wrap-anywhere"
                     style={{ color: "var(--text-primary)" }}
                     initial={{ opacity: 0, y: 30 }}
                     animate={
@@ -121,7 +121,7 @@ export default function HeroSection({ isLoaded }) {
                   </motion.span>
                 </h1>
                 <motion.h2
-                  className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold leading-tight tracking-wide text-left mt-2 sm:mt-4"
+                  className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold leading-tight tracking-wide text-left mt-2 sm:mt-3 md:mt-4 break-words overflow-wrap-anywhere"
                   style={{ color: "var(--text-secondary)" }}
                   initial={{ opacity: 0, y: 20 }}
                   animate={
@@ -140,7 +140,7 @@ export default function HeroSection({ isLoaded }) {
 
               {/* Social Media Bar */}
               <motion.div
-                className="mt-4 sm:mt-6 md:mt-8 flex items-center justify-start sm:justify-center lg:justify-start space-x-3 sm:space-x-4 md:space-x-6"
+                className="mt-3 sm:mt-4 md:mt-6 lg:mt-8 flex items-center justify-start sm:justify-center lg:justify-start space-x-2 sm:space-x-3 md:space-x-4 lg:space-x-6"
                 initial={{ opacity: 0, y: 20 }}
                 animate={
                   isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
@@ -151,11 +151,11 @@ export default function HeroSection({ isLoaded }) {
                   href="https://www.linkedin.com/in/hrishivuk/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 hover:bg-white/20 transition-all duration-200 group focus:outline-none focus:ring-2 focus:ring-white/50"
+                  className="w-9 h-9 sm:w-10 sm:h-10 md:w-11 md:h-11 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 active:bg-white/20 transition-all duration-200 group focus:outline-none focus:ring-2 focus:ring-white/50 touch-manipulation min-w-[44px] min-h-[44px]"
                   aria-label="Visit LinkedIn profile"
                 >
                   <svg
-                    className="w-4 h-4 sm:w-5 sm:h-5"
+                    className="w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5"
                     fill="currentColor"
                     viewBox="0 0 24 24"
                   >
@@ -210,7 +210,7 @@ export default function HeroSection({ isLoaded }) {
 
             {/* Right Side - Cards Stack */}
             <motion.div
-              className="w-full sm:w-80 lg:w-96 flex flex-col gap-4 sm:gap-6 lg:gap-8 mt-8 lg:mt-0"
+              className="w-full sm:w-80 lg:w-96 flex flex-col gap-3 sm:gap-4 md:gap-6 lg:gap-8 mt-6 sm:mt-8 lg:mt-0 min-w-0 max-w-full"
               initial={{ opacity: 0, x: 30 }}
               animate={isLoaded ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
               transition={{ delay: 1.0, duration: 0.8, ease: "easeOut" }}
@@ -224,15 +224,15 @@ export default function HeroSection({ isLoaded }) {
                 }
                 transition={{ delay: 1.2, duration: 0.6, ease: "easeOut" }}
               >
-                <div className="flex items-center justify-between mb-4 gap-3">
+                <div className="flex items-center justify-between mb-3 sm:mb-4 gap-2 sm:gap-3">
                   <div className="flex items-center">
-                    <div className="w-3 h-3 bg-orange-500 rounded-full mr-3" />
-                    <div className="flex flex-col">
-                      <span className="text-[11px] sm:text-xs font-medium uppercase tracking-[0.18em] text-gray-400">
+                    <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-orange-500 rounded-full mr-2 sm:mr-3 flex-shrink-0" />
+                    <div className="flex flex-col min-w-0">
+                      <span className="text-[10px] sm:text-[11px] md:text-xs font-medium uppercase tracking-[0.15em] sm:tracking-[0.18em] text-gray-400">
                         Currently in
                       </span>
                       <span
-                        className="text-sm sm:text-base md:text-lg font-semibold"
+                        className="text-xs sm:text-sm md:text-base lg:text-lg font-semibold break-words"
                         style={{ color: "var(--text-primary)" }}
                       >
                         {weather?.name && weather?.country
@@ -243,21 +243,21 @@ export default function HeroSection({ isLoaded }) {
                   </div>
 
                   {/* Weather summary */}
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
                     {!isWeatherLoading && weather?.icon ? (
                       <img
                         src={`https://openweathermap.org/img/wn/${weather.icon}@2x.png`}
                         alt={weather.description || "Weather icon"}
-                        className="w-8 h-8 sm:w-9 sm:h-9"
+                        className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9"
                       />
                     ) : (
-                      <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full border border-white/20 flex items-center justify-center text-[10px] text-gray-400">
+                      <div className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 rounded-full border border-white/20 flex items-center justify-center text-[9px] sm:text-[10px] text-gray-400">
                         ...
                       </div>
                     )}
                     <div className="text-right">
                       <div
-                        className="text-xl sm:text-2xl md:text-3xl font-semibold leading-none"
+                        className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold leading-none"
                         style={{ color: "var(--text-primary)" }}
                       >
                         {!isWeatherLoading && weather?.temp
@@ -265,7 +265,7 @@ export default function HeroSection({ isLoaded }) {
                           : "--°C"}
                       </div>
                       <div
-                        className="text-[11px] sm:text-xs capitalize mt-1"
+                        className="text-[10px] sm:text-[11px] md:text-xs capitalize mt-0.5 sm:mt-1"
                         style={{ color: "var(--text-muted)" }}
                       >
                         {!isWeatherLoading && weather?.description
@@ -277,7 +277,7 @@ export default function HeroSection({ isLoaded }) {
                 </div>
 
                 <p
-                  className="text-[11px] sm:text-xs md:text-sm leading-relaxed font-normal text-left mt-1"
+                  className="text-[10px] sm:text-[11px] md:text-xs lg:text-sm leading-relaxed font-normal text-left mt-1 sm:mt-2"
                   style={{ color: "var(--text-secondary)" }}
                 >
                   MSc Creative Digital Media & UX at TUD · Building thoughtful
@@ -287,22 +287,22 @@ export default function HeroSection({ isLoaded }) {
 
               {/* Experience Card (Bottom) */}
               <motion.div
-                className="bg-white/5 backdrop-blur-sm rounded-2xl p-4 sm:p-5 md:p-6 border border-white/10"
+                className="bg-white/5 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5 lg:p-6 border border-white/10"
                 initial={{ opacity: 0, y: 20 }}
                 animate={
                   isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
                 }
                 transition={{ delay: 1.4, duration: 0.6, ease: "easeOut" }}
               >
-                <div className="flex items-start justify-between mb-4 gap-3">
-                  <div className="flex items-start">
-                    <div className="w-3 h-3 bg-blue-500 rounded-full mr-3 flex-shrink-0 mt-1" />
-                    <div className="flex flex-col">
-                      <span className="text-[11px] sm:text-xs font-medium uppercase tracking-[0.18em] text-gray-400">
+                <div className="flex items-start justify-between mb-3 sm:mb-4 gap-2 sm:gap-3">
+                  <div className="flex items-start min-w-0">
+                    <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-blue-500 rounded-full mr-2 sm:mr-3 flex-shrink-0 mt-1" />
+                    <div className="flex flex-col min-w-0">
+                      <span className="text-[10px] sm:text-[11px] md:text-xs font-medium uppercase tracking-[0.15em] sm:tracking-[0.18em] text-gray-400">
                         Experience in
                       </span>
                       <span
-                        className="text-sm sm:text-base md:text-lg font-semibold"
+                        className="text-xs sm:text-sm md:text-base lg:text-lg font-semibold break-words"
                         style={{ color: "var(--text-primary)" }}
                       >
                         Building web apps
@@ -310,15 +310,15 @@ export default function HeroSection({ isLoaded }) {
                     </div>
                   </div>
 
-                  <div className="text-right">
+                  <div className="text-right flex-shrink-0">
                     <div
-                      className="text-xl sm:text-2xl md:text-3xl font-semibold leading-none"
+                      className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold leading-none"
                       style={{ color: "var(--text-primary)" }}
                     >
                       2+
                     </div>
                     <div
-                      className="text-[11px] sm:text-xs mt-1"
+                      className="text-[10px] sm:text-[11px] md:text-xs mt-0.5 sm:mt-1"
                       style={{ color: "var(--text-muted)" }}
                     >
                       years
@@ -326,11 +326,11 @@ export default function HeroSection({ isLoaded }) {
                   </div>
                 </div>
 
-                <div className="flex flex-wrap gap-2 mt-1">
+                <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-1 sm:mt-2">
                   {["React", "Next.js", "Figma"].map((label) => (
                     <span
                       key={label}
-                      className="px-2.5 py-1 rounded-full text-[11px] sm:text-xs font-medium bg-white/5 border border-white/10"
+                      className="px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-[11px] md:text-xs font-medium bg-white/5 border border-white/10"
                       style={{ color: "var(--text-secondary)" }}
                     >
                       {label}
@@ -339,7 +339,7 @@ export default function HeroSection({ isLoaded }) {
                 </div>
 
                 <p
-                  className="text-[11px] sm:text-xs md:text-sm leading-relaxed font-normal text-left mt-3"
+                  className="text-[10px] sm:text-[11px] md:text-xs lg:text-sm leading-relaxed font-normal text-left mt-2 sm:mt-3"
                   style={{ color: "var(--text-secondary)" }}
                 >
                   From startups to established companies, building responsive

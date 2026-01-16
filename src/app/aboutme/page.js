@@ -4,13 +4,11 @@ import { motion } from "framer-motion";
 import { useLayout } from "../contexts/LayoutContext";
 import { useTheme } from "../contexts/ThemeContext";
 import Navbar from "../components/navbar";
-import ScrollIndicator from "../components/ScrollIndicator";
 
 export default function AboutMePage() {
   const { maxWidth } = useLayout();
   const { currentTheme, setCurrentTheme, themes, showThemeArrow } = useTheme();
   const [isLoaded, setIsLoaded] = useState(false);
-  const [showScrollIndicator, setShowScrollIndicator] = useState(true);
 
   // Initialize loading state
   useEffect(() => {
@@ -21,21 +19,10 @@ export default function AboutMePage() {
     return () => clearTimeout(timer);
   }, []);
 
-  // Show scroll indicator only near the top hero section
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const heroHeight = window.innerHeight;
-      setShowScrollIndicator(scrollY < heroHeight * 0.5);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   return (
     <main
-      className="h-screen relative overflow-hidden snap-y snap-mandatory overflow-y-scroll"
+      className="relative overflow-x-hidden"
       style={{
         backgroundColor:
           currentTheme === "ghostMouse" ? "transparent" : "var(--bg-primary)",
@@ -51,14 +38,10 @@ export default function AboutMePage() {
           showThemeArrow={showThemeArrow}
         />
 
-        <ScrollIndicator
-          showScrollIndicator={showScrollIndicator}
-          isLoaded={isLoaded}
-        />
 
         {/* Hero Section */}
         <section
-          className="min-h-screen flex items-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative snap-start"
+          className="min-h-screen flex items-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative"
           style={{
             backgroundColor:
               currentTheme === "ghostMouse"
@@ -74,7 +57,7 @@ export default function AboutMePage() {
               transition={{ duration: 0.8, ease: "easeOut" }}
             >
               <motion.h1
-                className="text-6xl lg:text-7xl xl:text-8xl font-black leading-tight tracking-tight mb-8"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black leading-tight tracking-tight mb-6 sm:mb-8"
                 style={{ color: "var(--text-primary)" }}
                 initial={{ opacity: 0, y: 20 }}
                 animate={
@@ -86,7 +69,7 @@ export default function AboutMePage() {
               </motion.h1>
 
               <motion.p
-                className="text-xl lg:text-2xl max-w-4xl mx-auto leading-relaxed"
+                className="text-sm sm:text-base md:text-lg lg:text-xl max-w-4xl mx-auto leading-relaxed"
                 style={{ color: "var(--text-secondary)" }}
                 initial={{ opacity: 0, y: 20 }}
                 animate={
@@ -104,7 +87,7 @@ export default function AboutMePage() {
 
         {/* My Story Section */}
         <section
-          className="min-h-screen flex items-center py-16 lg:py-24 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative snap-start"
+          className="min-h-screen flex items-center py-16 lg:py-24 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative"
           style={{
             backgroundColor:
               currentTheme === "ghostMouse"
@@ -246,15 +229,15 @@ export default function AboutMePage() {
                 transition={{ delay: 1.0, duration: 0.6, ease: "easeOut" }}
               >
                 <h2
-                  className="text-4xl lg:text-5xl font-bold mb-6"
+                  className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6"
                   style={{ color: "var(--text-primary)" }}
                 >
                   My Story
                 </h2>
 
-                <div className="space-y-4">
+                <div className="space-y-3 sm:space-y-4">
                   <p
-                    className="text-lg leading-relaxed"
+                    className="text-sm sm:text-base md:text-lg leading-relaxed"
                     style={{ color: "var(--text-secondary)" }}
                   >
                     I&apos;m not your regular developer. I see things differently and
@@ -291,7 +274,7 @@ export default function AboutMePage() {
 
         {/* Skills & Expertise Section */}
         <section
-          className="min-h-screen flex flex-col justify-center py-16 lg:py-24 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative snap-start"
+          className="min-h-screen flex flex-col justify-center py-16 lg:py-24 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative"
           style={{
             backgroundColor:
               currentTheme === "ghostMouse"
