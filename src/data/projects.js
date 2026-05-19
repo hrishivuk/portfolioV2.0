@@ -160,7 +160,7 @@ export const projects = [
     title: "Portfolio v3 – Interactive Personal Site",
     category: "Frontend Development",
     year: "2025",
-    featured: true,
+    featured: false,
     summary:
       "An experimental portfolio with theme switching, animated backgrounds, and scroll-snapped sections designed to feel playful yet minimal.",
     description:
@@ -186,7 +186,7 @@ export const projects = [
     title: "Findaside – Football Match Planner",
     category: "Frontend Development",
     year: "2024",
-    featured: false,
+    featured: true,
     summary:
       "A freelance web application that helps hosts organize football matches, manage player registrations, handle payments, and coordinate teams—all in one platform.",
     description:
@@ -287,4 +287,12 @@ export const projects = [
 
 export function getProjectById(id) {
   return projects.find((p) => p.id === id);
+}
+
+/** Job-hunt order: featured & shipped work first, experiments last */
+export function getSortedProjects(list = projects) {
+  return [...list].sort((a, b) => {
+    if (a.featured !== b.featured) return a.featured ? -1 : 1;
+    return Number(b.year || 0) - Number(a.year || 0);
+  });
 }

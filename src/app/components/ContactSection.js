@@ -1,10 +1,12 @@
 "use client";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { useLayout } from "../contexts/LayoutContext";
+import PageContainer from "./PageContainer";
+import SectionHeading from "./SectionHeading";
+
+const fade = { duration: 0.35, ease: "easeOut" };
 
 export default function ContactSection({ isLoaded }) {
-  const { maxWidth } = useLayout();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -12,201 +14,127 @@ export default function ContactSection({ isLoaded }) {
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null); // 'success', 'error', or null
+  const [submitStatus, setSubmitStatus] = useState(null);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-    // Clear status when user starts typing again
-    if (submitStatus) {
-      setSubmitStatus(null);
-    }
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    if (submitStatus) setSubmitStatus(null);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus(null);
-
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-
-      const data = await response.json();
-
       if (response.ok) {
         setSubmitStatus("success");
-        // Reset form
-        setFormData({
-          name: "",
-          email: "",
-          subject: "",
-          message: "",
-        });
-        // Clear success message after 5 seconds
+        setFormData({ name: "", email: "", subject: "", message: "" });
         setTimeout(() => setSubmitStatus(null), 5000);
       } else {
         setSubmitStatus("error");
       }
-    } catch (error) {
+    } catch {
       setSubmitStatus("error");
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  const inputClass =
+    "w-full px-3 py-2.5 text-sm rounded-lg border transition-colors focus:outline-none focus:ring-2 focus:ring-white/20";
+
   return (
-    <section className="min-h-screen flex items-start md:items-center px-3 sm:px-4 md:px-6 lg:px-8 xl:px-12 pt-20 sm:pt-24 md:pt-28 pb-8 sm:pb-12">
-      <div className="mx-auto w-full" style={{ maxWidth }}>
+    <section className="py-10 sm:py-14 pb-16 border-t border-white/5">
+      <PageContainer>
         <motion.div
-          className="flex flex-col lg:flex-row gap-6 sm:gap-8 md:gap-12 lg:gap-16 py-6 sm:py-8 md:py-12"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ delay: 2.0, duration: 0.8, ease: "easeOut" }}
+          initial={{ opacity: 0, y: 12 }}
+          animate={isLoaded ? { opacity: 1, y: 0 } : {}}
+          transition={fade}
         >
-          {/* Left Side - Title and Contact Info */}
-          <div className="lg:w-1/2 w-full flex flex-col justify-center">
-            <motion.h2
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black leading-tight tracking-tight mb-6 sm:mb-8"
-              style={{ color: "var(--text-primary)" }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ delay: 2.2, duration: 0.6, ease: "easeOut" }}
-            >
-              CONTACT ME
-            </motion.h2>
-
-            <motion.div
-              className="space-y-4 sm:space-y-5 md:space-y-6"
-              initial={{ opacity: 0, y: 20 }}
-              animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ delay: 2.4, duration: 0.6, ease: "easeOut" }}
-            >
-              <div
-                className="p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl border"
-                style={{
-                  backgroundColor: "var(--bg-secondary)",
-                  borderColor: "var(--border-primary)",
-                }}
-              >
-                <h3
-                  className="text-lg sm:text-xl font-bold mb-2 sm:mb-3"
-                  style={{ color: "var(--text-primary)" }}
-                >
-                  Let&apos;s Work Together
-                </h3>
-                <p
-                  className="text-xs sm:text-sm md:text-base leading-relaxed"
-                  style={{ color: "var(--text-secondary)" }}
-                >
-                  I&apos;m always interested in new opportunities and creative
-                  projects. Whether you have a question or just want to say hi,
-                  I&apos;ll try my best to get back to you!
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+            <div>
+              <SectionHeading
+                eyebrow="Contact"
+                title="Let's talk"
+                description="Open to internships, graduate roles, and freelance projects. I usually reply within 24 hours."
+              />
+              <div className="space-y-3 text-sm" style={{ color: "var(--text-secondary)" }}>
+                <p>
+                  <span className="page-eyebrow text-[10px] block mb-0.5">Email</span>
+                  <a
+                    href="mailto:officialhrishivuk@gmail.com"
+                    className="font-medium hover:underline"
+                    style={{ color: "var(--text-primary)" }}
+                  >
+                    officialhrishivuk@gmail.com
+                  </a>
+                </p>
+                <p>
+                  <span className="page-eyebrow text-[10px] block mb-0.5">LinkedIn</span>
+                  <a
+                    href="https://www.linkedin.com/in/hrishivuk/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-medium hover:underline"
+                    style={{ color: "var(--text-primary)" }}
+                  >
+                    linkedin.com/in/hrishivuk
+                  </a>
                 </p>
               </div>
+            </div>
 
-              <div
-                className="p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl border"
-                style={{
-                  backgroundColor: "var(--bg-secondary)",
-                  borderColor: "var(--border-primary)",
-                }}
-              >
-                <h3
-                  className="text-lg sm:text-xl font-bold mb-2 sm:mb-3"
-                  style={{ color: "var(--text-primary)" }}
-                >
-                  Quick Response
-                </h3>
-                <p
-                  className="text-xs sm:text-sm md:text-base leading-relaxed"
-                  style={{ color: "var(--text-secondary)" }}
-                >
-                  I typically respond within 24 hours. For urgent inquiries,
-                  feel free to reach out directly via email.
-                </p>
+            <form onSubmit={handleSubmit} className="space-y-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label htmlFor="name" className="block text-xs font-medium mb-1">
+                    Name *
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    required
+                    className={inputClass}
+                    style={{
+                      backgroundColor: "var(--bg-secondary)",
+                      borderColor: "var(--border-primary)",
+                      color: "var(--text-primary)",
+                    }}
+                    placeholder="Your name"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="email" className="block text-xs font-medium mb-1">
+                    Email *
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required
+                    className={inputClass}
+                    style={{
+                      backgroundColor: "var(--bg-secondary)",
+                      borderColor: "var(--border-primary)",
+                      color: "var(--text-primary)",
+                    }}
+                    placeholder="you@email.com"
+                  />
+                </div>
               </div>
-            </motion.div>
-          </div>
-
-          {/* Right Side - Contact Form */}
-          <div className="lg:w-1/2 w-full">
-            <motion.form
-              onSubmit={handleSubmit}
-              className="space-y-4 sm:space-y-5 md:space-y-6"
-              initial={{ opacity: 0, y: 20 }}
-              animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ delay: 2.6, duration: 0.6, ease: "easeOut" }}
-            >
-              {/* Name Field */}
-              <div className="relative z-10">
-                <label
-                  htmlFor="name"
-                  className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2"
-                  style={{ color: "var(--text-primary)" }}
-                >
-                  Name *
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-opacity-50 relative z-10 touch-manipulation"
-                  style={{
-                    backgroundColor: "var(--bg-secondary)",
-                    borderColor: "var(--border-primary)",
-                    color: "var(--text-primary)",
-                    focusRingColor: "var(--accent-primary)",
-                  }}
-                  placeholder="Your name"
-                />
-              </div>
-
-              {/* Email Field */}
               <div>
-                <label
-                  htmlFor="email"
-                  className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2"
-                  style={{ color: "var(--text-primary)" }}
-                >
-                  Email *
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-opacity-50 touch-manipulation"
-                  style={{
-                    backgroundColor: "var(--bg-secondary)",
-                    borderColor: "var(--border-primary)",
-                    color: "var(--text-primary)",
-                    focusRingColor: "var(--accent-primary)",
-                  }}
-                  placeholder="your.email@example.com"
-                />
-              </div>
-
-              {/* Subject Field */}
-              <div>
-                <label
-                  htmlFor="subject"
-                  className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2"
-                  style={{ color: "var(--text-primary)" }}
-                >
+                <label htmlFor="subject" className="block text-xs font-medium mb-1">
                   Subject *
                 </label>
                 <input
@@ -216,24 +144,17 @@ export default function ContactSection({ isLoaded }) {
                   value={formData.subject}
                   onChange={handleInputChange}
                   required
-                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-opacity-50 touch-manipulation"
+                  className={inputClass}
                   style={{
                     backgroundColor: "var(--bg-secondary)",
                     borderColor: "var(--border-primary)",
                     color: "var(--text-primary)",
-                    focusRingColor: "var(--accent-primary)",
                   }}
-                  placeholder="What's this about?"
+                  placeholder="Role, project, or hello"
                 />
               </div>
-
-              {/* Message Field */}
               <div>
-                <label
-                  htmlFor="message"
-                  className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2"
-                  style={{ color: "var(--text-primary)" }}
-                >
+                <label htmlFor="message" className="block text-xs font-medium mb-1">
                   Message *
                 </label>
                 <textarea
@@ -242,97 +163,42 @@ export default function ContactSection({ isLoaded }) {
                   value={formData.message}
                   onChange={handleInputChange}
                   required
-                  rows={5}
-                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-opacity-50 resize-vertical touch-manipulation"
+                  rows={4}
+                  className={`${inputClass} resize-y`}
                   style={{
                     backgroundColor: "var(--bg-secondary)",
                     borderColor: "var(--border-primary)",
                     color: "var(--text-primary)",
-                    focusRingColor: "var(--accent-primary)",
                   }}
-                  placeholder="Tell me about your project or just say hello!"
+                  placeholder="Tell me about the opportunity..."
                 />
               </div>
 
-              {/* Status Message */}
               {submitStatus === "success" && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="p-4 rounded-lg border"
-                  style={{
-                    backgroundColor: "rgba(34, 197, 94, 0.1)",
-                    borderColor: "rgba(34, 197, 94, 0.3)",
-                    color: "#4ade80",
-                  }}
-                >
-                  <p className="text-xs sm:text-sm font-medium">
-                    ✓ Message sent successfully! I&apos;ll get back to you soon.
-                  </p>
-                </motion.div>
+                <p className="text-sm text-green-400">Message sent — I&apos;ll be in touch soon.</p>
               )}
-
               {submitStatus === "error" && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="p-4 rounded-lg border"
-                  style={{
-                    backgroundColor: "rgba(239, 68, 68, 0.1)",
-                    borderColor: "rgba(239, 68, 68, 0.3)",
-                    color: "#f87171",
-                  }}
-                >
-                  <p className="text-xs sm:text-sm font-medium">
-                    ✗ Something went wrong. Please try again or email me directly.
-                  </p>
-                </motion.div>
+                <p className="text-sm text-red-400">
+                  Something went wrong. Email me directly instead.
+                </p>
               )}
 
-              {/* Submit Button */}
-              <motion.button
+              <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full px-4 sm:px-5 md:px-6 py-3 sm:py-3.5 md:py-4 rounded-lg border transition-all duration-300 text-sm sm:text-base font-medium disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation min-h-[44px]"
+                className="w-full sm:w-auto px-6 py-2.5 rounded-lg border text-sm font-medium disabled:opacity-50 min-h-[44px]"
                 style={{
                   backgroundColor: "var(--bg-secondary)",
                   borderColor: "var(--border-primary)",
                   color: "var(--text-primary)",
                 }}
-                whileTap={!isSubmitting ? { scale: 0.95 } : {}}
               >
-                {isSubmitting ? (
-                  <span className="flex items-center justify-center gap-2">
-                    <svg
-                      className="animate-spin h-5 w-5"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <circle
-                        className="opacity-25"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                      ></circle>
-                      <path
-                        className="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                      ></path>
-                    </svg>
-                    Sending...
-                  </span>
-                ) : (
-                  "Send Message"
-                )}
-              </motion.button>
-            </motion.form>
+                {isSubmitting ? "Sending…" : "Send message"}
+              </button>
+            </form>
           </div>
         </motion.div>
-      </div>
+      </PageContainer>
     </section>
   );
 }

@@ -1,355 +1,158 @@
 "use client";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
-import { useLayout } from "../contexts/LayoutContext";
-import { useTheme } from "../contexts/ThemeContext";
-import { GhostMouseBackground } from "./backgrounds";
+import PageContainer from "./PageContainer";
+
+const roles = [
+  "UI/UX Designer",
+  "Frontend Developer",
+  "Android Developer",
+];
+
+const fade = { duration: 0.35, ease: "easeOut" };
 
 export default function HeroSection({ isLoaded }) {
-  const { maxWidth } = useLayout();
-  const { currentTheme } = useTheme();
+  const [roleIndex, setRoleIndex] = useState(0);
 
-  // Background is now handled globally, but we can still have other backgrounds
-  const selectedBackground = null; // No local background needed
-  const roles = [
-    "UI/UX Designer",
-    "Web Developer",
-    "Android Developer",
-    "Creative Thinker",
-  ];
-
-  const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
-
-  // Lightweight weather state for location card
-  const [weather, setWeather] = useState(null);
-  const [isWeatherLoading, setIsWeatherLoading] = useState(true);
-
-  // Role rotation effect
   useEffect(() => {
     const interval = setInterval(() => {
-      setIsAnimating(true);
-      setTimeout(() => {
-        setCurrentRoleIndex((prev) => (prev + 1) % roles.length);
-        setIsAnimating(false);
-      }, 250);
-    }, 3000);
-
+      setRoleIndex((i) => (i + 1) % roles.length);
+    }, 2800);
     return () => clearInterval(interval);
-  }, [roles.length]);
-
-  // Fetch current weather from /api/weather for the location card
-  useEffect(() => {
-    const fetchWeather = async () => {
-      try {
-        const res = await fetch("/api/weather", { cache: "no-store" });
-        if (!res.ok) {
-          if (process.env.NODE_ENV === "development") {
-            console.error("Failed to fetch weather. Status:", res.status);
-          }
-          return;
-        }
-
-        const data = await res.json();
-
-        // Only set weather if it's not a fallback
-        if (!data?._fallback) {
-          setWeather({
-            name: data?.name,
-            country: data?.sys?.country,
-            temp: Math.round(data?.main?.temp),
-            description: data?.weather?.[0]?.main,
-            icon: data?.weather?.[0]?.icon,
-          });
-        } else {
-          // If fallback, set weather to null so it doesn't display
-          setWeather(null);
-        }
-      } catch (error) {
-        if (process.env.NODE_ENV === "development") {
-          console.error("Error fetching weather:", error);
-        }
-      } finally {
-        setIsWeatherLoading(false);
-      }
-    };
-
-    fetchWeather();
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col justify-center px-3 sm:px-4 md:px-6 lg:px-8 xl:px-12 relative overflow-hidden overflow-x-hidden">
-      {/* Background Animation */}
-      {selectedBackground === "ghostMouse" && (
-        <GhostMouseBackground intensity="full" />
-      )}
-      {/* Main Content */}
-      <div className="flex-1 flex items-center justify-center py-6 sm:py-8 md:py-12 lg:py-16 xl:py-20 pt-16 sm:pt-20 md:pt-24 lg:pt-28 relative z-10 w-full overflow-x-hidden">
-        <div className="w-full mx-auto max-w-full" style={{ maxWidth }}>
-          {/* New Layout: Left content + Right boxes */}
-          <motion.div
-            className="flex flex-col lg:flex-row gap-6 sm:gap-8 md:gap-12 lg:gap-16 xl:gap-20 h-full mx-auto w-full max-w-full"
-            initial={{ opacity: 0, y: 30 }}
-            animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-          >
-            {/* Left Side - Name and Roles */}
-            <div className="flex-1 flex flex-col justify-center w-full min-w-0 overflow-hidden">
-              <div className="mb-4 sm:mb-6 lg:mb-8 w-full min-w-0">
-                <h1 className="leading-none text-left w-full min-w-0">
-                  <motion.span
-                    className="block text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-normal tracking-wide mb-1 sm:mb-2 break-words"
-                    style={{ color: "var(--text-secondary)" }}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={
-                      isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
-                    }
-                    transition={{ delay: 0.2, duration: 0.6, ease: "easeOut" }}
-                  >
-                    Hi! I&apos;m
-                  </motion.span>
-                  <motion.span
-                    className="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-black leading-[0.85] tracking-tight break-words overflow-wrap-anywhere"
-                    style={{ color: "var(--text-primary)" }}
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={
-                      isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }
-                    }
-                    transition={{ delay: 0.4, duration: 0.8, ease: "easeOut" }}
-                  >
-                    HRISHI
-                  </motion.span>
-                </h1>
-                <motion.h2
-                  className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold leading-tight tracking-wide text-left mt-2 sm:mt-3 md:mt-4 break-words overflow-wrap-anywhere"
-                  style={{ color: "var(--text-secondary)" }}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={
-                    isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
-                  }
-                  transition={{ delay: 0.6, duration: 0.6, ease: "easeOut" }}
-                >
-                  <span
-                    className={`role-text ${isAnimating ? "exiting" : ""}`}
-                    key={currentRoleIndex}
-                  >
-                    {roles[currentRoleIndex]}
-                  </span>
-                </motion.h2>
-              </div>
+    <section className="pt-24 sm:pt-28 pb-10 sm:pb-12">
+      <PageContainer>
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={isLoaded ? { opacity: 1, y: 0 } : {}}
+          transition={fade}
+        >
+          <p className="page-eyebrow mb-3">Open to frontend & UX roles · Dublin</p>
 
-              {/* Social Media Bar */}
-              <motion.div
-                className="mt-3 sm:mt-4 md:mt-6 lg:mt-8 flex items-center justify-start sm:justify-center lg:justify-start space-x-2 sm:space-x-3 md:space-x-4 lg:space-x-6"
-                initial={{ opacity: 0, y: 20 }}
-                animate={
-                  isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
-                }
-                transition={{ delay: 0.8, duration: 0.6, ease: "easeOut" }}
-              >
-                <a
-                  href="https://www.linkedin.com/in/hrishivuk/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-9 h-9 sm:w-10 sm:h-10 md:w-11 md:h-11 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 active:bg-white/20 transition-all duration-200 group focus:outline-none focus:ring-2 focus:ring-white/50 touch-manipulation min-w-[44px] min-h-[44px]"
-                  aria-label="Visit LinkedIn profile"
-                >
-                  <svg
-                    className="w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                  </svg>
-                </a>
-                <a
-                  href="https://twitter.com/hrishikesh49657"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 hover:bg-white/20 transition-all duration-200 group focus:outline-none focus:ring-2 focus:ring-white/50"
-                  aria-label="Visit Twitter profile"
-                >
-                  <svg
-                    className="w-4 h-4 sm:w-5 sm:h-5"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
-                  </svg>
-                </a>
-                <a
-                  href="https://github.com/hrishivuk"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 hover:bg-white/20 transition-all duration-200 group focus:outline-none focus:ring-2 focus:ring-white/50"
-                  aria-label="Visit GitHub profile"
-                >
-                  <svg
-                    className="w-4 h-4 sm:w-5 sm:h-5"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                  </svg>
-                </a>
-                <a
-                  href="mailto:officialhrishivuk@gmail.com"
-                  className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 hover:bg-white/20 transition-all duration-200 group"
-                  aria-label="Send email"
-                >
-                  <svg
-                    className="w-4 h-4 sm:w-5 sm:h-5"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-.904.732-1.636 1.636-1.636h3.819l6.545 4.91 6.545-4.91h3.819c.904 0 1.636.732 1.636 1.636z" />
-                  </svg>
-                </a>
-              </motion.div>
-            </div>
-
-            {/* Right Side - Cards Stack */}
-            <motion.div
-              className="w-full sm:w-80 lg:w-96 flex flex-col gap-3 sm:gap-4 md:gap-6 lg:gap-8 mt-6 sm:mt-8 lg:mt-0 min-w-0 max-w-full"
-              initial={{ opacity: 0, x: 30 }}
-              animate={isLoaded ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
-              transition={{ delay: 1.0, duration: 0.8, ease: "easeOut" }}
+          <h1 className="leading-tight">
+            <span
+              className="block text-sm sm:text-base font-normal mb-1"
+              style={{ color: "var(--text-secondary)" }}
             >
-              {/* Location Card (Top) - now includes live weather */}
-              <motion.div
-                className="bg-white/5 backdrop-blur-sm rounded-2xl p-4 sm:p-5 md:p-6 border border-white/10"
-                initial={{ opacity: 0, y: 20 }}
-                animate={
-                  isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
-                }
-                transition={{ delay: 1.2, duration: 0.6, ease: "easeOut" }}
+              Hi, I&apos;m
+            </span>
+            <span
+              className="block text-4xl sm:text-5xl md:text-6xl font-black tracking-tight"
+              style={{ color: "var(--text-primary)" }}
+            >
+              Hrishikesh Varma
+            </span>
+          </h1>
+
+          <p
+            className="mt-2 text-lg sm:text-xl font-semibold min-h-[1.75rem]"
+            style={{ color: "var(--text-secondary)" }}
+          >
+            <span className="role-text" key={roleIndex}>
+              {roles[roleIndex]}
+            </span>
+          </p>
+
+          <p className="page-lead mt-4 max-w-xl">
+            I build web and mobile products where design and code meet — from a
+            shipped football club app to freelance platforms and UX case studies.
+          </p>
+
+          <div className="flex flex-wrap gap-2 sm:gap-3 mt-6">
+            <Link
+              href="/works"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border text-sm font-medium min-h-[44px] transition-opacity hover:opacity-90"
+              style={{
+                backgroundColor: "var(--bg-secondary)",
+                borderColor: "var(--border-primary)",
+                color: "var(--text-primary)",
+              }}
+            >
+              View my work
+              <span
+                className="w-1.5 h-1.5 rounded-full"
+                style={{ backgroundColor: "var(--accent-primary)" }}
+              />
+            </Link>
+            <Link
+              href="/aboutme"
+              className="inline-flex items-center px-4 py-2.5 rounded-lg border text-sm font-medium min-h-[44px] transition-opacity hover:opacity-90"
+              style={{
+                borderColor: "var(--border-primary)",
+                color: "var(--text-primary)",
+              }}
+            >
+              About me
+            </Link>
+            <a
+              href="mailto:officialhrishivuk@gmail.com"
+              className="inline-flex items-center px-4 py-2.5 rounded-lg border text-sm font-medium min-h-[44px] transition-opacity hover:opacity-90"
+              style={{
+                borderColor: "var(--border-primary)",
+                color: "var(--text-secondary)",
+              }}
+            >
+              Email me
+            </a>
+          </div>
+
+          <motion.div
+            className="flex items-center gap-3 sm:gap-4 mt-6"
+            initial={{ opacity: 0 }}
+            animate={isLoaded ? { opacity: 1 } : {}}
+            transition={{ ...fade, delay: 0.1 }}
+          >
+            {[
+              { href: "https://www.linkedin.com/in/hrishivuk/", label: "LinkedIn" },
+              { href: "https://github.com/hrishivuk", label: "GitHub" },
+              { href: "https://twitter.com/hrishikesh49657", label: "Twitter" },
+            ].map(({ href, label }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs sm:text-sm font-medium underline-offset-4 hover:underline"
+                style={{ color: "var(--text-muted)" }}
               >
-                <div className="flex items-center justify-between mb-3 sm:mb-4 gap-2 sm:gap-3">
-                  <div className="flex items-center">
-                    <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-orange-500 rounded-full mr-2 sm:mr-3 flex-shrink-0" />
-                    <div className="flex flex-col min-w-0">
-                      <span className="text-[10px] sm:text-[11px] md:text-xs font-medium uppercase tracking-[0.15em] sm:tracking-[0.18em] text-gray-400">
-                        Currently in
-                      </span>
-                      <span
-                        className="text-xs sm:text-sm md:text-base lg:text-lg font-semibold break-words"
-                        style={{ color: "var(--text-primary)" }}
-                      >
-                        {weather?.name && weather?.country
-                          ? `${weather.name}, ${weather.country}`
-                          : "Dublin, IE"}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Weather summary */}
-                  <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
-                    {!isWeatherLoading && weather?.icon ? (
-                      <img
-                        src={`https://openweathermap.org/img/wn/${weather.icon}@2x.png`}
-                        alt={weather.description || "Weather icon"}
-                        className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9"
-                      />
-                    ) : (
-                      <div className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 rounded-full border border-white/20 flex items-center justify-center text-[9px] sm:text-[10px] text-gray-400">
-                        ...
-                      </div>
-                    )}
-                    <div className="text-right">
-                      <div
-                        className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold leading-none"
-                        style={{ color: "var(--text-primary)" }}
-                      >
-                        {!isWeatherLoading && weather?.temp
-                          ? `${weather.temp}°C`
-                          : "--°C"}
-                      </div>
-                      <div
-                        className="text-[10px] sm:text-[11px] md:text-xs capitalize mt-0.5 sm:mt-1"
-                        style={{ color: "var(--text-muted)" }}
-                      >
-                        {!isWeatherLoading && weather?.description
-                          ? weather.description
-                          : "Loading weather"}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <p
-                  className="text-[10px] sm:text-[11px] md:text-xs lg:text-sm leading-relaxed font-normal text-left mt-1 sm:mt-2"
-                  style={{ color: "var(--text-secondary)" }}
-                >
-                  MSc Creative Digital Media & UX at TUD · Building thoughtful
-                  interfaces from Dublin.
-                </p>
-              </motion.div>
-
-              {/* Experience Card (Bottom) */}
-              <motion.div
-                className="bg-white/5 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5 lg:p-6 border border-white/10"
-                initial={{ opacity: 0, y: 20 }}
-                animate={
-                  isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
-                }
-                transition={{ delay: 1.4, duration: 0.6, ease: "easeOut" }}
-              >
-                <div className="flex items-start justify-between mb-3 sm:mb-4 gap-2 sm:gap-3">
-                  <div className="flex items-start min-w-0">
-                    <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-blue-500 rounded-full mr-2 sm:mr-3 flex-shrink-0 mt-1" />
-                    <div className="flex flex-col min-w-0">
-                      <span className="text-[10px] sm:text-[11px] md:text-xs font-medium uppercase tracking-[0.15em] sm:tracking-[0.18em] text-gray-400">
-                        Experience in
-                      </span>
-                      <span
-                        className="text-xs sm:text-sm md:text-base lg:text-lg font-semibold break-words"
-                        style={{ color: "var(--text-primary)" }}
-                      >
-                        Building web apps
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="text-right flex-shrink-0">
-                    <div
-                      className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold leading-none"
-                      style={{ color: "var(--text-primary)" }}
-                    >
-                      2+
-                    </div>
-                    <div
-                      className="text-[10px] sm:text-[11px] md:text-xs mt-0.5 sm:mt-1"
-                      style={{ color: "var(--text-muted)" }}
-                    >
-                      years
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-1 sm:mt-2">
-                  {["React", "Next.js", "Figma"].map((label) => (
-                    <span
-                      key={label}
-                      className="px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-[11px] md:text-xs font-medium bg-white/5 border border-white/10"
-                      style={{ color: "var(--text-secondary)" }}
-                    >
-                      {label}
-                    </span>
-                  ))}
-                </div>
-
-                <p
-                  className="text-[10px] sm:text-[11px] md:text-xs lg:text-sm leading-relaxed font-normal text-left mt-2 sm:mt-3"
-                  style={{ color: "var(--text-secondary)" }}
-                >
-                  From startups to established companies, building responsive
-                  web applications that users love.
-                </p>
-              </motion.div>
-            </motion.div>
+                {label}
+              </a>
+            ))}
           </motion.div>
-        </div>
-      </div>
-    </div>
+        </motion.div>
+
+        {/* Quick facts — single row */}
+        <motion.ul
+          className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-8 sm:mt-10"
+          initial={{ opacity: 0, y: 12 }}
+          animate={isLoaded ? { opacity: 1, y: 0 } : {}}
+          transition={{ ...fade, delay: 0.12 }}
+        >
+          {[
+            { label: "Based in", value: "Dublin, IE" },
+            { label: "Experience", value: "2+ years" },
+            { label: "Studying", value: "MSc CDM & UX" },
+            { label: "Stack", value: "React · RN · Figma" },
+          ].map((item) => (
+            <li
+              key={item.label}
+              className="p-3 sm:p-4 rounded-xl border"
+              style={{
+                backgroundColor: "var(--bg-secondary)",
+                borderColor: "var(--border-primary)",
+              }}
+            >
+              <p className="page-eyebrow text-[10px] mb-1">{item.label}</p>
+              <p className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>
+                {item.value}
+              </p>
+            </li>
+          ))}
+        </motion.ul>
+      </PageContainer>
+    </section>
   );
 }

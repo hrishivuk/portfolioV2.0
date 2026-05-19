@@ -1,11 +1,16 @@
 "use client";
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, useCallback } from "react";
+import { usePathname } from "next/navigation";
 
 const ThemeContext = createContext();
+const THEME_HINT_KEY = "portfolio-theme-hint-dismissed";
 
 export function ThemeProvider({ children }) {
-  const [currentTheme, setCurrentTheme] = useState("ghostMouse");
-  const [showThemeArrow, setShowThemeArrow] = useState(true);
+  const pathname = usePathname();
+  const [currentTheme, setCurrentThemeState] = useState("ghostMouse");
+  const [themeHintDismissed, setThemeHintDismissed] = useState(true);
+  const [showThemeArrowOnScroll, setShowThemeArrowOnScroll] = useState(true);
+  const isHomePage = pathname === "/";
 
   // Theme definitions
   const themes = {
@@ -43,12 +48,11 @@ export function ThemeProvider({ children }) {
     },
   };
 
-  // Reset theme if current theme doesn't exist (safety check)
   useEffect(() => {
     if (!themes[currentTheme]) {
-      setCurrentTheme("ghostMouse");
+      setCurrentThemeState("ghostMouse");
     }
-  }, []);
+  }, [currentTheme]);
 
   // Update CSS variables when theme changes
   useEffect(() => {
@@ -70,17 +74,33 @@ export function ThemeProvider({ children }) {
     document.documentElement.style.setProperty("--text-muted", theme.textMuted);
   }, [currentTheme]);
 
-  // Handle scroll detection for theme arrow
   useEffect(() => {
+    setThemeHintDismissed(
+      window.localStorage.getItem(THEME_HINT_KEY) === "true"
+    );
+  }, []);
+
+  const setCurrentTheme = useCallback((themeKey) => {
+    setCurrentThemeState(themeKey);
+    window.localStorage.setItem(THEME_HINT_KEY, "true");
+    setThemeHintDismissed(true);
+  }, []);
+
+  // Theme hint only on home, near top of page, and only until dismissed
+  useEffect(() => {
+    if (!isHomePage) return;
+
     const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const heroHeight = window.innerHeight;
-      setShowThemeArrow(scrollY < heroHeight * 0.1);
+      setShowThemeArrowOnScroll(window.scrollY < window.innerHeight * 0.15);
     };
 
-    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [isHomePage]);
+
+  const showThemeArrow =
+    isHomePage && !themeHintDismissed && showThemeArrowOnScroll;
 
   const value = {
     currentTheme,

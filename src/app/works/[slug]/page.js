@@ -5,15 +5,14 @@ import { useParams, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import Navbar from "../../components/navbar";
+import PageContainer from "../../components/PageContainer";
 import { useTheme } from "../../contexts/ThemeContext";
-import { useLayout } from "../../contexts/LayoutContext";
 import { projects } from "../../../data/projects";
 
 export default function ProjectDetailPage() {
   const params = useParams();
   const router = useRouter();
   const { currentTheme, setCurrentTheme, themes, showThemeArrow } = useTheme();
-  const { maxWidth } = useLayout();
   const [isLoaded, setIsLoaded] = useState(false);
   const [showDeepDive, setShowDeepDive] = useState(false);
 
@@ -93,17 +92,15 @@ export default function ProjectDetailPage() {
         />
 
 
-        {/* Hero Section - Above the fold, minimal */}
         <section
-          className="min-h-screen flex items-center pb-12 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16"
+          className="pt-24 sm:pt-28 pb-10 sm:pb-12"
           style={{
             backgroundColor: isGhostTheme
               ? "rgba(10, 10, 10, 0.3)"
               : "transparent",
-            paddingTop: "70px",
           }}
         >
-          <div className="mx-auto w-full" style={{ maxWidth }}>
+          <PageContainer>
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -203,19 +200,19 @@ export default function ProjectDetailPage() {
                 </div>
               </div>
             </motion.div>
-          </div>
+          </PageContainer>
         </section>
 
         {/* Content Sections */}
         <section
-          className="pb-20 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16"
+          className="pb-20"
           style={{
             backgroundColor: isGhostTheme
               ? "rgba(10, 10, 10, 0.3)"
               : "transparent",
           }}
         >
-          <div className="mx-auto" style={{ maxWidth }}>
+          <PageContainer>
             {/* TL;DR Section - What I did & why it mattered */}
             <motion.div
               className="mb-12"
@@ -526,7 +523,7 @@ export default function ProjectDetailPage() {
                 )}
               </AnimatePresence>
             </motion.div>
-          </div>
+          </PageContainer>
         </section>
       </div>
     </main>

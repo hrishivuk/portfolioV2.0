@@ -1,30 +1,24 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
-import { useLayout } from "../contexts/LayoutContext";
 import { useTheme } from "../contexts/ThemeContext";
 import Navbar from "../components/navbar";
+import PageContainer from "../components/PageContainer";
+import PageHeader from "../components/PageHeader";
 import Link from "next/link";
-import { projects } from "../../data/projects";
+import { projects, getSortedProjects } from "../../data/projects";
 
 export default function WorksPage() {
-  const { maxWidth } = useLayout();
   const { currentTheme, setCurrentTheme, themes, showThemeArrow } = useTheme();
   const [isLoaded, setIsLoaded] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const isGhostTheme = currentTheme === "ghostMouse";
 
-  // Initialize loading state
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoaded(true);
-    }, 100);
-
+    const timer = setTimeout(() => setIsLoaded(true), 50);
     return () => clearTimeout(timer);
   }, []);
 
-
-  // Define category order
   const categoryOrder = [
     "Frontend Development",
     "Android Development",
@@ -32,19 +26,20 @@ export default function WorksPage() {
     "Creative Digital Media",
   ];
 
-  // Get unique categories from projects and order them
+  const sortedProjects = useMemo(() => getSortedProjects(projects), []);
+
   const uniqueCategories = [
-    ...new Set(projects.map((project) => project.category)),
+    ...new Set(sortedProjects.map((project) => project.category)),
   ];
-  const orderedCategories = categoryOrder.filter((cat) =>
-    uniqueCategories.includes(cat)
-  );
-  const categories = ["All", ...orderedCategories];
+  const categories = [
+    "All",
+    ...categoryOrder.filter((cat) => uniqueCategories.includes(cat)),
+  ];
 
   const filteredProjects =
     selectedCategory === "All"
-      ? projects
-      : projects.filter((project) => project.category === selectedCategory);
+      ? sortedProjects
+      : sortedProjects.filter((project) => project.category === selectedCategory);
 
   return (
     <main
@@ -55,8 +50,7 @@ export default function WorksPage() {
         zIndex: 1,
       }}
     >
-      {/* Content */}
-      <div className="relative z-10">
+      <div className="relative z-10 pb-16">
         <Navbar
           currentTheme={currentTheme}
           setCurrentTheme={setCurrentTheme}
@@ -64,79 +58,33 @@ export default function WorksPage() {
           showThemeArrow={showThemeArrow}
         />
 
+        <PageContainer>
+          <PageHeader
+            eyebrow="Portfolio"
+            title="Works"
+            description="Frontend, mobile, and UX projects built for real users — from shipped apps to design case studies."
+            isLoaded={isLoaded}
+          >
+            <p className="page-meta mt-3">
+              {sortedProjects.length} projects · Select a category or open a case study
+            </p>
+          </PageHeader>
 
-        {/* Hero Section */}
-        <section
-          className="min-h-screen flex items-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative"
-          style={{
-            backgroundColor:
-              currentTheme === "ghostMouse"
-                ? "rgba(10, 10, 10, 0.3)"
-                : "transparent",
-          }}
-        >
-          <div className="mx-auto relative z-10" style={{ maxWidth }}>
-            <motion.div
-              className="text-center"
-              initial={{ opacity: 0, y: 30 }}
-              animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-            >
-              <motion.h1
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black leading-tight tracking-tight mb-6 sm:mb-8"
-                style={{ color: "var(--text-primary)" }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={
-                  isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
-                }
-                transition={{ delay: 0.2, duration: 0.6, ease: "easeOut" }}
-              >
-                MY WORKS
-              </motion.h1>
-
-              <motion.p
-                className="text-sm sm:text-base md:text-lg lg:text-xl max-w-4xl mx-auto leading-relaxed"
-                style={{ color: "var(--text-secondary)" }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={
-                  isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
-                }
-                transition={{ delay: 0.4, duration: 0.6, ease: "easeOut" }}
-              >
-                A collection of projects showcasing my work in frontend
-                development, mobile apps, UX design, and creative digital media.
-              </motion.p>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Projects Section */}
-        <section
-          className="min-h-screen flex flex-col justify-center py-16 lg:py-24 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative"
-          style={{
-            backgroundColor:
-              currentTheme === "ghostMouse"
-                ? "rgba(10, 10, 10, 0.3)"
-                : "transparent",
-          }}
-        >
-          <div className="mx-auto relative z-10" style={{ maxWidth }}>
-            {/* Category Filter */}
-            <motion.div
-              className="flex flex-wrap justify-center gap-4 mb-12"
-              initial={{ opacity: 0, y: 20 }}
-              animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ delay: 0.6, duration: 0.6, ease: "easeOut" }}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+            transition={{ duration: 0.35, delay: 0.05 }}
+          >
+            <div
+              className="flex flex-wrap gap-2 mb-8"
+              role="group"
+              aria-label="Filter projects by category"
             >
               {categories.map((category) => (
                 <button
                   key={category}
                   onClick={() => setSelectedCategory(category)}
-                  className={`px-4 sm:px-5 md:px-6 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-medium border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 touch-manipulation min-h-[44px] ${
-                    selectedCategory === category
-                      ? "scale-105"
-                      : "hover:scale-105"
-                  }`}
+                  className="px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-medium border transition-all duration-200 focus:outline-none focus:ring-2 min-h-[40px]"
                   style={{
                     backgroundColor: isGhostTheme
                       ? selectedCategory === category
@@ -149,137 +97,112 @@ export default function WorksPage() {
                       ? "rgba(255,255,255,0.16)"
                       : "var(--border-primary)",
                     color: "var(--text-primary)",
-                    "--tw-ring-color": "rgba(255, 255, 255, 0.5)",
                   }}
-                  aria-label={`Filter projects by ${category}`}
                   aria-pressed={selectedCategory === category}
                 >
                   {category}
                 </button>
               ))}
-            </motion.div>
+            </div>
 
-            {/* Projects Grid */}
             {filteredProjects.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {filteredProjects.map((project, index) => (
-                  <motion.div
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+                {filteredProjects.map((project) => (
+                  <Link
                     key={project.id}
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={
-                      isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }
-                    }
-                    transition={{
-                      delay: 0.8 + index * 0.1,
-                      duration: 0.6,
-                      ease: "easeOut",
-                    }}
+                    href={`/works/${project.id}`}
+                    className="block h-full group"
                   >
-                    <Link href={`/works/${project.id}`}>
-                      <div
-                        className="p-5 rounded-2xl border transition-all duration-300 hover:-translate-y-1 cursor-pointer h-full flex flex-col backdrop-blur-sm"
+                    <article
+                      className="p-4 rounded-2xl border transition-all duration-200 group-hover:-translate-y-0.5 h-full flex flex-col backdrop-blur-sm"
+                      style={{
+                        backgroundColor: isGhostTheme
+                          ? "rgba(255,255,255,0.04)"
+                          : "var(--bg-secondary)",
+                        borderColor: isGhostTheme
+                          ? "rgba(255,255,255,0.16)"
+                          : "var(--border-primary)",
+                      }}
+                    >
+                      <motion.div
+                        className="w-full aspect-[16/10] rounded-xl mb-3 overflow-hidden"
                         style={{
                           backgroundColor: isGhostTheme
-                            ? "rgba(255,255,255,0.04)"
-                            : "var(--bg-secondary)",
-                          borderColor: isGhostTheme
-                            ? "rgba(255,255,255,0.16)"
-                            : "var(--border-primary)",
+                            ? "rgba(0,0,0,0.35)"
+                            : "var(--bg-primary)",
                         }}
                       >
-                        {/* Project Image */}
-                        <div
-                          className="w-full h-56 rounded-xl mb-4 flex items-center justify-center overflow-hidden"
+                        {project.image ? (
+                          <img
+                            src={project.image}
+                            alt=""
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <span
+                            className="flex items-center justify-center h-full text-2xl"
+                            style={{ color: "var(--text-muted)" }}
+                            aria-hidden
+                          >
+                            🚀
+                          </span>
+                        )}
+                      </motion.div>
+
+                      <div className="flex flex-wrap items-center gap-2 mb-2">
+                        <span
+                          className="text-[10px] font-medium px-2 py-0.5 rounded-full border"
                           style={{
-                            backgroundColor: isGhostTheme
-                              ? "rgba(0,0,0,0.35)"
-                              : "var(--bg-primary)",
+                            backgroundColor: "var(--bg-primary)",
+                            borderColor: "var(--border-primary)",
+                            color: "var(--text-secondary)",
                           }}
                         >
-                          {project.image ? (
-                            <img
-                              src={project.image}
-                              alt={project.title}
-                              className="w-full h-full object-cover"
-                            />
-                          ) : (
-                            <span
-                              className="text-4xl"
-                              style={{ color: "var(--text-muted)" }}
-                            >
-                              🚀
-                            </span>
-                          )}
-                        </div>
-
-                        {/* Project Info - Minimal */}
-                        <div className="flex-1 flex flex-col">
-                          <div className="mb-2">
-                            <span
-                              className="text-[10px] sm:text-xs font-medium px-2 sm:px-2.5 md:px-3 py-0.5 sm:py-1 rounded-full border inline-block"
-                              style={{
-                                backgroundColor: "var(--bg-primary)",
-                                borderColor: "var(--border-primary)",
-                                color: "var(--text-secondary)",
-                              }}
-                            >
-                              {project.category}
-                            </span>
-                          </div>
-
-                          <h3
-                            className="text-base sm:text-lg md:text-xl font-bold mb-2"
-                            style={{ color: "var(--text-primary)" }}
+                          {project.category}
+                        </span>
+                        {project.year && (
+                          <span className="page-meta">{project.year}</span>
+                        )}
+                        {project.featured && (
+                          <span
+                            className="text-[10px] font-semibold px-2 py-0.5 rounded-full"
+                            style={{
+                              backgroundColor: "var(--accent-primary)",
+                              color: "var(--bg-primary)",
+                            }}
                           >
-                            {project.title}
-                          </h3>
-
-                          {/* One-liner (summary) */}
-                          <p
-                            className="text-xs sm:text-sm leading-relaxed mb-3 flex-1"
-                            style={{ color: "var(--text-secondary)" }}
-                          >
-                            {project.summary}
-                          </p>
-
-                          {/* Role */}
-                          {project.role && (
-                            <p
-                              className="text-xs mt-auto pt-2"
-                              style={{ color: "var(--text-muted)" }}
-                            >
-                              {project.role}
-                            </p>
-                          )}
-                        </div>
+                            Featured
+                          </span>
+                        )}
                       </div>
-                    </Link>
-                  </motion.div>
+
+                      <h2 className="text-base sm:text-lg font-bold mb-1.5 group-hover:underline underline-offset-4 decoration-1">
+                        {project.title}
+                      </h2>
+
+                      <p
+                        className="text-xs sm:text-sm leading-relaxed flex-1 line-clamp-2"
+                        style={{ color: "var(--text-secondary)" }}
+                      >
+                        {project.summary}
+                      </p>
+
+                      {project.role && (
+                        <p className="page-meta mt-3 pt-2 border-t border-white/10">
+                          {project.role}
+                        </p>
+                      )}
+                    </article>
+                  </Link>
                 ))}
               </div>
             ) : (
-              <motion.div
-                className="text-center py-20"
-                initial={{ opacity: 0, y: 20 }}
-                animate={
-                  isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
-                }
-                transition={{ delay: 0.8, duration: 0.6, ease: "easeOut" }}
-              >
-                <p
-                  className="text-xl mb-4"
-                  style={{ color: "var(--text-secondary)" }}
-                >
-                  No projects found in this category.
-                </p>
-                <p className="text-base" style={{ color: "var(--text-muted)" }}>
-                  Projects will appear here once you add them to the projects
-                  array.
-                </p>
-              </motion.div>
+              <p className="text-center py-12 page-lead">
+                No projects in this category.
+              </p>
             )}
-          </div>
-        </section>
+          </motion.div>
+        </PageContainer>
       </div>
     </main>
   );
