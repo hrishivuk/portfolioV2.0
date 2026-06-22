@@ -22,8 +22,7 @@ export default function Error({ error, reset }) {
     <main
       className="min-h-screen relative"
       style={{
-        backgroundColor:
-          currentTheme === "ghostMouse" ? "transparent" : "var(--bg-primary)",
+        backgroundColor: "var(--bg-primary)",
         zIndex: 1,
       }}
     >

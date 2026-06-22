@@ -9,10 +9,9 @@ import Link from "next/link";
 import { projects, getSortedProjects } from "../../data/projects";
 
 export default function WorksPage() {
-  const { currentTheme, setCurrentTheme, themes, showThemeArrow } = useTheme();
+  const { setCurrentTheme, themes, showThemeArrow, currentTheme } = useTheme();
   const [isLoaded, setIsLoaded] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const isGhostTheme = currentTheme === "ghostMouse";
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoaded(true), 50);
@@ -44,11 +43,7 @@ export default function WorksPage() {
   return (
     <main
       className="relative overflow-x-hidden"
-      style={{
-        backgroundColor:
-          currentTheme === "ghostMouse" ? "transparent" : "var(--bg-primary)",
-        zIndex: 1,
-      }}
+      style={{ backgroundColor: "var(--bg-primary)", zIndex: 1 }}
     >
       <div className="relative z-10 pb-16">
         <Navbar
@@ -86,16 +81,11 @@ export default function WorksPage() {
                   onClick={() => setSelectedCategory(category)}
                   className="px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-medium border transition-all duration-200 focus:outline-none focus:ring-2 min-h-[40px]"
                   style={{
-                    backgroundColor: isGhostTheme
-                      ? selectedCategory === category
-                        ? "rgba(255,255,255,0.12)"
-                        : "rgba(255,255,255,0.03)"
-                      : selectedCategory === category
-                      ? "var(--bg-secondary)"
-                      : "var(--bg-primary)",
-                    borderColor: isGhostTheme
-                      ? "rgba(255,255,255,0.16)"
-                      : "var(--border-primary)",
+                    backgroundColor:
+                      selectedCategory === category
+                        ? "var(--bg-secondary)"
+                        : "var(--bg-primary)",
+                    borderColor: "var(--border-primary)",
                     color: "var(--text-primary)",
                   }}
                   aria-pressed={selectedCategory === category}
@@ -114,23 +104,15 @@ export default function WorksPage() {
                     className="block h-full group"
                   >
                     <article
-                      className="p-4 rounded-2xl border transition-all duration-200 group-hover:-translate-y-0.5 h-full flex flex-col backdrop-blur-sm"
+                      className="p-4 rounded-2xl border transition-all duration-200 group-hover:-translate-y-0.5 h-full flex flex-col"
                       style={{
-                        backgroundColor: isGhostTheme
-                          ? "rgba(255,255,255,0.04)"
-                          : "var(--bg-secondary)",
-                        borderColor: isGhostTheme
-                          ? "rgba(255,255,255,0.16)"
-                          : "var(--border-primary)",
+                        backgroundColor: "var(--bg-secondary)",
+                        borderColor: "var(--border-primary)",
                       }}
                     >
-                      <motion.div
+                      <div
                         className="w-full aspect-[16/10] rounded-xl mb-3 overflow-hidden"
-                        style={{
-                          backgroundColor: isGhostTheme
-                            ? "rgba(0,0,0,0.35)"
-                            : "var(--bg-primary)",
-                        }}
+                        style={{ backgroundColor: "var(--bg-primary)" }}
                       >
                         {project.image ? (
                           <img
@@ -147,7 +129,7 @@ export default function WorksPage() {
                             🚀
                           </span>
                         )}
-                      </motion.div>
+                      </div>
 
                       <div className="flex flex-wrap items-center gap-2 mb-2">
                         <span
@@ -188,7 +170,10 @@ export default function WorksPage() {
                       </p>
 
                       {project.role && (
-                        <p className="page-meta mt-3 pt-2 border-t border-white/10">
+                        <p
+                          className="page-meta mt-3 pt-2 border-t"
+                          style={{ borderColor: "var(--border-primary)" }}
+                        >
                           {project.role}
                         </p>
                       )}

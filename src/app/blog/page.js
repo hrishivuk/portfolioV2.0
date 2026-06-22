@@ -12,8 +12,7 @@ export default function Blog() {
     <main
       className="min-h-screen relative"
       style={{
-        backgroundColor:
-          currentTheme === "ghostMouse" ? "transparent" : "var(--bg-primary)",
+        backgroundColor: "var(--bg-primary)",
         zIndex: 1,
       }}
     >
@@ -27,12 +26,6 @@ export default function Blog() {
 
         <section
           className="h-screen flex items-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16"
-          style={{
-            backgroundColor:
-              currentTheme === "ghostMouse"
-                ? "rgba(10, 10, 10, 0.3)"
-                : "transparent",
-          }}
         >
           <div className="mx-auto" style={{ maxWidth }}>
             <motion.div

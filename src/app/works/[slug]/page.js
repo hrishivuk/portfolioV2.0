@@ -21,8 +21,6 @@ export default function ProjectDetailPage() {
     [params.slug]
   );
 
-  const isGhostTheme = currentTheme === "ghostMouse";
-
   const screenshots = project?.screenshots || [];
   const overviewScreens = screenshots.filter(
     (shot) => shot.placement === "overview"
@@ -47,8 +45,7 @@ export default function ProjectDetailPage() {
       <main
         className="min-h-screen flex items-center justify-center"
         style={{
-          backgroundColor:
-            currentTheme === "ghostMouse" ? "transparent" : "var(--bg-primary)",
+          backgroundColor: "var(--bg-primary)",
         }}
       >
         <div className="text-center px-4">
@@ -78,8 +75,7 @@ export default function ProjectDetailPage() {
     <main
       className="min-h-screen relative"
       style={{
-        backgroundColor:
-          currentTheme === "ghostMouse" ? "transparent" : "var(--bg-primary)",
+        backgroundColor: "var(--bg-primary)",
         zIndex: 1,
       }}
     >
@@ -94,11 +90,6 @@ export default function ProjectDetailPage() {
 
         <section
           className="pt-24 sm:pt-28 pb-10 sm:pb-12"
-          style={{
-            backgroundColor: isGhostTheme
-              ? "rgba(10, 10, 10, 0.3)"
-              : "transparent",
-          }}
         >
           <PageContainer>
             <motion.div
@@ -115,9 +106,7 @@ export default function ProjectDetailPage() {
                   style={{
                     borderColor: "var(--border-primary)",
                     color: "var(--text-secondary)",
-                    backgroundColor: isGhostTheme
-                      ? "rgba(0,0,0,0.4)"
-                      : "var(--bg-secondary)",
+                    backgroundColor: "var(--bg-secondary)",
                   }}
                 >
                   ← Back to works
@@ -177,9 +166,7 @@ export default function ProjectDetailPage() {
                 <div
                   className="rounded-3xl border overflow-hidden aspect-video flex items-center justify-center"
                   style={{
-                    backgroundColor: isGhostTheme
-                      ? "rgba(0,0,0,0.4)"
-                      : "var(--bg-secondary)",
+                    backgroundColor: "var(--bg-secondary)",
                     borderColor: "var(--border-primary)",
                   }}
                 >
@@ -206,11 +193,6 @@ export default function ProjectDetailPage() {
         {/* Content Sections */}
         <section
           className="pb-20"
-          style={{
-            backgroundColor: isGhostTheme
-              ? "rgba(10, 10, 10, 0.3)"
-              : "transparent",
-          }}
         >
           <PageContainer>
             {/* TL;DR Section - What I did & why it mattered */}

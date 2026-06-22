@@ -24,10 +24,7 @@ export default function Home() {
   return (
     <main
       className="relative overflow-x-hidden"
-      style={{
-        backgroundColor:
-          currentTheme === "ghostMouse" ? "transparent" : "var(--bg-primary)",
-      }}
+      style={{ backgroundColor: "var(--bg-primary)" }}
     >
       {/* Content */}
       <div className="relative z-10 w-full overflow-x-hidden">

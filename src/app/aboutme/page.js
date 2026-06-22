@@ -102,30 +102,20 @@ function SkillIcon({ type }) {
 export default function AboutMePage() {
   const { currentTheme, setCurrentTheme, themes, showThemeArrow } = useTheme();
   const [isLoaded, setIsLoaded] = useState(false);
-  const isGhostTheme = currentTheme === "ghostMouse";
-
   useEffect(() => {
     const timer = setTimeout(() => setIsLoaded(true), 50);
     return () => clearTimeout(timer);
   }, []);
 
   const cardStyle = {
-    backgroundColor: isGhostTheme
-      ? "rgba(255,255,255,0.04)"
-      : "var(--bg-secondary)",
-    borderColor: isGhostTheme
-      ? "rgba(255,255,255,0.16)"
-      : "var(--border-primary)",
+    backgroundColor: "var(--bg-secondary)",
+    borderColor: "var(--border-primary)",
   };
 
   return (
     <main
       className="relative overflow-x-hidden"
-      style={{
-        backgroundColor:
-          currentTheme === "ghostMouse" ? "transparent" : "var(--bg-primary)",
-        zIndex: 1,
-      }}
+      style={{ backgroundColor: "var(--bg-primary)", zIndex: 1 }}
     >
       <div className="relative z-10 pb-16">
         <Navbar
@@ -145,7 +135,7 @@ export default function AboutMePage() {
 
           <motion.div
             className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 pb-10 sm:pb-12 border-b"
-            style={{ borderColor: isGhostTheme ? "rgba(255,255,255,0.1)" : "var(--border-primary)" }}
+            style={{ borderColor: "var(--border-primary)" }}
             initial={{ opacity: 0, y: 12 }}
             animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
             transition={{ duration: 0.35, delay: 0.05 }}

@@ -36,72 +36,73 @@ export default function Navbar({
   return (
     <>
       <nav
-        className="fixed top-2 sm:top-4 left-1/2 transform -translate-x-1/2 z-50 flex justify-between items-center bg-neutral-900 text-sm sm:text-base md:text-lg px-3 sm:px-4 md:px-6 lg:px-8 py-2 sm:py-3 md:py-4 rounded-2xl sm:rounded-[28px] md:rounded-[36px] w-[calc(100%-1rem)] sm:w-[calc(100%-1.5rem)] md:w-[calc(100%-2rem)] shadow-lg backdrop-blur-sm"
-        style={{ maxWidth }}
+        className="fixed top-2 sm:top-4 left-1/2 transform -translate-x-1/2 z-50 flex justify-between items-center text-sm sm:text-base md:text-lg px-3 sm:px-4 md:px-6 lg:px-8 py-2 sm:py-3 md:py-4 rounded-2xl sm:rounded-[28px] md:rounded-[36px] w-[calc(100%-1rem)] sm:w-[calc(100%-1.5rem)] md:w-[calc(100%-2rem)] shadow-lg backdrop-blur-md border"
+        style={{
+          maxWidth,
+          backgroundColor: "color-mix(in srgb, var(--bg-secondary) 88%, transparent)",
+          borderColor: "var(--border-primary)",
+          color: "var(--text-primary)",
+        }}
       >
         {/* Brand */}
-        <Link href="/" className="font-bold text-white text-sm sm:text-base md:text-lg">
+        <Link
+          href="/"
+          className="font-bold text-sm sm:text-base md:text-lg"
+          style={{ color: "var(--text-primary)" }}
+        >
           hrishi.
         </Link>
 
       {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-8">
-        <Link
-          href="/"
-          className={
-            isActive("/")
-                ? "text-white"
-                : "text-neutral-400 hover:text-white transition-colors"
-          }
-        >
-          home.
-        </Link>
-        <Link
-          href="/works"
-          className={
-            isActive("/works")
-                ? "text-white"
-                : "text-neutral-400 hover:text-white transition-colors"
-          }
-        >
-          works.
-        </Link>
-        <Link
-          href="/aboutme"
-          className={
-            isActive("/aboutme")
-                ? "text-white"
-                : "text-neutral-400 hover:text-white transition-colors"
-          }
-        >
-          about me.
-        </Link>
-        <Link
-          href="/blog"
-          className={
-            isActive("/blog")
-                ? "text-white"
-                : "text-neutral-400 hover:text-white transition-colors"
-          }
-        >
-          blog.
-        </Link>
+        {[
+          { href: "/", label: "home." },
+          { href: "/works", label: "works." },
+          { href: "/aboutme", label: "about me." },
+          { href: "/blog", label: "blog." },
+        ].map(({ href, label }) => (
+          <Link
+            key={href}
+            href={href}
+            className="transition-opacity hover:opacity-80"
+            style={{
+              color: isActive(href) ? "var(--text-primary)" : "var(--text-muted)",
+              fontWeight: isActive(href) ? 600 : 400,
+            }}
+          >
+            {label}
+          </Link>
+        ))}
           {/* Theme Switcher */}
           <div className="relative" ref={dropdownRef}>
             <button
               onClick={() => setShowThemeSwitcher(!showThemeSwitcher)}
-              className="flex items-center space-x-2 text-neutral-400 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-white/50 rounded"
+              className="flex items-center space-x-2 transition-opacity hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-offset-1 rounded"
+              style={{ color: "var(--text-muted)" }}
               aria-label="Toggle theme selector"
               aria-expanded={showThemeSwitcher}
               aria-haspopup="true"
             >
               <div
-                className="w-4 h-4 rounded-full border-2 border-current"
-                style={{
-                  backgroundColor:
-                    themes?.[currentTheme]?.bgPrimary || "#0a0a0a",
-                }}
-              ></div>
+                className="w-4 h-4 rounded-full border overflow-hidden flex shrink-0"
+                style={{ borderColor: "var(--border-primary)" }}
+                aria-hidden
+              >
+                <span
+                  className="flex-1 h-full"
+                  style={{
+                    backgroundColor:
+                      themes?.[currentTheme]?.bgPrimary || "#0a0a0b",
+                  }}
+                />
+                <span
+                  className="w-1.5 h-full"
+                  style={{
+                    backgroundColor:
+                      themes?.[currentTheme]?.accentPrimary || "#22d3ee",
+                  }}
+                />
+              </div>
               <span className="text-sm">theme</span>
             </button>
 
@@ -119,14 +120,19 @@ export default function Navbar({
                     src="/arrow.png"
                     alt="Arrow pointing down"
                     className="w-16 h-16 opacity-90 scale-y-[-1] -rotate-90"
-                    style={{ filter: "invert(1)" }}
+                    style={{
+                      filter: currentTheme === "paper" ? "none" : "invert(1)",
+                    }}
                     initial={{ opacity: 0.9 }}
                     animate={{ opacity: 0.9 }}
                     transition={{ duration: 0.3 }}
                   />
                   <motion.p
-                    className="text-xs text-neutral-300 mt-2 mr-10 whitespace-nowrap px-2 py-1 rounded"
-                    style={{ fontFamily: "var(--font-dynapuff)" }}
+                    className="text-xs mt-2 mr-10 whitespace-nowrap px-2 py-1 rounded"
+                    style={{
+                      color: "var(--text-secondary)",
+                      fontFamily: "var(--font-dynapuff)",
+                    }}
                     initial={{ opacity: 0.8 }}
                     animate={{ opacity: 0.8 }}
                     transition={{ duration: 0.3 }}
@@ -139,11 +145,22 @@ export default function Navbar({
 
             {/* Theme Dropdown */}
             {showThemeSwitcher && (
-              <div className="absolute top-full right-0 mt-2 w-48 bg-neutral-800 rounded-xl shadow-lg border border-neutral-700 overflow-hidden">
-                {/* Choose Theme Text */}
-                <div className="px-4 py-2 bg-neutral-700 border-b border-neutral-600">
-                  <p className="text-xs text-neutral-300 text-center">
-                    Choose your theme here
+              <div
+                className="absolute top-full right-0 mt-2 w-52 rounded-xl shadow-lg border overflow-hidden"
+                style={{
+                  backgroundColor: "var(--bg-secondary)",
+                  borderColor: "var(--border-primary)",
+                }}
+              >
+                <div
+                  className="px-4 py-2 border-b"
+                  style={{ borderColor: "var(--border-primary)" }}
+                >
+                  <p
+                    className="text-xs text-center"
+                    style={{ color: "var(--text-muted)" }}
+                  >
+                    Choose a theme
                   </p>
                 </div>
                 {Object.entries(themes).map(([key, theme]) => (
@@ -153,29 +170,29 @@ export default function Navbar({
                       setCurrentTheme(key);
                       setShowThemeSwitcher(false);
                     }}
-                    className={`w-full px-4 py-3 flex items-center space-x-3 text-left hover:bg-neutral-700 transition-colors ${
-                      currentTheme === key ? "bg-neutral-700" : ""
-                    }`}
+                    className="w-full px-4 py-3 flex items-center space-x-3 text-left transition-colors"
+                    style={{
+                      backgroundColor:
+                        currentTheme === key
+                          ? "color-mix(in srgb, var(--accent-primary) 12%, var(--bg-secondary))"
+                          : "transparent",
+                      color: "var(--text-primary)",
+                    }}
                   >
                     <div
-                      className="w-6 h-6 rounded-full border-2 border-neutral-500"
-                      style={{ backgroundColor: theme.bgPrimary }}
-                    ></div>
-                    <div className="flex flex-col">
-                      <span className="text-white text-sm font-medium">
-                        {theme.name}
-                      </span>
-                      <div className="flex space-x-1">
-                        <div
-                          className="w-3 h-2 rounded-sm"
-                          style={{ backgroundColor: theme.bgPrimary }}
-                        ></div>
-                        <div
-                          className="w-3 h-2 rounded-sm"
-                          style={{ backgroundColor: theme.textPrimary }}
-                        ></div>
-                      </div>
+                      className="w-6 h-6 rounded-full border overflow-hidden flex shrink-0"
+                      style={{ borderColor: theme.borderPrimary }}
+                    >
+                      <span
+                        className="flex-1 h-full"
+                        style={{ backgroundColor: theme.bgPrimary }}
+                      />
+                      <span
+                        className="w-2 h-full"
+                        style={{ backgroundColor: theme.accentPrimary }}
+                      />
                     </div>
+                    <span className="text-sm font-medium">{theme.name}</span>
                   </button>
                 ))}
               </div>

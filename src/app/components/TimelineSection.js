@@ -99,10 +99,7 @@ export default function TimelineSection() {
       className="py-16 lg:py-24 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative"
       style={{
         minHeight: "200vh",
-        backgroundColor:
-          currentTheme === "ghostMouse"
-            ? "rgba(10, 10, 10, 0.3)"
-            : "transparent",
+        backgroundColor: "transparent",
         zIndex: 10,
       }}
     >

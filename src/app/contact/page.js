@@ -22,8 +22,7 @@ export default function Contact() {
     <main
       className="min-h-screen relative"
       style={{
-        backgroundColor:
-          currentTheme === "ghostMouse" ? "transparent" : "var(--bg-primary)",
+        backgroundColor: "var(--bg-primary)",
         zIndex: 1,
       }}
     >

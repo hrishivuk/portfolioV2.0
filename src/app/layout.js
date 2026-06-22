@@ -2,7 +2,7 @@ import { Geist, Geist_Mono, DynaPuff } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { LayoutProvider } from "./contexts/LayoutContext";
-import GlobalGhostMouseBackground from "./components/GlobalGhostMouseBackground";
+import AmbientBackground from "./components/AmbientBackground";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -61,11 +61,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${dynaPuff.variable} antialiased bg-neutral-950 text-neutral-100`}
+        className={`${geistSans.variable} ${geistMono.variable} ${dynaPuff.variable} antialiased`}
+        style={{ backgroundColor: "var(--bg-primary)", color: "var(--text-primary)" }}
       >
         <ThemeProvider>
           <LayoutProvider>
-            <GlobalGhostMouseBackground />
+            <AmbientBackground />
         {children}
           </LayoutProvider>
         </ThemeProvider>
