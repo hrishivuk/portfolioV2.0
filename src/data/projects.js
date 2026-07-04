@@ -44,6 +44,35 @@ export const projects = [
       "Navigation that adapts to auth state, profile completion, club membership, and join-request status without dead-ends.",
       "Production-ready Android build demonstrating a complete pipeline from design and architecture through to distribution.",
     ],
+    caseStudy: {
+      eyebrow: "Flagship product case study",
+      timeline: "2025",
+      status: "Android release build",
+      problem:
+        "Grassroots football clubs often run on scattered WhatsApp threads, spreadsheets, informal approvals, and coach memory. That creates friction for onboarding, player management, and match preparation.",
+      opportunity:
+        "Create a structured club workspace that still feels simple enough for non-technical coaches and players to use every week.",
+      users: ["Club managers", "Football coaches", "Players waiting to join a club"],
+      productThinking: [
+        "Separated coach and player onboarding so each role only sees the decisions that matter to them.",
+        "Mapped the app around user state: unauthenticated, profile incomplete, club owner, pending join request, approved player.",
+        "Made club identity visible across the experience so a join code feels connected to a real team, not a generic form.",
+      ],
+      designDecisions: [
+        "Designed onboarding as a guided sequence instead of a long form.",
+        "Used branded club previews to build trust before a player submits a join request.",
+        "Kept home screens role-specific so managers and players land on different priorities.",
+      ],
+      engineeringDecisions: [
+        "Built state-aware navigation with React Navigation so users always land in the correct flow.",
+        "Structured Firestore around users, clubs, players, and join requests to keep ownership boundaries clear.",
+        "Handled Android build, signing, and release APK debugging to move beyond prototype status.",
+      ],
+      outcome:
+        "CoachCanvas demonstrates the full product loop: problem framing, UX flows, mobile UI, backend structure, role-based logic, and release preparation.",
+      reflection:
+        "The biggest learning was that mobile product quality depends as much on state design as visual design. The app needed to understand where each user was in the club journey before any screen could feel simple.",
+    },
     screenshots: [
       {
         src: "/images/coachcanvas/coachcanvas-loading.png",
@@ -101,6 +130,34 @@ export const projects = [
       "Mobile-first design with focus on thumb reach zones and one-handed usability.",
       "Clean, approachable visual language that removes intimidation from financial planning.",
     ],
+    caseStudy: {
+      eyebrow: "Five-day UX sprint",
+      timeline: "5 days",
+      status: "High-fidelity prototype",
+      problem:
+        "Many budgeting products feel rigid and punitive, which makes saving feel like restriction rather than progress.",
+      opportunity:
+        "Design a lightweight savings companion that helps users feel in control without overwhelming them with financial complexity.",
+      users: ["Students", "Young professionals", "Casual savers"],
+      productThinking: [
+        "Focused the concept around small, visible progress instead of heavy budgeting rules.",
+        "Prioritized fast goal creation and clear reward moments for mobile use.",
+        "Kept the scope tight enough to produce a complete prototype inside the sprint window.",
+      ],
+      designDecisions: [
+        "Used progress-led goal cards to make status understandable at a glance.",
+        "Designed for thumb reach and short sessions rather than long planning workflows.",
+        "Created a softer visual language to reduce the intimidation common in finance apps.",
+      ],
+      engineeringDecisions: [
+        "Prepared reusable component patterns and interaction states for eventual implementation.",
+        "Designed screens with consistent spacing and hierarchy so handoff would be straightforward.",
+      ],
+      outcome:
+        "The project shows rapid product thinking: identifying a user problem, shaping a focused concept, and delivering a coherent mobile interface quickly.",
+      reflection:
+        "The time constraint forced clear prioritization. The strongest ideas were the ones that made the product easier to understand in the first few seconds.",
+    },
     screenshots: [
       {
         src: "/images/flexsave/fs-all-coups.png",
@@ -131,28 +188,139 @@ export const projects = [
   },
   {
     id: "brightspace-learning-experience",
-    title: "Brightspace – Learning Experience Concept",
+    title: "Brightspace – Career Growth Feature Concept",
     category: "UX Design",
     year: "2023",
     featured: true,
     summary:
-      "A UX case study and interactive prototype focused on simplifying student workflows, improving visual hierarchy, and reducing friction in daily tasks.",
+      "A graded university UI/UX project that extended the Brightspace student app with career-focused features for resumes, networking, portfolios, and academic references.",
     description:
-      "Brightspace explores how a student portal can feel calmer and more focused. The concept reorganizes key actions like checking deadlines, modules, and messages into a clearer, more visual structure.",
+      "For this project, I chose Brightspace as an existing university app with an opportunity to support students beyond modules, notes, and results. After planning and sketching, I proposed three additions: a resume builder, a networking/career area, and a portfolio page where students can showcase university projects while professors can add notes and references.",
     image: "/images/brightspace/brightspace.png",
-    technologies: ["Figma", "Prototyping", "User Research", "UI Design"],
+    heroFit: "contain",
+    technologies: [
+      "Figma",
+      "UI Design",
+      "UX Research",
+      "Wireframing",
+      "Prototyping",
+      "Mobile App Design",
+    ],
     liveUrl: "",
     githubUrl: "",
     role: "UX & UI Designer",
     responsibilities: [
-      "Mapped the current student journey and identified key friction points.",
-      "Redesigned the information architecture for the dashboard and modules.",
-      "Built high-fidelity prototypes in Figma for usability walkthroughs.",
+      "Reviewed the existing Brightspace student app and identified an opportunity to support career growth inside the university experience.",
+      "Planned three new feature areas: resume maker, networking/career opportunities, and a student project portfolio.",
+      "Sketched early concepts for growth and resume creation before moving into high-fidelity mobile screens.",
+      "Redesigned the bottom navigation to make the new career-focused area easier to access.",
+      "Created final UI screens for adding projects, building a CV, connecting with others, and browsing career opportunities.",
     ],
     highlights: [
-      "Card-based dashboard that surfaces the next important action.",
-      "Cleaner visual hierarchy for deadlines and assessments.",
-      "Prototype designed to support quick user testing sessions.",
+      "Extended an existing university app rather than designing a standalone concept.",
+      "Connected academic work to employability through portfolios, resumes, references, and networking.",
+      "Used sketches and planning before moving into final mobile UI screens.",
+      "Before/after bottom navigation exploration showing how the new feature could fit into the current app.",
+    ],
+    caseStudy: {
+      eyebrow: "University UI/UX project",
+      timeline: "2023",
+      status: "Graded UX concept",
+      problem:
+        "Brightspace helps students access modules, notes, and results, but it does not strongly support the next step: turning university work into career-ready proof such as resumes, portfolios, references, and networking.",
+      opportunity:
+        "Add a career-growth layer inside the existing app so students can build a CV, showcase projects, discover opportunities, and collect professor references without leaving the university ecosystem.",
+      users: ["University students", "Professors", "Career support teams"],
+      productSectionEyebrow: "UX planning",
+      productSectionTitle: "Why this addition belonged inside Brightspace.",
+      designSectionEyebrow: "Feature design",
+      designSectionTitle: "The three additions I designed.",
+      productThinking: [
+        "Started with the existing app context instead of creating a separate career product from scratch.",
+        "Focused on the transition from coursework to employability: projects, CVs, references, and opportunities.",
+        "Explored early ideas through sketches for growth and resume creation before committing to final UI screens.",
+      ],
+      designDecisions: [
+        "Resume maker: a guided area for students to create and manage a CV using university and project information.",
+        "Networking and career opportunities: screens for discovering roles, connecting with people, and finding relevant opportunities.",
+        "Portfolio page: a place for students to add university projects while professors can provide notes and references.",
+        "Bottom navigation update: adjusted the app navigation to make the new growth/career area easier to find.",
+      ],
+      engineeringDecisions: [
+        "Designed mobile-first screens at app dimensions so the concept could be evaluated as a realistic Brightspace addition.",
+        "Kept the visual direction close enough to an education app so the feature felt like an extension, not a separate product.",
+        "Prepared final screens around clear user tasks: add project, build CV, connect, browse opportunities, and request references.",
+      ],
+      outcome:
+        "The project shows UX thinking through a practical feature extension: identifying a gap in an existing app, planning the addition, sketching early ideas, and producing final mobile screens.",
+      reflection:
+        "This project helped me understand how to add new value to an existing product without ignoring its current purpose. The strongest part was connecting academic activity to career readiness.",
+    },
+    screenshots: [
+      {
+        src: "/images/brightspace/GrowthSketch.png",
+        alt: "Initial sketch exploring the career growth addition inside Brightspace",
+        placement: "overview",
+        aspect: "portrait",
+      },
+      {
+        src: "/images/brightspace/ResumeSketch.png",
+        alt: "Initial sketch for the resume maker flow",
+        placement: "overview",
+        aspect: "portrait",
+      },
+      {
+        src: "/images/brightspace/beforeMenu.png",
+        alt: "Before: original Brightspace bottom navigation",
+        placement: "process",
+        aspect: "banner",
+        size: "large",
+        presentation: "comparison",
+      },
+      {
+        src: "/images/brightspace/AfterMenu.png",
+        alt: "After: updated bottom navigation with the new growth area",
+        placement: "process",
+        aspect: "banner",
+        size: "large",
+        presentation: "comparison",
+      },
+      {
+        src: "/images/brightspace/Addprojects.png",
+        alt: "Add projects screen for showcasing university work in a student portfolio",
+        placement: "features",
+        aspect: "portrait",
+      },
+      {
+        src: "/images/brightspace/BuildCV1.png",
+        alt: "Build CV screen for creating a student resume inside Brightspace",
+        placement: "features",
+        aspect: "portrait",
+      },
+      {
+        src: "/images/brightspace/Connect Home Screen.png",
+        alt: "Networking home screen for connecting with people and career support",
+        placement: "features",
+        aspect: "portrait",
+      },
+      {
+        src: "/images/brightspace/GP Offer List.png",
+        alt: "Career opportunities screen showing available growth and job-related offers",
+        placement: "features",
+        aspect: "portrait",
+      },
+      {
+        src: "/images/brightspace/Open Resume Tab.png",
+        alt: "Resume tab screen showing access to the CV builder feature",
+        placement: "features",
+        aspect: "portrait",
+      },
+      {
+        src: "/images/brightspace/Reference Screenshot.png",
+        alt: "Professor reference screen for notes and academic recommendations",
+        placement: "features",
+        aspect: "portrait",
+      },
     ],
   },
   {
@@ -180,6 +348,35 @@ export const projects = [
       "Shared PageContainer alignment system matching the navbar.",
       "Content-dense home layout optimized for hiring managers.",
     ],
+    caseStudy: {
+      eyebrow: "Personal product system",
+      timeline: "2025",
+      status: "Live portfolio iteration",
+      problem:
+        "The previous portfolio was functional but did not fully express the overlap between design thinking, frontend craft, and product storytelling.",
+      opportunity:
+        "Turn the portfolio into a product experience that helps recruiters understand how the work was shaped, not just what tools were used.",
+      users: ["Recruiters", "Hiring managers", "Product teams"],
+      productThinking: [
+        "Audited the information architecture around recruiter scanning behavior.",
+        "Moved from a vertical card stack toward editorial project storytelling.",
+        "Repositioned the site around product building from idea to production.",
+      ],
+      designDecisions: [
+        "Reduced repeated card patterns and introduced stronger section contrast.",
+        "Adopted a single authored dark theme as the default visual identity.",
+        "Used larger typography and calmer motion to create a more premium first impression.",
+      ],
+      engineeringDecisions: [
+        "Kept the redesign within the existing Next.js app structure.",
+        "Centralized visual tokens and reusable studio utilities in global CSS.",
+        "Moved homepage project rendering to Next Image for stronger media performance.",
+      ],
+      outcome:
+        "The redesign reframes the site as a product/design engineering portfolio instead of a conventional React portfolio.",
+      reflection:
+        "The main lesson was restraint: the strongest portfolio moments come from hierarchy and story before decoration.",
+    },
   },
   {
     id: "findaside-football-planner",
@@ -188,48 +385,108 @@ export const projects = [
     year: "2024",
     featured: true,
     summary:
-      "A freelance web application that helps hosts organize football matches, manage player registrations, handle payments, and coordinate teams—all in one platform.",
+      "A contract frontend build for a football match-planning web app, covering host dashboards, game creation, player groups, payments, maps, routing, and responsive screens.",
     description:
-      "Findaside is a football match planning platform built for hosts who organize regular games. Hosts can create accounts, book turfs externally, and then create match events in the app. Players can join matches, form teams (Team A and Team B), and manage payments either through the app or in-person with status updates. The app also enables hosts to share player lists directly to WhatsApp groups, streamlining communication and coordination for local football communities.",
+      "Findaside is a football match-planning platform for hosts and players. I worked on the frontend implementation after initially being involved with the UI team, building the React interface across dashboards, game creation, booking, groups, payments, maps, and authenticated user flows.",
     image: "/images/findaside/findaside.png",
-    technologies: ["React", "JavaScript", "CSS", "Frontend Development"],
+    heroFit: "contain",
+    technologies: [
+      "React",
+      "TypeScript",
+      "React Router",
+      "Google Maps API",
+      "Firebase Authentication",
+      "Firestore",
+      "Firebase",
+      "CSS",
+    ],
     liveUrl: "",
     githubUrl: "",
-    role: "Frontend Developer (Freelance)",
+    role: "Frontend Developer (Contract / Freelance)",
     responsibilities: [
-      "Built the complete frontend interface using React for match creation, player management, and team formation.",
-      "Implemented user authentication and account management flows for hosts and players.",
-      "Designed and developed match listing, player registration, and team selection interfaces.",
-      "Created payment tracking UI that supports both in-app and in-person payment status updates.",
-      "Built WhatsApp integration feature for sharing player lists to external groups.",
+      "Built the React frontend for dashboard, upcoming games, booking, create-game, group, and payment screens.",
+      "Implemented client-side routing with React Router so hosts and players could move between match-management flows.",
+      "Connected authenticated user experiences using Firebase Authentication with OAuth and Firestore-backed data.",
+      "Integrated map-based UI using the Maps API for location-focused game discovery and booking context.",
+      "Built responsive layouts so the same match details and player flows worked across desktop and mobile views.",
     ],
     highlights: [
-      "Streamlined match organization workflow from turf booking to team formation.",
-      "Flexible payment system supporting both digital and cash payments with status tracking.",
-      "WhatsApp integration that bridges the app with existing communication channels.",
-      "Team formation feature allowing players to organize into Team A and Team B before matches.",
-      "Clean, intuitive interface that makes match planning accessible for non-technical hosts.",
+      "React + TypeScript frontend for a real contract/freelance product workflow.",
+      "Host and player flows separated across dashboard, game creation, booking, groups, and payments.",
+      "OAuth authentication and Firestore usage for account-backed product states.",
+      "Maps API integration for location-led match discovery and booking views.",
+      "Responsive implementation across desktop dashboards and mobile match-detail screens.",
     ],
+    caseStudy: {
+      eyebrow: "Contract frontend build",
+      timeline: "2024",
+      status: "Contract / freelance frontend work",
+      problem:
+        "The product needed a working frontend for two user types: hosts who create and manage games, and players who discover, join, and coordinate around those games.",
+      opportunity:
+        "Turn the product requirements into a usable React application with authenticated flows, route-based pages, map views, game creation, group management, and payment screens.",
+      users: ["Match hosts", "Players"],
+      productSectionEyebrow: "Build context",
+      productSectionTitle: "What the frontend needed to support.",
+      designSectionEyebrow: "Frontend scope",
+      designSectionTitle: "The screens and flows I implemented.",
+      productThinking: [
+        "Hosts needed a dashboard for upcoming games, bookings, created games, groups, and payment activity.",
+        "Players needed clear game discovery and match-detail screens that worked on mobile as well as desktop.",
+        "The frontend had to support authenticated states through Firebase Authentication and Firestore-connected user data.",
+      ],
+      designDecisions: [
+        "Built the main page set: dashboard, search/upcoming games, booking, create game, group, payments, and settings.",
+        "Used React Router to keep each workflow separated while preserving a consistent app shell and navigation.",
+        "Implemented responsive layouts for dense desktop dashboard screens and simpler mobile match-detail views.",
+      ],
+      engineeringDecisions: [
+        "Built the application frontend with React and TypeScript for component-driven screens and safer UI logic.",
+        "Used Firebase Authentication with OAuth and Firestore for account-backed flows and app data.",
+        "Integrated the Maps API into the game discovery and booking experience.",
+        "Handled frontend states such as empty upcoming games, created game details, group views, and payment screens.",
+      ],
+      outcome:
+        "Findaside demonstrates contract frontend delivery: taking product requirements and turning them into routed, authenticated, responsive React screens for a real match-planning workflow.",
+      reflection:
+        "The project pushed me to focus less on visual exploration and more on implementation quality: page structure, state handling, authenticated flows, responsive layouts, and making complex screens usable.",
+    },
     screenshots: [
       {
-        src: "/images/findaside/fs-dashboard.png",
-        alt: "Findaside dashboard - mobile responsive view",
+        src: "/images/findaside/FSUpcoming.png",
+        alt: "Upcoming games screen with map view and empty-state game schedule",
         placement: "overview",
+        aspect: "wide",
       },
       {
-        src: "/images/findaside/fs-responsive.png",
-        alt: "Findaside responsive mobile interface",
+        src: "/images/findaside/FSBooking.png",
+        alt: "Booking screen showing match details and location context",
         placement: "overview",
+        aspect: "wide",
       },
       {
-        src: "/images/findaside/fs-cover.png",
-        alt: "Findaside match creation and team management - desktop view",
+        src: "/images/findaside/FSCreate.png",
+        alt: "Create game form built for hosts to add match details",
         placement: "features",
+        aspect: "wide",
       },
       {
-        src: "/images/findaside/fs-games.png",
-        alt: "Findaside games listing and match management - desktop view",
+        src: "/images/findaside/FSGame.png",
+        alt: "Game detail screen with match information and join action",
         placement: "features",
+        aspect: "wide",
+      },
+      {
+        src: "/images/findaside/FSGroup.png",
+        alt: "Group screen for organizing players around a match",
+        placement: "process",
+        aspect: "wide",
+      },
+      {
+        src: "/images/findaside/FSPayments.png",
+        alt: "Payments screen for tracking match-related payment activity",
+        placement: "features",
+        aspect: "wide",
       },
     ],
   },

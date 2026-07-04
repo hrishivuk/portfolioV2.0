@@ -1,31 +1,29 @@
 "use client";
+
 import { useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { FiRefreshCw } from "react-icons/fi";
 import Navbar from "./components/navbar";
+import PageContainer from "./components/PageContainer";
 import { useTheme } from "./contexts/ThemeContext";
 
 export default function Error({ error, reset }) {
   const { currentTheme, setCurrentTheme, themes, showThemeArrow } = useTheme();
 
   useEffect(() => {
-    // Log error to error reporting service in production
-    if (process.env.NODE_ENV === "production") {
-      // You can integrate error reporting here (e.g., Sentry, LogRocket)
-      // console.error("Application error:", error);
-    } else {
+    if (process.env.NODE_ENV !== "production") {
       console.error("Application error:", error);
     }
   }, [error]);
 
   return (
-    <main
-      className="min-h-screen relative"
-      style={{
-        backgroundColor: "var(--bg-primary)",
-        zIndex: 1,
-      }}
-    >
+    <main className="relative min-h-screen overflow-x-hidden bg-[var(--bg-primary)]">
+      <div className="pointer-events-none fixed inset-0 z-0 opacity-60">
+        <div className="studio-grid absolute inset-0" />
+        <div className="studio-cursor-glow absolute inset-[-10%]" />
+      </div>
+
       <div className="relative z-10">
         <Navbar
           currentTheme={currentTheme}
@@ -34,68 +32,37 @@ export default function Error({ error, reset }) {
           showThemeArrow={showThemeArrow}
         />
 
-        <section className="min-h-screen flex items-center justify-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
-          <div className="text-center max-w-2xl mx-auto">
+        <section className="min-h-screen pt-32 flex items-center">
+          <PageContainer>
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
+              transition={{ duration: 0.55, ease: "easeOut" }}
+              className="max-w-5xl"
             >
-              <motion.h1
-                className="text-6xl lg:text-7xl font-black mb-4"
-                style={{ color: "var(--text-primary)" }}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.2, duration: 0.6 }}
-              >
-                Something went wrong
-              </motion.h1>
-
-              <motion.p
-                className="text-lg mb-8 leading-relaxed"
-                style={{ color: "var(--text-secondary)" }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.6 }}
-              >
-                We encountered an unexpected error. Don&apos;t worry, this has been
-                logged and we&apos;ll look into it.
-              </motion.p>
-
-              <motion.div
-                className="flex flex-col sm:flex-row gap-4 justify-center"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6, duration: 0.6 }}
-              >
+              <p className="studio-kicker mb-5">Error</p>
+              <h1 className="studio-display">Something slipped in the interface.</h1>
+              <p className="studio-subheading mt-7 max-w-2xl">
+                The page hit an unexpected state. Try reloading this view, or jump
+                back to the work while the issue is checked.
+              </p>
+              <div className="mt-9 flex flex-col gap-3 sm:flex-row">
                 <button
+                  type="button"
                   onClick={reset}
-                  className="px-6 py-3 rounded-lg border font-medium transition-all duration-300 hover:scale-105"
-                  style={{
-                    backgroundColor: "var(--bg-secondary)",
-                    borderColor: "var(--border-primary)",
-                    color: "var(--text-primary)",
-                  }}
+                  className="studio-button studio-button-primary"
                 >
-                  Try Again
+                  Try again
+                  <FiRefreshCw aria-hidden />
                 </button>
-                <Link
-                  href="/"
-                  className="px-6 py-3 rounded-lg border font-medium transition-all duration-300 hover:scale-105"
-                  style={{
-                    backgroundColor: "var(--bg-secondary)",
-                    borderColor: "var(--border-primary)",
-                    color: "var(--text-primary)",
-                  }}
-                >
-                  Go Home
+                <Link href="/works" className="studio-button studio-button-ghost">
+                  View work
                 </Link>
-              </motion.div>
+              </div>
             </motion.div>
-          </div>
+          </PageContainer>
         </section>
       </div>
     </main>
   );
 }
-

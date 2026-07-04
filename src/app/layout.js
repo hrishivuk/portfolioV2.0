@@ -1,41 +1,24 @@
-import { Geist, Geist_Mono, DynaPuff } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { LayoutProvider } from "./contexts/LayoutContext";
 import AmbientBackground from "./components/AmbientBackground";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-const dynaPuff = DynaPuff({
-  variable: "--font-dynapuff",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
-
 // Get site URL from environment variable or use default
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://hrishivuk.com";
 
 export const metadata = {
-  title: "Hrishikesh Varma - Frontend Developer & UX Designer",
+  title: "Hrishikesh Varma - Frontend Engineer & Product Designer",
   description:
-    "Frontend Developer & Creative Digital Media enthusiast based in Dublin. Specializing in React, Next.js, UI/UX design, and creating intuitive digital experiences.",
+    "Frontend engineer and UX-minded product builder in Dublin designing and building web, mobile, and AI-assisted product experiences.",
   keywords:
-    "Frontend Developer, UX Designer, React, Next.js, Dublin, Web Development, UI Design",
+    "Frontend Engineer, Product Engineer, UX Engineer, Design Engineer, React, Next.js, React Native, Dublin",
   authors: [{ name: "Hrishikesh Varma" }],
   creator: "Hrishikesh Varma",
   metadataBase: new URL(siteUrl),
   openGraph: {
-    title: "Hrishikesh Varma - Frontend Developer & UX Designer",
+    title: "Hrishikesh Varma - Frontend Engineer & Product Designer",
     description:
-      "Frontend Developer & Creative Digital Media enthusiast based in Dublin. Specializing in React, Next.js, UI/UX design, and creating intuitive digital experiences.",
+      "Frontend engineer and UX-minded product builder in Dublin designing and building web, mobile, and AI-assisted product experiences.",
     url: siteUrl,
     siteName: "Hrishikesh Varma Portfolio",
     type: "website",
@@ -44,15 +27,15 @@ export const metadata = {
         url: `${siteUrl}/og-image.png`,
         width: 1200,
         height: 630,
-        alt: "Hrishikesh Varma - Frontend Developer & UX Designer Portfolio",
+        alt: "Hrishikesh Varma - Frontend Engineer & Product Designer Portfolio",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Hrishikesh Varma - Frontend Developer & UX Designer",
+    title: "Hrishikesh Varma - Frontend Engineer & Product Designer",
     description:
-      "Frontend Developer & Creative Digital Media enthusiast based in Dublin",
+      "Frontend engineer and UX-minded product builder in Dublin",
     images: [`${siteUrl}/og-image.png`],
   },
 };
@@ -61,7 +44,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${dynaPuff.variable} antialiased`}
+        className="antialiased"
         style={{ backgroundColor: "var(--bg-primary)", color: "var(--text-primary)" }}
       >
         <ThemeProvider>

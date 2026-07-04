@@ -1,21 +1,22 @@
 "use client";
-import { useEffect } from "react";
+
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { FiArrowUpRight } from "react-icons/fi";
 import Navbar from "./components/navbar";
+import PageContainer from "./components/PageContainer";
 import { useTheme } from "./contexts/ThemeContext";
 
 export default function NotFound() {
   const { currentTheme, setCurrentTheme, themes, showThemeArrow } = useTheme();
 
   return (
-    <main
-      className="min-h-screen relative"
-      style={{
-        backgroundColor: "var(--bg-primary)",
-        zIndex: 1,
-      }}
-    >
+    <main className="relative min-h-screen overflow-x-hidden bg-[var(--bg-primary)]">
+      <div className="pointer-events-none fixed inset-0 z-0 opacity-60">
+        <div className="studio-grid absolute inset-0" />
+        <div className="studio-cursor-glow absolute inset-[-10%]" />
+      </div>
+
       <div className="relative z-10">
         <Navbar
           currentTheme={currentTheme}
@@ -24,78 +25,33 @@ export default function NotFound() {
           showThemeArrow={showThemeArrow}
         />
 
-        <section className="min-h-screen flex items-center justify-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
-          <div className="text-center max-w-2xl mx-auto">
+        <section className="min-h-screen pt-32 flex items-center">
+          <PageContainer>
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
+              transition={{ duration: 0.55, ease: "easeOut" }}
+              className="max-w-5xl"
             >
-              <motion.h1
-                className="text-8xl lg:text-9xl font-black mb-4"
-                style={{ color: "var(--text-primary)" }}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.2, duration: 0.6 }}
-              >
-                404
-              </motion.h1>
-
-              <motion.h2
-                className="text-3xl lg:text-4xl font-bold mb-6"
-                style={{ color: "var(--text-primary)" }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.6 }}
-              >
-                Page Not Found
-              </motion.h2>
-
-              <motion.p
-                className="text-lg mb-8 leading-relaxed"
-                style={{ color: "var(--text-secondary)" }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6, duration: 0.6 }}
-              >
-                The page you&apos;re looking for doesn&apos;t exist or has been moved.
-                Let&apos;s get you back on track.
-              </motion.p>
-
-              <motion.div
-                className="flex flex-col sm:flex-row gap-4 justify-center"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8, duration: 0.6 }}
-              >
-                <Link
-                  href="/"
-                  className="px-6 py-3 rounded-lg border font-medium transition-all duration-300 hover:scale-105"
-                  style={{
-                    backgroundColor: "var(--bg-secondary)",
-                    borderColor: "var(--border-primary)",
-                    color: "var(--text-primary)",
-                  }}
-                >
-                  Go Home
+              <p className="studio-kicker mb-5">404</p>
+              <h1 className="studio-display">This page moved off the canvas.</h1>
+              <p className="studio-subheading mt-7 max-w-2xl">
+                The route you opened does not exist anymore. The best next move is
+                back to the product stories.
+              </p>
+              <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+                <Link href="/works" className="studio-button studio-button-primary">
+                  View work
+                  <FiArrowUpRight aria-hidden />
                 </Link>
-                <Link
-                  href="/works"
-                  className="px-6 py-3 rounded-lg border font-medium transition-all duration-300 hover:scale-105"
-                  style={{
-                    backgroundColor: "var(--bg-secondary)",
-                    borderColor: "var(--border-primary)",
-                    color: "var(--text-primary)",
-                  }}
-                >
-                  View Works
+                <Link href="/" className="studio-button studio-button-ghost">
+                  Go home
                 </Link>
-              </motion.div>
+              </div>
             </motion.div>
-          </div>
+          </PageContainer>
         </section>
       </div>
     </main>
   );
 }
-

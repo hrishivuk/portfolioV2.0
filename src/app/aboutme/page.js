@@ -1,123 +1,95 @@
 "use client";
-import { useState, useEffect } from "react";
+
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
+import { FiArrowUpRight, FiDownload, FiMapPin } from "react-icons/fi";
 import { useTheme } from "../contexts/ThemeContext";
 import Navbar from "../components/navbar";
 import PageContainer from "../components/PageContainer";
-import PageHeader from "../components/PageHeader";
-import SectionHeading from "../components/SectionHeading";
 
-const skillGroups = [
+const fadeUp = {
+  hidden: { opacity: 0, y: 18 },
+  visible: { opacity: 1, y: 0 },
+};
+
+const buildInterests = [
   {
-    title: "Frontend Development",
-    description:
-      "Responsive web interfaces — clean code, performance, and accessible interactions.",
-    label: "Tech Stack",
-    skills: [
-      "React",
-      "Next.js",
-      "TypeScript",
-      "Tailwind CSS",
-      "Vue.js",
-      "Angular",
-    ],
-    icon: "browser",
+    title: "Design Systems",
+    body: "Components, tokens, states, and interface rules that make products feel clear and consistent.",
   },
   {
-    title: "UX & Interaction Design",
-    description:
-      "Research-driven flows, prototypes, and interfaces tuned for real user behaviour.",
-    label: "Skills",
-    skills: [
-      "Wireframing",
-      "User Research",
-      "Prototyping",
-      "UI Design",
-      "Usability Testing",
-    ],
-    icon: "ux",
+    title: "AI Interfaces",
+    body: "Products where AI is useful because the interface makes the output understandable, editable, and practical.",
   },
   {
-    title: "Android Development",
-    description:
-      "React Native apps with Firebase backends and role-based mobile experiences.",
-    label: "Tech Stack",
-    skills: [
-      "React Native",
-      "Firebase",
-      "Firestore",
-      "Mobile UI/UX",
-    ],
-    icon: "mobile",
+    title: "Product Dashboards",
+    body: "User-facing SaaS surfaces where people can scan, compare, decide, and act without friction.",
   },
   {
-    title: "Creative Digital Media",
-    description:
-      "VR/AR, interaction design, and digital storytelling from my MSc programme.",
-    label: "Practice",
-    skills: [
-      "VR/AR",
-      "Game Prototyping",
-      "Motion Design",
-      "Digital Storytelling",
-    ],
-    icon: "media",
+    title: "Mobile Apps",
+    body: "Onboarding, navigation, roles, and app flows that feel natural on smaller screens.",
   },
 ];
 
-function SkillIcon({ type }) {
-  const color = "var(--accent-primary)";
-  if (type === "browser") {
-    return (
-      <svg viewBox="0 0 24 24" className="w-6 h-6" style={{ color }} aria-hidden>
-        <rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" strokeWidth="2" />
-        <line x1="3" y1="9" x2="21" y2="9" stroke="currentColor" strokeWidth="2" />
-      </svg>
-    );
-  }
-  if (type === "mobile") {
-    return (
-      <svg viewBox="0 0 24 24" className="w-6 h-6" style={{ color }} aria-hidden>
-        <rect x="7" y="3" width="10" height="18" rx="2" fill="none" stroke="currentColor" strokeWidth="2" />
-        <circle cx="12" cy="17.5" r="1" fill="currentColor" />
-      </svg>
-    );
-  }
-  if (type === "media") {
-    return (
-      <svg viewBox="0 0 24 24" className="w-6 h-6" style={{ color }} aria-hidden>
-        <circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" strokeWidth="2" />
-        <polygon points="10,9 16,12 10,15" fill="currentColor" />
-      </svg>
-    );
-  }
-  return (
-    <svg viewBox="0 0 24 24" className="w-6 h-6" style={{ color }} aria-hidden>
-      <rect x="4" y="4" width="10" height="8" rx="1.5" fill="none" stroke="currentColor" strokeWidth="2" />
-      <path d="M14 14L18 20L22 17" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-    </svg>
-  );
-}
+const personalityNotes = [
+  "Real Madrid fan. I can talk about football for far longer than planned.",
+  "Running helps me reset when I have been staring at a tricky UI problem for too long.",
+  "Cooking is one of the few things where I enjoy experimenting without needing a browser tab open.",
+  "I learn fastest by building real projects, not by only following tutorials.",
+];
+
+const nowItems = [
+  "Brainstorming SaaS product ideas.",
+  "Exploring MatchAI, an in-progress AI product for lineups and team analysis.",
+  "Building Housewar, a simple house-based game with points and friendly competition.",
+  "Sharpening how I present product thinking in my case studies.",
+];
+
+const timeline = [
+  {
+    label: "Dublin",
+    title: "Finding opportunities by building and reaching out",
+    body: "Since moving to Dublin for my MSc, I have connected with people through LinkedIn and turned those conversations into freelance and contract work.",
+  },
+  {
+    label: "2025",
+    title: "First Class Honours MSc in Creative Digital Media & UX",
+    body: "Graduated from Technological University Dublin, with a stronger foundation in UX, prototyping, research, and creative digital media.",
+  },
+  {
+    label: "3 years",
+    title: "Frontend development practice",
+    body: "Around 3 years building user-facing web applications with React, Next.js, JavaScript, TypeScript, Tailwind CSS, APIs, and product workflows.",
+  },
+];
 
 export default function AboutMePage() {
   const { currentTheme, setCurrentTheme, themes, showThemeArrow } = useTheme();
   const [isLoaded, setIsLoaded] = useState(false);
+
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoaded(true), 50);
+    const timer = setTimeout(() => setIsLoaded(true), 60);
     return () => clearTimeout(timer);
   }, []);
 
-  const cardStyle = {
-    backgroundColor: "var(--bg-secondary)",
-    borderColor: "var(--border-primary)",
-  };
-
   return (
-    <main
-      className="relative overflow-x-hidden"
-      style={{ backgroundColor: "var(--bg-primary)", zIndex: 1 }}
-    >
-      <div className="relative z-10 pb-16">
+    <main className="relative overflow-x-hidden bg-[#eee9dd] text-[#191815]">
+      <div
+        className="pointer-events-none fixed inset-0 z-0 opacity-70"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle at 12% 12%, rgba(53, 214, 255, 0.16), transparent 28%), radial-gradient(circle at 82% 18%, rgba(77, 255, 181, 0.12), transparent 24%), linear-gradient(rgba(25, 24, 21, 0.045) 1px, transparent 1px)",
+          backgroundSize: "auto, auto, 100% 32px",
+        }}
+      />
+
+      <div className="pointer-events-none fixed left-8 top-28 z-0 hidden rotate-[-8deg] text-sm font-semibold text-[#191815]/35 lg:block">
+        notes / ideas / product mess
+      </div>
+
+      <div className="relative z-10">
         <Navbar
           currentTheme={currentTheme}
           setCurrentTheme={setCurrentTheme}
@@ -125,122 +97,245 @@ export default function AboutMePage() {
           showThemeArrow={showThemeArrow}
         />
 
-        <PageContainer>
-          <PageHeader
-            eyebrow="Profile"
-            title="About Me"
-            description="Frontend developer and UX designer in Dublin. I ship mobile apps and web products where engineering and design work as one discipline."
-            isLoaded={isLoaded}
-          />
-
-          <motion.div
-            className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 pb-10 sm:pb-12 border-b"
-            style={{ borderColor: "var(--border-primary)" }}
-            initial={{ opacity: 0, y: 12 }}
-            animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
-            transition={{ duration: 0.35, delay: 0.05 }}
-          >
-            <div
-              className="rounded-xl border overflow-hidden h-64 sm:h-72"
-              style={{ backgroundColor: "#0a0a0a", borderColor: cardStyle.borderColor }}
+        <section className="pt-32 sm:pt-36 pb-16">
+          <PageContainer>
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              animate={isLoaded ? "visible" : "hidden"}
+              transition={{ duration: 0.55, ease: "easeOut" }}
+              className="rounded-[28px] border border-[#191815]/15 bg-[#fffdf6] p-6 shadow-[0_24px_80px_rgba(25,24,21,0.12)] sm:p-8 lg:p-12"
+              style={{
+                backgroundImage:
+                  "linear-gradient(rgba(25,24,21,0.055) 1px, transparent 1px)",
+                backgroundSize: "100% 34px",
+              }}
             >
-              <div
-                className="flex items-center gap-2 px-4 py-2.5 border-b"
-                style={{ borderColor: "rgba(255,255,255,0.1)", backgroundColor: "rgba(0,0,0,0.3)" }}
-              >
-                <div className="flex gap-1.5">
-                  <span className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
+              <div className="grid gap-10 lg:grid-cols-[1fr_0.68fr] lg:items-center">
+                <div>
+                  <p className="mb-5 text-xs font-bold uppercase tracking-[0.18em] text-[#6f665a]">
+                    About me
+                  </p>
+                  <h1 className="max-w-4xl text-5xl font-black leading-[0.98] tracking-normal text-[#191815] sm:text-6xl lg:text-7xl">
+                    Frontend developer. Product thinker. Serial idea scribbler.
+                  </h1>
+                  <p className="mt-8 max-w-2xl text-lg leading-8 text-[#4d463d]">
+                    I&apos;m Hrishikesh Varma, a Frontend Developer based in
+                    Dublin, Ireland, focused on building thoughtful digital
+                    products that combine clean engineering with great user
+                    experience.
+                  </p>
+                  <p className="mt-5 max-w-2xl text-base leading-7 text-[#5f574d]">
+                    I have around 3 years of experience and a First Class Honours
+                    MSc in Creative Digital Media & UX from Technological
+                    University Dublin.
+                  </p>
+                  <div className="mt-8 flex flex-wrap gap-2">
+                    <span className="inline-flex min-h-11 items-center gap-2 rounded-full border border-[#191815]/20 bg-[#f7efd9] px-4 text-sm font-semibold text-[#191815]">
+                      <FiMapPin aria-hidden />
+                      Dublin / Remote / Hybrid / Relocation
+                    </span>
+                    <span className="inline-flex min-h-11 items-center rounded-full border border-[#191815]/20 bg-white px-4 text-sm font-semibold text-[#191815]">
+                      Around 3 years
+                    </span>
+                  </div>
                 </div>
-                <span className="text-[11px] ml-2 font-mono text-neutral-500">about-me.ts</span>
+                <div className="relative mx-auto w-full max-w-[420px] lg:ml-auto">
+                  <div className="relative aspect-[4/5] overflow-hidden">
+                    <Image
+                      src="/images/Hrishi-portfolio.png"
+                      alt="Hrishikesh Varma"
+                      fill
+                      sizes="(min-width: 1024px) 30vw, 88vw"
+                      className="object-contain"
+                      priority
+                    />
+                  </div>
+                </div>
               </div>
-              <div className="p-4 font-mono text-xs sm:text-sm space-y-2.5 overflow-auto h-[calc(100%-40px)]">
-                <p><span className="text-green-400">{"> "}</span><span className="text-neutral-200"> whoami</span></p>
-                <p className="ml-3 text-neutral-200">Hrishikesh Varma</p>
-                <p><span className="text-green-400">{"> "}</span><span className="text-neutral-200"> role</span></p>
-                <p className="ml-3 text-neutral-200">Frontend Developer × UX Designer</p>
-                <p><span className="text-green-400">{"> "}</span><span className="text-neutral-200"> status</span></p>
-                <p className="ml-3 text-neutral-200">Open to roles · Dublin / Remote EU</p>
-                <p><span className="text-green-400">{"> "}</span><span className="text-green-400 animate-pulse">▌</span></p>
+            </motion.div>
+          </PageContainer>
+        </section>
+
+        <section className="py-16 sm:py-20">
+          <PageContainer>
+            <div className="grid gap-6 lg:grid-cols-[0.8fr_1.2fr]">
+              <div className="rounded-[24px] border border-[#191815]/15 bg-[#191815] p-6 text-[#fffdf6]">
+                <p className="mb-4 text-xs font-bold uppercase tracking-[0.18em] text-[#4dffb5]">
+                  What I do
+                </p>
+                <h2 className="text-4xl font-black leading-none sm:text-5xl">
+                  I like useful products with a bit of personality.
+                </h2>
+              </div>
+              <div className="rounded-[24px] border border-[#191815]/15 bg-[#fffdf6] p-6">
+                <p className="text-lg leading-8 text-[#4d463d]">
+                  I enjoy user-facing web applications, AI-powered products, and
+                  SaaS platforms. I&apos;m interested in UX research, wireframing,
+                  prototyping, and design systems, but I like keeping those close
+                  to the product instead of turning them into process theatre.
+                </p>
+                <p className="mt-5 text-base leading-7 text-[#5f574d]">
+                  My favorite way to learn is to build something real, hit the
+                  awkward parts, and figure out the technology through the
+                  project.
+                </p>
               </div>
             </div>
+          </PageContainer>
+        </section>
 
-            <div>
-              <h2 className="section-title mb-4">My Story</h2>
-              <div className="space-y-3 page-lead">
-                <p>
-                  I combine frontend engineering with UX thinking — shipped mobile apps,
-                  freelance web platforms, and rapid university design sprints.
+        <section className="py-16 sm:py-20">
+          <PageContainer>
+            <div className="mb-12 max-w-4xl">
+              <p className="mb-4 text-xs font-bold uppercase tracking-[0.18em] text-[#6f665a]">
+                Things I enjoy building
+              </p>
+              <h2 className="text-4xl font-black leading-tight text-[#191815] sm:text-5xl">
+                The sticky notes that keep coming back.
+              </h2>
+            </div>
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {buildInterests.map((item) => (
+                <article
+                  key={item.title}
+                  className="rotate-[-0.5deg] rounded-[18px] border border-[#191815]/15 bg-[#fffdf6] p-5 shadow-[0_16px_40px_rgba(25,24,21,0.08)] even:rotate-[0.5deg]"
+                >
+                  <h3 className="text-2xl font-black text-[#191815]">
+                    {item.title}
+                  </h3>
+                  <p className="mt-4 text-base leading-7 text-[#5f574d]">
+                    {item.body}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </PageContainer>
+        </section>
+
+        <section className="py-16 sm:py-20">
+          <PageContainer>
+            <div className="grid gap-6 lg:grid-cols-[0.8fr_1.2fr]">
+              <div className="rounded-[24px] border border-[#191815]/15 bg-[#f7efd9] p-6">
+                <p className="mb-4 text-xs font-bold uppercase tracking-[0.18em] text-[#6f665a]">
+                  Personality
                 </p>
-                <p>
-                  MSc Creative Digital Media & UX at TU Dublin (2024–2026). I care about
-                  interfaces that are fast to use, clear to maintain, and grounded in how
-                  people actually behave.
-                </p>
+                <h2 className="text-4xl font-black leading-tight text-[#191815] sm:text-5xl">
+                  Some non-portfolio evidence.
+                </h2>
               </div>
-              <div className="flex flex-wrap gap-2 mt-5">
-                {["React", "React Native", "Figma", "Next.js", "Firebase"].map((s) => (
-                  <span
-                    key={s}
-                    className="px-2.5 py-1 rounded-full text-xs font-medium border"
-                    style={{
-                      backgroundColor: "var(--bg-primary)",
-                      borderColor: "var(--border-primary)",
-                      color: "var(--text-primary)",
-                    }}
+              <div className="grid gap-4 sm:grid-cols-2">
+                {personalityNotes.map((note) => (
+                  <article
+                    key={note}
+                    className="rounded-[18px] border border-[#191815]/15 bg-[#fffdf6] p-5"
                   >
-                    {s}
+                    <p className="text-base leading-7 text-[#4d463d]">{note}</p>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </PageContainer>
+        </section>
+
+        <section className="py-16 sm:py-20">
+          <PageContainer>
+            <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
+              <div>
+                <p className="mb-4 text-xs font-bold uppercase tracking-[0.18em] text-[#6f665a]">
+                  Now
+                </p>
+                <h2 className="text-4xl font-black leading-tight text-[#191815] sm:text-5xl">
+                  Current scribbles.
+                </h2>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                {nowItems.map((item) => (
+                  <span
+                    key={item}
+                    className="inline-flex min-h-11 items-center rounded-full border border-[#191815]/20 bg-[#fffdf6] px-4 text-sm font-semibold text-[#191815]"
+                  >
+                    {item}
                   </span>
                 ))}
               </div>
             </div>
-          </motion.div>
+          </PageContainer>
+        </section>
 
-          <section className="pt-10 sm:pt-12">
-            <SectionHeading
-              eyebrow="Capabilities"
-              title="Skills & Expertise"
-              description="What I bring to product teams and client projects."
-            />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
-              {skillGroups.map((group) => (
-                <article key={group.title} className="p-4 sm:p-5 rounded-xl border" style={cardStyle}>
-                  <div
-                    className="w-9 h-9 rounded-lg mb-3 flex items-center justify-center"
-                    style={{ backgroundColor: "var(--bg-primary)" }}
+        <section className="py-16 sm:py-20">
+          <PageContainer>
+            <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
+              <div className="lg:sticky lg:top-32">
+                <p className="mb-4 text-xs font-bold uppercase tracking-[0.18em] text-[#6f665a]">
+                  Path
+                </p>
+                <h2 className="text-4xl font-black leading-tight text-[#191815] sm:text-5xl">
+                  How I got here.
+                </h2>
+              </div>
+              <div className="space-y-4">
+                {timeline.map((item) => (
+                  <article
+                    key={item.title}
+                    className="grid gap-4 border-b border-[#191815]/15 py-6 sm:grid-cols-[120px_1fr]"
                   >
-                    <SkillIcon type={group.icon} />
-                  </div>
-                  <h3 className="text-base font-bold mb-1.5" style={{ color: "var(--text-primary)" }}>
-                    {group.title}
-                  </h3>
-                  <p className="text-sm leading-relaxed mb-3" style={{ color: "var(--text-secondary)" }}>
-                    {group.description}
-                  </p>
-                  <p className="text-[11px] font-semibold mb-2 uppercase tracking-wide" style={{ color: "var(--text-muted)" }}>
-                    {group.label}
-                  </p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {group.skills.map((skill) => (
-                      <span
-                        key={skill}
-                        className="px-2 py-0.5 rounded-full text-[11px] font-medium border"
-                        style={{
-                          backgroundColor: "var(--bg-primary)",
-                          borderColor: "var(--border-primary)",
-                          color: "var(--text-primary)",
-                        }}
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </article>
-              ))}
+                    <p className="text-sm font-bold text-[#8a5b20]">
+                      {item.label}
+                    </p>
+                    <div>
+                      <h3 className="text-2xl font-black text-[#191815]">
+                        {item.title}
+                      </h3>
+                      <p className="mt-2 text-base leading-7 text-[#5f574d]">
+                        {item.body}
+                      </p>
+                    </div>
+                  </article>
+                ))}
+              </div>
             </div>
-          </section>
-        </PageContainer>
+          </PageContainer>
+        </section>
+
+        <section className="pb-20 pt-4">
+          <PageContainer>
+            <div className="rounded-[28px] border border-[#191815]/15 bg-[#191815] p-6 text-[#fffdf6] sm:p-10 lg:p-12">
+              <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
+                <div>
+                  <p className="mb-4 text-xs font-bold uppercase tracking-[0.18em] text-[#4dffb5]">
+                    Next
+                  </p>
+                  <h2 className="max-w-5xl text-4xl font-black leading-tight sm:text-5xl">
+                    The clearest proof is in the work.
+                  </h2>
+                  <p className="mt-5 max-w-2xl text-base leading-7 text-[#d9d3c8]">
+                    The case studies show how I turn ideas into user-facing
+                    products across web, mobile, AI, dashboards, and UX-focused
+                    interfaces.
+                  </p>
+                </div>
+                <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
+                  <Link
+                    href="/works"
+                    className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/20 bg-white/10 px-5 text-sm font-bold text-white"
+                  >
+                    View work
+                    <FiArrowUpRight aria-hidden />
+                  </Link>
+                  <a
+                    href="/resume/Hrishikesh_Varma_Resume.pdf"
+                    download
+                    className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/20 px-5 text-sm font-bold text-[#d9d3c8]"
+                  >
+                    Download CV
+                    <FiDownload aria-hidden />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </PageContainer>
+        </section>
       </div>
     </main>
   );

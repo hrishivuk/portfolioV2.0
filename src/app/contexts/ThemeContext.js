@@ -14,17 +14,17 @@ const THEME_STORAGE_KEY = "portfolio-theme";
 
 export const themes = {
   midnight: {
-    name: "Midnight",
-    bgPrimary: "#0a0a0b",
-    bgSecondary: "#141416",
-    textPrimary: "#fafafa",
-    textSecondary: "#d4d4d8",
-    textMuted: "#a1a1aa",
-    borderPrimary: "#27272a",
-    accentPrimary: "#22d3ee",
-    mesh1: "rgba(34, 211, 238, 0.35)",
-    mesh2: "rgba(99, 102, 241, 0.25)",
-    mesh3: "rgba(168, 85, 247, 0.15)",
+    name: "Studio",
+    bgPrimary: "#060708",
+    bgSecondary: "#101214",
+    textPrimary: "#f4f7fa",
+    textSecondary: "#aab4bf",
+    textMuted: "#68727d",
+    borderPrimary: "rgba(255, 255, 255, 0.08)",
+    accentPrimary: "#35d6ff",
+    mesh1: "rgba(53, 214, 255, 0.32)",
+    mesh2: "rgba(77, 255, 181, 0.18)",
+    mesh3: "rgba(255, 255, 255, 0.08)",
   },
   slate: {
     name: "Slate",

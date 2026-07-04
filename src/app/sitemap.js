@@ -29,12 +29,6 @@ export default async function sitemap() {
       changeFrequency: "monthly",
       priority: 0.7,
     },
-    {
-      url: `${baseUrl}/blog`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.6,
-    },
   ];
 
   // Dynamic project routes - safely handle projects array
@@ -49,4 +43,3 @@ export default async function sitemap() {
 
   return [...routes, ...projectRoutes];
 }
-
