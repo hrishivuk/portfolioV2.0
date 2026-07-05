@@ -5,7 +5,6 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { FiArrowUpRight, FiChevronRight, FiMail } from "react-icons/fi";
 import { useTheme } from "./contexts/ThemeContext";
-import AnimatedDeveloperScene from "./components/AnimatedDeveloperScene";
 import Navbar from "./components/navbar";
 import PageContainer from "./components/PageContainer";
 
@@ -94,9 +93,9 @@ export default function Home() {
               initial="hidden"
               animate={isLoaded ? "visible" : "hidden"}
               transition={{ duration: 0.55, ease: "easeOut" }}
-              className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(420px,0.8fr)]"
+              className="max-w-5xl"
             >
-              <div className="max-w-5xl">
+              <div>
                 <p className="studio-kicker mb-5">
                   Frontend engineer - UX-minded product builder
                 </p>
@@ -137,9 +136,6 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="hidden lg:block">
-                <AnimatedDeveloperScene />
-              </div>
             </motion.div>
           </PageContainer>
         </section>

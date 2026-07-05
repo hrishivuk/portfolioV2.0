@@ -75,21 +75,16 @@ export default function AboutMePage() {
   }, []);
 
   return (
-    <main className="relative overflow-x-hidden bg-[#eee9dd] text-[#191815]">
-      <div
-        className="pointer-events-none fixed inset-0 z-0 opacity-70"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle at 12% 12%, rgba(53, 214, 255, 0.16), transparent 28%), radial-gradient(circle at 82% 18%, rgba(77, 255, 181, 0.12), transparent 24%), linear-gradient(rgba(25, 24, 21, 0.045) 1px, transparent 1px)",
-          backgroundSize: "auto, auto, 100% 32px",
-        }}
-      />
-
-      <div className="pointer-events-none fixed left-8 top-28 z-0 hidden rotate-[-8deg] text-sm font-semibold text-[#191815]/35 lg:block">
-        notes / ideas / product mess
+    <main
+      className="relative overflow-x-hidden"
+      style={{ backgroundColor: "var(--bg-primary)" }}
+    >
+      <div className="pointer-events-none fixed inset-0 z-0 opacity-70">
+        <div className="studio-grid absolute inset-0" />
+        <div className="studio-cursor-glow absolute inset-[-10%]" />
       </div>
 
-      <div className="relative z-10">
+      <div className="relative z-10 pb-16">
         <Navbar
           currentTheme={currentTheme}
           setCurrentTheme={setCurrentTheme}
@@ -97,85 +92,74 @@ export default function AboutMePage() {
           showThemeArrow={showThemeArrow}
         />
 
-        <section className="pt-32 sm:pt-36 pb-16">
+        <section className="pt-32 sm:pt-36 pb-14">
           <PageContainer>
             <motion.div
               variants={fadeUp}
               initial="hidden"
               animate={isLoaded ? "visible" : "hidden"}
               transition={{ duration: 0.55, ease: "easeOut" }}
-              className="rounded-[28px] border border-[#191815]/15 bg-[#fffdf6] p-6 shadow-[0_24px_80px_rgba(25,24,21,0.12)] sm:p-8 lg:p-12"
-              style={{
-                backgroundImage:
-                  "linear-gradient(rgba(25,24,21,0.055) 1px, transparent 1px)",
-                backgroundSize: "100% 34px",
-              }}
+              className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-center"
             >
-              <div className="grid gap-10 lg:grid-cols-[1fr_0.68fr] lg:items-center">
-                <div>
-                  <p className="mb-5 text-xs font-bold uppercase tracking-[0.18em] text-[#6f665a]">
-                    About me
-                  </p>
-                  <h1 className="max-w-4xl text-5xl font-black leading-[0.98] tracking-normal text-[#191815] sm:text-6xl lg:text-7xl">
-                    Frontend developer. Product thinker. Serial idea scribbler.
-                  </h1>
-                  <p className="mt-8 max-w-2xl text-lg leading-8 text-[#4d463d]">
-                    I&apos;m Hrishikesh Varma, a Frontend Developer based in
-                    Dublin, Ireland, focused on building thoughtful digital
-                    products that combine clean engineering with great user
-                    experience.
-                  </p>
-                  <p className="mt-5 max-w-2xl text-base leading-7 text-[#5f574d]">
-                    I have around 3 years of experience and a First Class Honours
-                    MSc in Creative Digital Media & UX from Technological
-                    University Dublin.
-                  </p>
-                  <div className="mt-8 flex flex-wrap gap-2">
-                    <span className="inline-flex min-h-11 items-center gap-2 rounded-full border border-[#191815]/20 bg-[#f7efd9] px-4 text-sm font-semibold text-[#191815]">
-                      <FiMapPin aria-hidden />
-                      Dublin / Remote / Hybrid / Relocation
-                    </span>
-                    <span className="inline-flex min-h-11 items-center rounded-full border border-[#191815]/20 bg-white px-4 text-sm font-semibold text-[#191815]">
-                      Around 3 years
-                    </span>
-                  </div>
+              <div className="max-w-5xl">
+                <p className="studio-kicker mb-5">About me</p>
+                <h1 className="studio-display">
+                  Frontend developer. Product thinker. UX-minded builder.
+                </h1>
+                <p className="studio-subheading mt-7 max-w-3xl">
+                  I&apos;m Hrishikesh Varma, a frontend developer based in
+                  Dublin, Ireland, focused on building thoughtful digital
+                  products that combine clean engineering with great user
+                  experience.
+                </p>
+                <p className="studio-text mt-5 max-w-2xl">
+                  I have around 3 years of experience and a First Class Honours
+                  MSc in Creative Digital Media & UX from Technological
+                  University Dublin.
+                </p>
+
+                <div className="mt-8 flex flex-wrap gap-2">
+                  <span className="studio-pill gap-2">
+                    <FiMapPin aria-hidden />
+                    Dublin / Remote / Hybrid / Relocation
+                  </span>
+                  <span className="studio-pill">Around 3 years</span>
                 </div>
-                <div className="relative mx-auto w-full max-w-[420px] lg:ml-auto">
-                  <div className="relative aspect-[4/5] overflow-hidden">
-                    <Image
-                      src="/images/Hrishi-portfolio.png"
-                      alt="Hrishikesh Varma"
-                      fill
-                      sizes="(min-width: 1024px) 30vw, 88vw"
-                      className="object-contain"
-                      priority
-                    />
-                  </div>
+              </div>
+
+              <div className="relative mx-auto w-full max-w-[360px] lg:ml-auto">
+                <div className="relative aspect-[4/5] overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.025]">
+                  <Image
+                    src="/images/Hrishi-portfolio.png"
+                    alt="Hrishikesh Varma"
+                    fill
+                    sizes="(min-width: 1024px) 360px, 88vw"
+                    className="object-contain"
+                    priority
+                  />
                 </div>
               </div>
             </motion.div>
           </PageContainer>
         </section>
 
-        <section className="py-16 sm:py-20">
+        <section className="studio-section border-y studio-hairline bg-white/[0.015]">
           <PageContainer>
-            <div className="grid gap-6 lg:grid-cols-[0.8fr_1.2fr]">
-              <div className="rounded-[24px] border border-[#191815]/15 bg-[#191815] p-6 text-[#fffdf6]">
-                <p className="mb-4 text-xs font-bold uppercase tracking-[0.18em] text-[#4dffb5]">
-                  What I do
-                </p>
-                <h2 className="text-4xl font-black leading-none sm:text-5xl">
-                  I like useful products with a bit of personality.
+            <div className="grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
+              <div className="lg:sticky lg:top-32">
+                <p className="studio-kicker mb-4">What I do</p>
+                <h2 className="studio-heading">
+                  Useful products with a bit of personality.
                 </h2>
               </div>
-              <div className="rounded-[24px] border border-[#191815]/15 bg-[#fffdf6] p-6">
-                <p className="text-lg leading-8 text-[#4d463d]">
+              <div>
+                <p className="studio-subheading max-w-3xl">
                   I enjoy user-facing web applications, AI-powered products, and
                   SaaS platforms. I&apos;m interested in UX research, wireframing,
                   prototyping, and design systems, but I like keeping those close
                   to the product instead of turning them into process theatre.
                 </p>
-                <p className="mt-5 text-base leading-7 text-[#5f574d]">
+                <p className="studio-text mt-5 max-w-2xl">
                   My favorite way to learn is to build something real, hit the
                   awkward parts, and figure out the technology through the
                   project.
@@ -185,52 +169,38 @@ export default function AboutMePage() {
           </PageContainer>
         </section>
 
-        <section className="py-16 sm:py-20">
+        <section className="studio-section">
           <PageContainer>
-            <div className="mb-12 max-w-4xl">
-              <p className="mb-4 text-xs font-bold uppercase tracking-[0.18em] text-[#6f665a]">
-                Things I enjoy building
-              </p>
-              <h2 className="text-4xl font-black leading-tight text-[#191815] sm:text-5xl">
-                The sticky notes that keep coming back.
+            <div className="mb-8 max-w-3xl">
+              <p className="studio-kicker mb-4">Things I enjoy building</p>
+              <h2 className="studio-heading">
+                The product ideas that keep coming back.
               </h2>
             </div>
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {buildInterests.map((item) => (
-                <article
-                  key={item.title}
-                  className="rotate-[-0.5deg] rounded-[18px] border border-[#191815]/15 bg-[#fffdf6] p-5 shadow-[0_16px_40px_rgba(25,24,21,0.08)] even:rotate-[0.5deg]"
-                >
-                  <h3 className="text-2xl font-black text-[#191815]">
+                <article key={item.title} className="p-5 studio-surface">
+                  <h3 className="text-xl font-semibold text-[var(--text-primary)]">
                     {item.title}
                   </h3>
-                  <p className="mt-4 text-base leading-7 text-[#5f574d]">
-                    {item.body}
-                  </p>
+                  <p className="studio-text mt-3">{item.body}</p>
                 </article>
               ))}
             </div>
           </PageContainer>
         </section>
 
-        <section className="py-16 sm:py-20">
+        <section className="studio-section border-y studio-hairline bg-white/[0.015]">
           <PageContainer>
-            <div className="grid gap-6 lg:grid-cols-[0.8fr_1.2fr]">
-              <div className="rounded-[24px] border border-[#191815]/15 bg-[#f7efd9] p-6">
-                <p className="mb-4 text-xs font-bold uppercase tracking-[0.18em] text-[#6f665a]">
-                  Personality
-                </p>
-                <h2 className="text-4xl font-black leading-tight text-[#191815] sm:text-5xl">
-                  Some non-portfolio evidence.
-                </h2>
+            <div className="grid gap-10 lg:grid-cols-[0.82fr_1.18fr]">
+              <div>
+                <p className="studio-kicker mb-4">Personality</p>
+                <h2 className="studio-heading">Some non-portfolio evidence.</h2>
               </div>
               <div className="grid gap-4 sm:grid-cols-2">
                 {personalityNotes.map((note) => (
-                  <article
-                    key={note}
-                    className="rounded-[18px] border border-[#191815]/15 bg-[#fffdf6] p-5"
-                  >
-                    <p className="text-base leading-7 text-[#4d463d]">{note}</p>
+                  <article key={note} className="p-5 studio-surface">
+                    <p className="studio-text">{note}</p>
                   </article>
                 ))}
               </div>
@@ -238,23 +208,16 @@ export default function AboutMePage() {
           </PageContainer>
         </section>
 
-        <section className="py-16 sm:py-20">
+        <section className="studio-section">
           <PageContainer>
-            <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
+            <div className="grid gap-10 lg:grid-cols-[0.82fr_1.18fr]">
               <div>
-                <p className="mb-4 text-xs font-bold uppercase tracking-[0.18em] text-[#6f665a]">
-                  Now
-                </p>
-                <h2 className="text-4xl font-black leading-tight text-[#191815] sm:text-5xl">
-                  Current scribbles.
-                </h2>
+                <p className="studio-kicker mb-4">Now</p>
+                <h2 className="studio-heading">Current focus.</h2>
               </div>
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-2">
                 {nowItems.map((item) => (
-                  <span
-                    key={item}
-                    className="inline-flex min-h-11 items-center rounded-full border border-[#191815]/20 bg-[#fffdf6] px-4 text-sm font-semibold text-[#191815]"
-                  >
+                  <span key={item} className="studio-pill">
                     {item}
                   </span>
                 ))}
@@ -263,33 +226,27 @@ export default function AboutMePage() {
           </PageContainer>
         </section>
 
-        <section className="py-16 sm:py-20">
+        <section className="studio-section border-y studio-hairline bg-white/[0.015]">
           <PageContainer>
-            <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
+            <div className="grid gap-10 lg:grid-cols-[0.82fr_1.18fr]">
               <div className="lg:sticky lg:top-32">
-                <p className="mb-4 text-xs font-bold uppercase tracking-[0.18em] text-[#6f665a]">
-                  Path
-                </p>
-                <h2 className="text-4xl font-black leading-tight text-[#191815] sm:text-5xl">
-                  How I got here.
-                </h2>
+                <p className="studio-kicker mb-4">Path</p>
+                <h2 className="studio-heading">How I got here.</h2>
               </div>
-              <div className="space-y-4">
+              <div className="space-y-2">
                 {timeline.map((item) => (
                   <article
                     key={item.title}
-                    className="grid gap-4 border-b border-[#191815]/15 py-6 sm:grid-cols-[120px_1fr]"
+                    className="grid gap-3 border-b py-5 studio-hairline sm:grid-cols-[120px_1fr]"
                   >
-                    <p className="text-sm font-bold text-[#8a5b20]">
+                    <p className="text-sm font-semibold text-[var(--accent-secondary)]">
                       {item.label}
                     </p>
                     <div>
-                      <h3 className="text-2xl font-black text-[#191815]">
+                      <h3 className="text-xl sm:text-2xl font-semibold text-[var(--text-primary)]">
                         {item.title}
                       </h3>
-                      <p className="mt-2 text-base leading-7 text-[#5f574d]">
-                        {item.body}
-                      </p>
+                      <p className="studio-text mt-2">{item.body}</p>
                     </div>
                   </article>
                 ))}
@@ -298,40 +255,33 @@ export default function AboutMePage() {
           </PageContainer>
         </section>
 
-        <section className="pb-20 pt-4">
+        <section className="studio-section pb-20">
           <PageContainer>
-            <div className="rounded-[28px] border border-[#191815]/15 bg-[#191815] p-6 text-[#fffdf6] sm:p-10 lg:p-12">
-              <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
-                <div>
-                  <p className="mb-4 text-xs font-bold uppercase tracking-[0.18em] text-[#4dffb5]">
-                    Next
-                  </p>
-                  <h2 className="max-w-5xl text-4xl font-black leading-tight sm:text-5xl">
-                    The clearest proof is in the work.
-                  </h2>
-                  <p className="mt-5 max-w-2xl text-base leading-7 text-[#d9d3c8]">
-                    The case studies show how I turn ideas into user-facing
-                    products across web, mobile, AI, dashboards, and UX-focused
-                    interfaces.
-                  </p>
-                </div>
-                <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
-                  <Link
-                    href="/works"
-                    className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/20 bg-white/10 px-5 text-sm font-bold text-white"
-                  >
-                    View work
-                    <FiArrowUpRight aria-hidden />
-                  </Link>
-                  <a
-                    href="/resume/Hrishikesh_Varma_Resume.pdf"
-                    download
-                    className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/20 px-5 text-sm font-bold text-[#d9d3c8]"
-                  >
-                    Download CV
-                    <FiDownload aria-hidden />
-                  </a>
-                </div>
+            <div className="grid gap-8 p-6 sm:p-8 lg:grid-cols-[1fr_auto] lg:items-end lg:p-10 studio-panel">
+              <div>
+                <p className="studio-kicker mb-4">Next</p>
+                <h2 className="studio-heading max-w-5xl">
+                  The clearest proof is in the work.
+                </h2>
+                <p className="studio-text mt-5 max-w-2xl">
+                  The case studies show how I turn ideas into user-facing
+                  products across web, mobile, AI, dashboards, and UX-focused
+                  interfaces.
+                </p>
+              </div>
+              <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
+                <Link href="/works" className="studio-button studio-button-primary">
+                  View work
+                  <FiArrowUpRight aria-hidden />
+                </Link>
+                <a
+                  href="/resume/Hrishikesh_Varma_Resume.pdf"
+                  download
+                  className="studio-button studio-button-ghost"
+                >
+                  Download CV
+                  <FiDownload aria-hidden />
+                </a>
               </div>
             </div>
           </PageContainer>
