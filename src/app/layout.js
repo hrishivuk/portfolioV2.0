@@ -1,10 +1,17 @@
 import "./globals.css";
+import { Space_Grotesk } from "next/font/google";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { LayoutProvider } from "./contexts/LayoutContext";
 import AmbientBackground from "./components/AmbientBackground";
 
 // Get site URL from environment variable or use default
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://hrishivuk.com";
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-space-grotesk",
+});
 
 export const metadata = {
   title: "Hrishikesh Varma - Frontend Engineer & Product Designer",
@@ -44,7 +51,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className="antialiased"
+        className={`${spaceGrotesk.variable} antialiased`}
         style={{ backgroundColor: "var(--bg-primary)", color: "var(--text-primary)" }}
       >
         <ThemeProvider>
