@@ -1,39 +1,38 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 import { useLayout } from "../contexts/LayoutContext";
 
-const navItems = [
-  { href: "/works", label: "Work" },
-  { href: "/aboutme", label: "About" },
-  { href: "/contact", label: "Contact" },
+const defaultSections = [
+  { id: "home", label: "Home" },
+  { id: "about", label: "About" },
+  { id: "skills", label: "Skills" },
+  { id: "experience", label: "Experience" },
+  { id: "projects", label: "Projects" },
+  { id: "contact", label: "Contact" },
 ];
 
-export default function Navbar() {
+export default function Navbar({
+  activeSection = "home",
+  sections = defaultSections,
+  onNavigate,
+}) {
   const { maxWidth } = useLayout();
-  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
-  const [hash, setHash] = useState("");
 
-  useEffect(() => {
-    const updateHash = () => {
-      setHash(window.location.hash);
-    };
+  function navigate(id) {
+    setIsOpen(false);
 
-    updateHash();
-    window.addEventListener("hashchange", updateHash);
-    return () => window.removeEventListener("hashchange", updateHash);
-  }, [pathname]);
+    if (onNavigate) {
+      onNavigate(id);
+      return;
+    }
 
-  const isActive = (href) => {
-    if (href === "/works") return pathname.startsWith("/works");
-    if (href === "/#process") return pathname === "/" && hash === "#process";
-    return pathname === href;
-  };
+    const node = document.getElementById(id);
+    if (node) node.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
 
   return (
     <>
@@ -49,49 +48,40 @@ export default function Navbar() {
           }}
           aria-label="Primary navigation"
         >
-          <Link
-            href="/"
+          <button
+            type="button"
             className="text-sm font-semibold tracking-normal text-[var(--text-primary)]"
-            onClick={() => setIsOpen(false)}
+            onClick={() => navigate("home")}
           >
             hrishi.
-          </Link>
+          </button>
 
-          <div className="hidden items-center gap-1 md:flex">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
+          <div className="hidden items-center gap-1 lg:flex">
+            {sections.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => navigate(item.id)}
                 className="rounded-full px-4 py-2 text-sm font-medium transition-colors"
                 style={{
-                  color: isActive(item.href)
-                    ? "var(--text-primary)"
-                    : "var(--text-muted)",
+                  color:
+                    activeSection === item.id
+                      ? "var(--text-primary)"
+                      : "var(--text-muted)",
                   backgroundColor:
-                    isActive(item.href)
+                    activeSection === item.id
                       ? "rgba(255,255,255,0.06)"
                       : "transparent",
                 }}
               >
                 {item.label}
-              </Link>
+              </button>
             ))}
           </div>
 
-          <a
-            href="mailto:officialhrishivuk@gmail.com"
-            className="hidden min-h-[40px] items-center rounded-full border px-4 text-sm font-semibold transition-transform hover:-translate-y-0.5 md:inline-flex"
-            style={{
-              borderColor: "var(--border-secondary)",
-              color: "var(--text-primary)",
-            }}
-          >
-            Let&apos;s talk
-          </a>
-
           <button
             type="button"
-            className="inline-flex min-h-[40px] min-w-[40px] items-center justify-center rounded-full border md:hidden"
+            className="inline-flex min-h-[40px] min-w-[40px] items-center justify-center rounded-full border transition hover:border-cyan-200/40 hover:text-white"
             style={{
               borderColor: "var(--border-primary)",
               color: "var(--text-primary)",
@@ -108,45 +98,40 @@ export default function Navbar() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="fixed inset-0 z-40 bg-[var(--bg-primary)]/96 px-4 pt-24 backdrop-blur-xl md:hidden"
+            className="fixed inset-0 z-40 bg-[#050608]/96 px-4 pt-24 backdrop-blur-xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
           >
-            <nav className="mx-auto flex max-w-sm flex-col gap-3" aria-label="Mobile navigation">
-              {navItems.map((item, index) => (
-                <motion.div
-                  key={item.href}
-                  initial={{ opacity: 0, y: 12 }}
+            <nav className="mx-auto flex max-w-xl flex-col gap-3" aria-label="Menu navigation">
+              {sections.map((item, index) => (
+                <motion.button
+                  key={item.id}
+                  type="button"
+                  onClick={() => navigate(item.id)}
+                  className="group flex min-h-[68px] items-center justify-between rounded-2xl border border-white/10 bg-white/[0.025] px-5 text-left text-2xl font-black text-white transition hover:border-cyan-200/30"
+                  initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
                   transition={{ duration: 0.25, delay: index * 0.04 }}
                 >
-                  <Link
-                    href={item.href}
-                    onClick={() => setIsOpen(false)}
-                    className="flex min-h-[64px] items-center justify-between rounded-2xl border px-5 text-xl font-semibold"
-                    style={{
-                      backgroundColor: "var(--bg-secondary)",
-                      borderColor: "var(--border-primary)",
-                      color: "var(--text-primary)",
-                    }}
+                  <span>{item.label}</span>
+                  <span
+                    className={`font-mono text-sm ${
+                      activeSection === item.id
+                        ? "text-[var(--accent-secondary)]"
+                        : "text-cyan-100/36"
+                    }`}
                   >
-                    {item.label}
-                    <span className="text-sm text-[var(--text-muted)]">
-                      0{index + 1}
-                    </span>
-                  </Link>
-                </motion.div>
+                    0{index + 1}
+                  </span>
+                </motion.button>
               ))}
               <a
                 href="mailto:officialhrishivuk@gmail.com"
                 onClick={() => setIsOpen(false)}
-                className="mt-3 flex min-h-[56px] items-center justify-center rounded-full border text-sm font-semibold"
-                style={{
-                  borderColor: "var(--border-secondary)",
-                  color: "var(--text-primary)",
-                }}
+                className="mt-4 flex min-h-[56px] items-center justify-center rounded-full border border-cyan-200/25 text-sm font-bold text-white"
               >
                 Let&apos;s talk
               </a>

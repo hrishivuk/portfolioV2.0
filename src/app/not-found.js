@@ -36,11 +36,11 @@ export default function NotFound() {
               <p className="studio-kicker mb-5">404</p>
               <h1 className="studio-display">This page moved off the canvas.</h1>
               <p className="studio-subheading mt-7 max-w-2xl">
-                The route you opened does not exist anymore. The best next move is
-                back to the product stories.
+                The route you opened does not exist anymore. The portfolio now
+                lives as one continuous page.
               </p>
               <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-                <Link href="/works" className="studio-button studio-button-primary">
+                <Link href="/#projects" className="studio-button studio-button-primary">
                   View work
                   <FiArrowUpRight aria-hidden />
                 </Link>

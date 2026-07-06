@@ -44,7 +44,7 @@ export default function Error({ error, reset }) {
               <h1 className="studio-display">Something slipped in the interface.</h1>
               <p className="studio-subheading mt-7 max-w-2xl">
                 The page hit an unexpected state. Try reloading this view, or jump
-                back to the work while the issue is checked.
+                back to the one-page portfolio while the issue is checked.
               </p>
               <div className="mt-9 flex flex-col gap-3 sm:flex-row">
                 <button
@@ -55,7 +55,7 @@ export default function Error({ error, reset }) {
                   Try again
                   <FiRefreshCw aria-hidden />
                 </button>
-                <Link href="/works" className="studio-button studio-button-ghost">
+                <Link href="/#projects" className="studio-button studio-button-ghost">
                   View work
                 </Link>
               </div>

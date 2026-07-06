@@ -2,95 +2,128 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import {
+  AnimatePresence,
   motion,
   useMotionValue,
   useReducedMotion,
+  useScroll,
   useSpring,
   useTransform,
 } from "framer-motion";
 import {
   FiActivity,
   FiArrowUpRight,
-  FiChevronRight,
   FiClock,
   FiCloud,
+  FiGithub,
+  FiLinkedin,
   FiMail,
+  FiMapPin,
   FiMusic,
   FiRadio,
+  FiSend,
 } from "react-icons/fi";
-import { useTheme } from "./contexts/ThemeContext";
 import Navbar from "./components/navbar";
 import PageContainer from "./components/PageContainer";
+import { getSortedProjects, projects } from "../data/projects";
 
-const processSteps = [
+const navSections = [
+  { id: "home", label: "Home" },
+  { id: "about", label: "About" },
+  { id: "skills", label: "Skills" },
+  { id: "experience", label: "Experience" },
+  { id: "projects", label: "Projects" },
+  { id: "contact", label: "Contact" },
+];
+
+const particles = [
+  { left: "6%", top: "18%", size: 2, delay: 0.1, duration: 9.2 },
+  { left: "16%", top: "78%", size: 1, delay: 1.6, duration: 10.4 },
+  { left: "28%", top: "38%", size: 2, delay: 2.2, duration: 11.8 },
+  { left: "42%", top: "12%", size: 2, delay: 0.8, duration: 8.8 },
+  { left: "58%", top: "84%", size: 1, delay: 2.9, duration: 12.1 },
+  { left: "70%", top: "32%", size: 2, delay: 1.2, duration: 9.8 },
+  { left: "82%", top: "68%", size: 1, delay: 3.1, duration: 10.8 },
+  { left: "94%", top: "22%", size: 2, delay: 0.4, duration: 12.4 },
+  { left: "88%", top: "90%", size: 1, delay: 2.4, duration: 9.6 },
+  { left: "52%", top: "52%", size: 1, delay: 1.8, duration: 11.2 },
+];
+
+const skills = [
   {
-    number: "01",
-    title: "Find the friction",
-    body: "Start with the user, context, constraints, and the workflow that needs to improve.",
+    group: "Frontend",
+    items: ["React", "Next.js", "React Native", "Tailwind CSS", "Framer Motion"],
   },
   {
-    number: "02",
-    title: "Shape the flow",
-    body: "Turn messy needs into journeys, states, wireframes, and clear interaction decisions.",
+    group: "Backend & Data",
+    items: ["Firebase", "Supabase", "Firestore", "APIs"],
   },
   {
-    number: "03",
-    title: "Prototype the interface",
-    body: "Make ideas tangible early so hierarchy, motion, and usability can be judged quickly.",
-  },
-  {
-    number: "04",
-    title: "Build the product",
-    body: "Translate the experience into reliable frontend architecture, APIs, and responsive UI.",
-  },
-  {
-    number: "05",
-    title: "Refine and ship",
-    body: "Polish edge cases, performance, accessibility, and the final product story.",
+    group: "Design & Tools",
+    items: ["Figma", "UX Research", "Prototyping", "Design Systems"],
   },
 ];
 
-const nextLinks = [
+const experienceItems = [
   {
-    href: "/works",
-    label: "View case studies",
-    body: "CoachCanvas, Findaside, UX sprints, and product builds.",
+    label: "Dublin",
+    title: "Finding opportunities by building and reaching out",
+    meta: "Remote, hybrid, relocation-ready",
+    body: "Since moving to Dublin for my MSc, I have connected with people through LinkedIn and turned those conversations into freelance and contract work.",
   },
   {
-    href: "/aboutme",
-    label: "About me",
-    body: "The design-engineering background behind the work.",
+    label: "2025",
+    title: "First Class Honours MSc in Creative Digital Media & UX",
+    meta: "Technological University Dublin",
+    body: "A stronger foundation in UX, prototyping, research, and creative digital media now sits beside my frontend engineering practice.",
   },
   {
-    href: "/contact",
-    label: "Contact",
-    body: "For roles, product ideas, freelance work, or a quick hello.",
+    label: "3 years",
+    title: "Frontend development practice",
+    meta: "React, Next.js, React Native, Tailwind, APIs",
+    body: "Around 3 years building user-facing web applications, mobile flows, dashboards, and product workflows with design thinking baked in.",
   },
 ];
+
+const inputBase =
+  "w-full rounded-2xl border px-4 py-3.5 text-sm outline-none transition-colors focus:border-cyan-200/40 focus:ring-2 focus:ring-cyan-200/10";
 
 const reveal = {
-  hidden: { opacity: 0, y: 24 },
+  hidden: { opacity: 0, y: 34 },
   visible: { opacity: 1, y: 0 },
 };
 
-function MagneticLink({ href, children, variant = "primary" }) {
+function scrollToSection(id) {
+  const node = document.getElementById(id);
+  if (!node) return;
+  node.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function SectionShell({ id, eyebrow, title, children, className = "" }) {
   return (
-    <Link
-      href={href}
-      className={`group relative inline-flex min-h-[3.35rem] items-center justify-center overflow-hidden rounded-full border px-5 text-sm font-bold tracking-normal transition duration-300 hover:-translate-y-1 ${
-        variant === "primary"
-          ? "border-cyan-200/30 bg-cyan-200/10 text-white shadow-[0_0_32px_rgba(53,214,255,0.14)]"
-          : "border-white/12 bg-white/[0.025] text-[var(--text-secondary)]"
-      }`}
-    >
-      <span className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-[radial-gradient(circle_at_50%_0%,rgba(77,255,181,0.18),transparent_55%)]" />
-      <span className="relative flex items-center gap-2">
-        {children}
-        <FiArrowUpRight className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
-      </span>
-    </Link>
+    <section id={id} className={`relative scroll-mt-24 py-24 sm:py-32 ${className}`}>
+      <PageContainer>
+        <motion.div
+          variants={reveal}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-90px" }}
+          transition={{ duration: 0.65, ease: "easeOut" }}
+        >
+          <div className="mb-12 grid gap-5 lg:grid-cols-[0.32fr_0.68fr] lg:items-end">
+            <p className="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.18em] text-cyan-100/58">
+              <span className="text-2xl leading-none text-[var(--accent-secondary)]">*</span>
+              {eyebrow}
+            </p>
+            <h2 className="max-w-5xl text-[clamp(2.5rem,7vw,6.1rem)] font-black leading-[0.9] tracking-[-0.045em] text-white">
+              {title}
+            </h2>
+          </div>
+          {children}
+        </motion.div>
+      </PageContainer>
+    </section>
   );
 }
 
@@ -201,7 +234,7 @@ function FloatingCard({ className = "", title, children, icon: Icon, delay = 0 }
   );
 }
 
-function CreativeKeyArt() {
+function SpiderHeroArt() {
   const reduceMotion = useReducedMotion();
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -215,19 +248,6 @@ function CreativeKeyArt() {
   const artY = useTransform(smoothY, [-1, 1], reduceMotion ? [0, 0] : [-12, 12]);
   const cardX = useTransform(smoothX, [-1, 1], reduceMotion ? [0, 0] : [10, -10]);
   const cardY = useTransform(smoothY, [-1, 1], reduceMotion ? [0, 0] : [7, -7]);
-  const particles = useMemo(
-    () => [
-      { left: "12%", top: "18%", size: 3, delay: 0.1, duration: 7.2 },
-      { left: "28%", top: "72%", size: 2, delay: 1.4, duration: 8.4 },
-      { left: "42%", top: "14%", size: 2, delay: 2.2, duration: 7.8 },
-      { left: "68%", top: "78%", size: 3, delay: 0.8, duration: 9.2 },
-      { left: "84%", top: "28%", size: 2, delay: 1.9, duration: 8.8 },
-      { left: "76%", top: "52%", size: 2, delay: 3.1, duration: 7.4 },
-      { left: "18%", top: "48%", size: 2, delay: 2.7, duration: 8.1 },
-      { left: "52%", top: "88%", size: 3, delay: 1.1, duration: 9.6 },
-    ],
-    []
-  );
 
   function handlePointerMove(event) {
     if (reduceMotion) return;
@@ -249,7 +269,7 @@ function CreativeKeyArt() {
 
   return (
     <motion.div
-      className="group relative min-h-[720px] overflow-hidden rounded-[30px] border border-cyan-100/10 bg-[#03080b]/88 shadow-[0_34px_120px_rgba(0,0,0,0.48)] sm:min-h-[640px] lg:min-h-[660px]"
+      className="group relative min-h-[650px] overflow-hidden rounded-[30px] border border-cyan-100/10 bg-[#03080b]/88 shadow-[0_34px_120px_rgba(0,0,0,0.48)] sm:min-h-[620px] xl:min-h-[680px]"
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
       aria-label="Interactive Spider-Verse inspired hero artwork"
@@ -270,7 +290,7 @@ function CreativeKeyArt() {
       />
 
       <motion.div
-        className="absolute inset-0 bg-[radial-gradient(circle_at_58%_36%,rgba(53,214,255,0.2),transparent_34%),radial-gradient(circle_at_28%_76%,rgba(77,255,181,0.13),transparent_30%),radial-gradient(circle_at_78%_72%,rgba(255,31,61,0.11),transparent_26%)]"
+        className="absolute inset-0 bg-[radial-gradient(circle_at_58%_36%,rgba(53,214,255,0.2),transparent_34%),radial-gradient(circle_at_28%_76%,rgba(77,255,181,0.13),transparent_30%),radial-gradient(circle_at_78%_72%,rgba(255,31,61,0.1),transparent_26%)]"
         animate={reduceMotion ? undefined : { opacity: [0.72, 1, 0.78], scale: [1, 1.04, 1] }}
         transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
       />
@@ -280,26 +300,6 @@ function CreativeKeyArt() {
         transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
       />
       <div className="spider-noise absolute inset-0 opacity-45" />
-
-      {particles.map((particle) => (
-        <motion.span
-          key={`${particle.left}-${particle.top}`}
-          className="absolute rounded-full bg-cyan-100/70 shadow-[0_0_14px_rgba(53,214,255,0.72)]"
-          style={{
-            left: particle.left,
-            top: particle.top,
-            height: particle.size,
-            width: particle.size,
-          }}
-          animate={reduceMotion ? undefined : { y: [0, -22, 0], opacity: [0.14, 0.74, 0.14] }}
-          transition={{
-            duration: particle.duration,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: particle.delay,
-          }}
-        />
-      ))}
 
       <motion.div className="absolute inset-0" style={{ x: cardX, y: cardY }}>
         <FloatingCard className="left-3 top-4 w-[calc(50%-1rem)] sm:left-5 sm:top-6 sm:w-48" icon={FiRadio} title="CURRENT STATUS" delay={0.16}>
@@ -358,7 +358,7 @@ function CreativeKeyArt() {
       </motion.div>
 
       <motion.div className="absolute inset-0 z-20" style={{ x: artX, y: artY }}>
-        <div className="absolute left-1/2 top-1/2 flex w-[min(78%,330px)] -translate-x-1/2 -translate-y-1/2 flex-col items-center text-center sm:w-[360px]">
+        <div className="absolute left-1/2 top-1/2 flex w-[min(74%,330px)] -translate-x-1/2 -translate-y-1/2 flex-col items-center text-center sm:w-[360px]">
           <motion.div
             className="absolute top-4 h-72 w-72 rounded-full border border-cyan-200/10 bg-cyan-200/[0.025] shadow-[0_0_80px_rgba(53,214,255,0.16)] sm:h-80 sm:w-80"
             animate={reduceMotion ? undefined : { scale: [1, 1.05, 1], rotate: [0, -2, 0] }}
@@ -381,33 +381,176 @@ function CreativeKeyArt() {
               className="object-contain drop-shadow-[0_0_24px_rgba(53,214,255,0.55)]"
             />
           </motion.div>
-
         </div>
       </motion.div>
 
-      <motion.div
-        className="absolute left-8 top-1/2 h-28 w-px bg-gradient-to-b from-transparent via-cyan-200/30 to-transparent"
-        animate={reduceMotion ? undefined : { opacity: [0.16, 0.48, 0.16] }}
-        transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute right-8 top-1/3 h-36 w-px bg-gradient-to-b from-transparent via-emerald-200/25 to-transparent"
-        animate={reduceMotion ? undefined : { opacity: [0.36, 0.12, 0.36] }}
-        transition={{ duration: 6.4, repeat: Infinity, ease: "easeInOut" }}
-      />
       <LiveClock />
     </motion.div>
   );
 }
 
+function ProgressIndicator({ activeSection }) {
+  const { scrollYProgress } = useScroll();
+  const scaleY = useSpring(scrollYProgress, { stiffness: 120, damping: 28 });
+
+  return (
+    <aside className="fixed right-5 top-1/2 z-40 hidden -translate-y-1/2 items-center gap-4 xl:flex">
+      <div className="relative h-32 w-1 overflow-hidden rounded-full bg-white/10">
+        <motion.div
+          className="absolute left-0 top-0 h-full w-full origin-top rounded-full bg-[var(--accent-secondary)] shadow-[0_0_18px_rgba(77,255,181,0.75)]"
+          style={{ scaleY }}
+        />
+      </div>
+      <div className="flex flex-col gap-2">
+        {navSections.map((section) => (
+          <button
+            key={section.id}
+            type="button"
+            onClick={() => scrollToSection(section.id)}
+            className="group flex items-center justify-end gap-2 text-right"
+            aria-label={`Scroll to ${section.label}`}
+          >
+            <span
+              className={`text-[10px] font-bold uppercase tracking-[0.18em] transition ${
+                activeSection === section.id ? "text-cyan-100/80" : "text-transparent"
+              }`}
+            >
+              {section.label}
+            </span>
+            <span
+              className={`h-1.5 rounded-full transition-all ${
+                activeSection === section.id
+                  ? "w-6 bg-[var(--accent-secondary)] shadow-[0_0_14px_rgba(77,255,181,0.75)]"
+                  : "w-1.5 bg-white/22 group-hover:bg-cyan-100/50"
+              }`}
+            />
+          </button>
+        ))}
+      </div>
+    </aside>
+  );
+}
+
+function EmailRail() {
+  return (
+    <a
+      href="mailto:officialhrishivuk@gmail.com"
+      className="fixed bottom-8 left-5 z-40 hidden origin-left -rotate-90 text-xs font-semibold tracking-[0.18em] text-cyan-100/55 transition hover:text-cyan-100 lg:block"
+    >
+      officialhrishivuk@gmail.com
+    </a>
+  );
+}
+
+function AmbientParticles() {
+  return (
+    <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+      {particles.map((particle) => (
+        <motion.span
+          key={`${particle.left}-${particle.top}`}
+          className="absolute rounded-full bg-cyan-100/70 shadow-[0_0_14px_rgba(53,214,255,0.72)]"
+          style={{
+            left: particle.left,
+            top: particle.top,
+            height: particle.size,
+            width: particle.size,
+          }}
+          animate={{ y: [0, -24, 0], opacity: [0.12, 0.72, 0.12] }}
+          transition={{
+            duration: particle.duration,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: particle.delay,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+function getProjectName(title) {
+  return title.split("–")[0].trim();
+}
+
+function getProjectDescriptor(title) {
+  return title.split("–").slice(1).join("–").trim();
+}
+
 export default function Home() {
-  const { currentTheme, setCurrentTheme, themes, showThemeArrow } = useTheme();
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
+
+  const sortedProjects = useMemo(() => getSortedProjects(projects), []);
+  const selectedProjects = useMemo(
+    () =>
+      ["coach-canvas", "findaside-football-planner", "brightspace-learning-experience", "flexsave-smart-savings"]
+        .map((id) => sortedProjects.find((project) => project.id === id))
+        .filter(Boolean),
+    [sortedProjects]
+  );
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoaded(true), 80);
-    return () => clearTimeout(timer);
+    const observers = navSections
+      .map((section) => document.getElementById(section.id))
+      .filter(Boolean);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible?.target?.id) setActiveSection(visible.target.id);
+      },
+      { rootMargin: "-35% 0px -45% 0px", threshold: [0.12, 0.35, 0.6] }
+    );
+
+    observers.forEach((node) => observer.observe(node));
+    return () => observer.disconnect();
   }, []);
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((current) => ({ ...current, [name]: value }));
+    if (submitStatus) setSubmitStatus(null);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Contact request failed");
+      }
+
+      setSubmitStatus("success");
+      setFormData({ name: "", email: "", subject: "", message: "" });
+    } catch {
+      setSubmitStatus("error");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const fieldStyle = {
+    backgroundColor: "rgba(255, 255, 255, 0.035)",
+    borderColor: "var(--border-primary)",
+    color: "var(--text-primary)",
+  };
 
   return (
     <main className="relative overflow-x-hidden bg-[#050608]">
@@ -416,138 +559,362 @@ export default function Home() {
         <div className="studio-cursor-glow absolute inset-[-10%]" />
         <div className="spider-noise absolute inset-0 opacity-35" />
       </div>
+      <AmbientParticles />
+      <ProgressIndicator activeSection={activeSection} />
+      <EmailRail />
 
       <div className="relative z-10">
-        <Navbar
-          currentTheme={currentTheme}
-          setCurrentTheme={setCurrentTheme}
-          themes={themes}
-          showThemeArrow={showThemeArrow}
-        />
+        <Navbar activeSection={activeSection} sections={navSections} onNavigate={scrollToSection} />
 
-        <section className="min-h-[92vh] pt-32 sm:pt-36 pb-16 flex items-center">
+        <section id="home" className="relative flex min-h-screen scroll-mt-24 items-center pt-28 pb-16">
           <PageContainer>
-            <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(420px,0.82fr)]">
+            <div className="grid items-center gap-10 xl:grid-cols-[minmax(0,0.82fr)_minmax(520px,0.88fr)]">
               <motion.div
-                variants={reveal}
-                initial="hidden"
-                animate={isLoaded ? "visible" : "hidden"}
-                transition={{ duration: 0.65, ease: "easeOut" }}
+                initial={{ opacity: 0, y: 34 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, ease: "easeOut" }}
               >
-                <p className="mb-5 text-xs font-bold uppercase tracking-[0.18em] text-[var(--accent-secondary)]">
+                <p className="mb-5 text-xs font-bold uppercase tracking-[0.2em] text-[var(--accent-secondary)]">
                   Frontend engineer - UX-minded product builder
                 </p>
-                <h1 className="max-w-4xl text-[clamp(2.75rem,5.2vw,5.4rem)] font-black leading-[0.94] tracking-[-0.04em] text-white">
-                  I design and build digital products from idea to interface.
+                <h1 className="max-w-5xl text-[clamp(4rem,10vw,8.6rem)] font-black uppercase leading-[0.78] tracking-[-0.055em] text-white">
+                  Frontend
+                  <span className="block text-transparent [-webkit-text-stroke:1px_rgba(244,247,250,0.88)]">
+                    Developer
+                  </span>
                 </h1>
-                <p className="mt-7 max-w-2xl text-lg leading-8 text-[var(--text-secondary)]">
+                <p className="mt-8 max-w-2xl text-lg leading-8 text-[var(--text-secondary)]">
                   I&apos;m Hrishikesh Varma, a frontend engineer in Dublin building
                   web, mobile, and AI-assisted product experiences with design
                   thinking baked in.
                 </p>
-
-                <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-                  <MagneticLink href="/works">View work</MagneticLink>
-                  <a
-                    href="mailto:officialhrishivuk@gmail.com"
-                    className="group relative inline-flex min-h-[3.35rem] items-center justify-center overflow-hidden rounded-full border border-white/12 bg-white/[0.025] px-5 text-sm font-bold text-[var(--text-secondary)] transition duration-300 hover:-translate-y-1 hover:border-cyan-200/30 hover:text-white"
+                <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
+                  <button
+                    type="button"
+                    onClick={() => scrollToSection("contact")}
+                    className="group relative inline-flex min-h-[3.35rem] items-center justify-center overflow-hidden rounded-full border border-cyan-200/30 bg-cyan-200/10 px-5 text-sm font-bold text-white shadow-[0_0_32px_rgba(53,214,255,0.14)] transition duration-300 hover:-translate-y-1"
                   >
-                    <span className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-[radial-gradient(circle_at_50%_0%,rgba(53,214,255,0.16),transparent_60%)]" />
+                    <span className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-[radial-gradient(circle_at_50%_0%,rgba(77,255,181,0.18),transparent_55%)]" />
                     <span className="relative flex items-center gap-2">
-                      Contact me
-                      <FiMail aria-hidden />
+                      Let&apos;s talk
+                      <FiArrowUpRight className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
                     </span>
-                  </a>
+                  </button>
+                  <div className="flex items-center gap-2 text-sm font-semibold text-cyan-100/62">
+                    <span className="h-2.5 w-2.5 rounded-full bg-white shadow-[0_0_14px_rgba(77,255,181,0.8)]" />
+                    Available for full-time opportunities
+                  </div>
                 </div>
               </motion.div>
 
               <motion.div
-                variants={reveal}
-                initial="hidden"
-                animate={isLoaded ? "visible" : "hidden"}
-                transition={{ duration: 0.7, delay: 0.12, ease: "easeOut" }}
+                initial={{ opacity: 0, y: 34, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.75, delay: 0.12, ease: "easeOut" }}
               >
-                <CreativeKeyArt />
+                <SpiderHeroArt />
               </motion.div>
             </div>
           </PageContainer>
         </section>
 
-        <section id="process" className="studio-section border-y border-white/10 bg-white/[0.012]">
-          <PageContainer>
-            <div className="grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
-              <div className="lg:sticky lg:top-32">
-                <p className="studio-kicker mb-4">Process</p>
-                <h2 className="text-[clamp(2.35rem,4.5vw,4.25rem)] font-black leading-[0.94] tracking-[-0.035em] text-white">
-                  How I move from problem to product.
-                </h2>
-                <p className="studio-text mt-5 max-w-xl">
-                  This is the part of the homepage worth keeping: it explains why
-                  the portfolio is not just a list of React projects.
-                </p>
+        <SectionShell
+          id="about"
+          eyebrow="About"
+          title="User-centered interfaces with a product engineer's eye."
+        >
+          <div className="grid gap-10 border-t border-white/10 pt-9 lg:grid-cols-[0.42fr_0.58fr]">
+            <div>
+              <p className="text-[clamp(2rem,4vw,3.6rem)] font-black leading-none tracking-[-0.035em] text-white">
+                Hi, I&apos;m Hrishikesh.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-2">
+                <span className="studio-pill gap-2">
+                  <FiMapPin aria-hidden />
+                  Dublin / Remote / Hybrid
+                </span>
+                <span className="studio-pill">Around 3 years</span>
+                <span className="studio-pill">First Class Honours MSc</span>
               </div>
+            </div>
+            <div className="space-y-5 text-lg leading-8 text-[var(--text-secondary)]">
+              <p>
+                I&apos;m a frontend developer based in Dublin, Ireland, focused on
+                building thoughtful digital products that combine clean engineering
+                with great user experience.
+              </p>
+              <p>
+                I enjoy user-facing web applications, AI-powered products, and SaaS
+                platforms. I&apos;m interested in UX research, wireframing, prototyping,
+                and design systems, but I like keeping those close to the product.
+              </p>
+            </div>
+          </div>
+        </SectionShell>
 
-              <div className="space-y-1">
-                {processSteps.map((step) => (
-                  <motion.article
-                    key={step.number}
-                    variants={reveal}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, margin: "-80px" }}
-                    transition={{ duration: 0.5, ease: "easeOut" }}
-                    className="group grid gap-4 border-b border-white/10 py-6 sm:grid-cols-[88px_1fr]"
-                  >
-                    <p className="font-mono text-sm font-bold text-[var(--accent-secondary)]">
-                      {step.number}
+        <SectionShell id="skills" eyebrow="My stack" title="Tools I use to shape and ship interfaces.">
+          <div className="space-y-14 border-t border-white/10 pt-9">
+            {skills.map((group) => (
+              <div key={group.group} className="grid gap-5 lg:grid-cols-[0.32fr_0.68fr] lg:items-start">
+                <h3 className="text-[clamp(2rem,4vw,3.5rem)] font-black uppercase leading-none tracking-[-0.035em] text-white/78">
+                  {group.group}
+                </h3>
+                <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+                  {group.items.map((item) => (
+                    <motion.div
+                      key={item}
+                      whileHover={{ y: -4, borderColor: "rgba(53,214,255,0.35)" }}
+                      className="rounded-2xl border border-white/10 bg-white/[0.025] px-4 py-4 text-lg font-bold text-white/86 shadow-[0_18px_60px_rgba(0,0,0,0.18)]"
+                    >
+                      <span className="mr-3 inline-block h-2 w-2 rounded-full bg-[var(--accent-secondary)] shadow-[0_0_14px_rgba(77,255,181,0.75)]" />
+                      {item}
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </SectionShell>
+
+        <SectionShell id="experience" eyebrow="Experience" title="The path behind the product work.">
+          <div className="space-y-10 border-t border-white/10 pt-9">
+            {experienceItems.map((item, index) => (
+              <motion.article
+                key={item.title}
+                variants={reveal}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.55, delay: index * 0.06, ease: "easeOut" }}
+                className="grid gap-5 border-b border-white/10 pb-10 lg:grid-cols-[0.32fr_0.68fr]"
+              >
+                <div>
+                  <p className="text-sm font-bold uppercase tracking-[0.18em] text-[var(--accent-secondary)]">
+                    {item.label}
+                  </p>
+                  <p className="mt-3 text-sm font-semibold text-cyan-100/52">{item.meta}</p>
+                </div>
+                <div>
+                  <h3 className="text-[clamp(2rem,5vw,4.25rem)] font-black leading-[0.92] tracking-[-0.04em] text-white">
+                    {item.title}
+                  </h3>
+                  <p className="mt-5 max-w-3xl text-base leading-7 text-[var(--text-secondary)]">
+                    {item.body}
+                  </p>
+                </div>
+              </motion.article>
+            ))}
+          </div>
+        </SectionShell>
+
+        <SectionShell id="projects" eyebrow="Selected projects" title="Product stories, reduced to the signal.">
+          <div className="grid gap-8 border-t border-white/10 pt-9">
+            {selectedProjects.map((project, index) => (
+              <motion.article
+                key={project.id}
+                variants={reveal}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.6, delay: index * 0.06, ease: "easeOut" }}
+                className="group grid gap-6 overflow-hidden border-b border-white/10 pb-8 lg:grid-cols-[0.62fr_0.38fr] lg:items-center"
+              >
+                <div className="grid gap-5 sm:grid-cols-[56px_1fr]">
+                  <p className="font-mono text-sm font-bold text-cyan-100/42">
+                    {String(index + 1).padStart(2, "0")}.
+                  </p>
+                  <div>
+                    <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-[var(--accent-secondary)]">
+                      {project.category} / {project.year}
                     </p>
-                    <div>
-                      <h3 className="text-xl font-bold tracking-[-0.015em] text-white sm:text-2xl">
-                        {step.title}
-                      </h3>
-                      <p className="mt-2 max-w-2xl text-base leading-7 text-[var(--text-secondary)]">
-                        {step.body}
+                    <h3 className="text-[clamp(2.4rem,7vw,5.5rem)] font-black leading-[0.86] tracking-[-0.05em] text-white transition-colors group-hover:text-cyan-100">
+                      {getProjectName(project.title)}
+                    </h3>
+                    {getProjectDescriptor(project.title) && (
+                      <p className="mt-3 text-xl font-bold text-white/58">
+                        {getProjectDescriptor(project.title)}
                       </p>
+                    )}
+                    <p className="mt-5 max-w-3xl text-base leading-7 text-[var(--text-secondary)]">
+                      {project.summary}
+                    </p>
+                    <div className="mt-5 flex flex-wrap gap-2">
+                      {(project.technologies || []).slice(0, 4).map((tool) => (
+                        <span key={tool} className="rounded-full border border-white/10 px-3 py-1 text-xs font-bold text-cyan-100/58">
+                          {tool}
+                        </span>
+                      ))}
                     </div>
-                  </motion.article>
-                ))}
-              </div>
-            </div>
-          </PageContainer>
-        </section>
-
-        <section className="studio-section">
-          <PageContainer>
-            <div className="mb-8 max-w-3xl">
-              <p className="studio-kicker mb-4">Next</p>
-              <h2 className="text-[clamp(2.25rem,4.2vw,4rem)] font-black leading-[0.96] tracking-[-0.035em] text-white">
-                Choose what you want to know.
-              </h2>
-            </div>
-            <div className="grid gap-4 md:grid-cols-3">
-              {nextLinks.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="group relative overflow-hidden rounded-[24px] border border-white/10 bg-white/[0.025] p-5 transition-transform duration-300 hover:-translate-y-1"
-                >
-                  <div className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-[radial-gradient(circle_at_24%_0%,rgba(77,255,181,0.14),transparent_58%)]" />
-                  <div className="relative flex items-start justify-between gap-4">
-                    <div>
-                      <h3 className="text-xl font-bold tracking-[-0.015em] text-white">
-                        {item.label}
-                      </h3>
-                      <p className="mt-3 text-sm leading-6 text-[var(--text-secondary)]">
-                        {item.body}
-                      </p>
-                    </div>
-                    <FiChevronRight className="mt-1 shrink-0 text-[var(--accent-secondary)] transition-transform group-hover:translate-x-1" />
                   </div>
-                </Link>
-              ))}
-            </div>
-          </PageContainer>
-        </section>
+                </div>
+                <div className="relative min-h-[240px] overflow-hidden rounded-[24px] border border-white/10 bg-black/30 sm:min-h-[320px]">
+                  {project.image ? (
+                    <Image
+                      src={project.image}
+                      alt=""
+                      fill
+                      sizes="(min-width: 1024px) 34vw, 100vw"
+                      className={`transition-transform duration-700 group-hover:scale-[1.04] ${
+                        project.heroFit === "contain" ? "object-contain p-6" : "object-cover"
+                      }`}
+                    />
+                  ) : null}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+                </div>
+              </motion.article>
+            ))}
+          </div>
+        </SectionShell>
+
+        <SectionShell id="contact" eyebrow="Contact" title="Have a product, role, or idea?">
+          <div className="grid gap-10 border-t border-white/10 pt-9 lg:grid-cols-[0.38fr_0.62fr]">
+            <aside className="space-y-8">
+              <p className="text-lg leading-8 text-[var(--text-secondary)]">
+                I&apos;m open to frontend, product, UX engineering, design engineering,
+                and creative technology opportunities.
+              </p>
+              <div className="space-y-3">
+                <a
+                  href="mailto:officialhrishivuk@gmail.com"
+                  className="group flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.025] p-4"
+                >
+                  <span className="inline-flex items-center gap-3 text-sm font-semibold text-white">
+                    <FiMail aria-hidden />
+                    Email
+                  </span>
+                  <FiArrowUpRight className="text-[var(--accent-secondary)] transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/hrishivuk/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.025] p-4"
+                >
+                  <span className="inline-flex items-center gap-3 text-sm font-semibold text-white">
+                    <FiLinkedin aria-hidden />
+                    LinkedIn
+                  </span>
+                  <FiArrowUpRight className="text-[var(--accent-secondary)] transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                </a>
+                <a
+                  href="https://github.com/hrishivuk"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.025] p-4"
+                >
+                  <span className="inline-flex items-center gap-3 text-sm font-semibold text-white">
+                    <FiGithub aria-hidden />
+                    GitHub
+                  </span>
+                  <FiArrowUpRight className="text-[var(--accent-secondary)] transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                </a>
+              </div>
+            </aside>
+
+            <form onSubmit={handleSubmit} className="rounded-[28px] border border-white/10 bg-white/[0.025] p-5 shadow-[0_24px_90px_rgba(0,0,0,0.28)] backdrop-blur-xl sm:p-8">
+              <div className="grid gap-5 sm:grid-cols-2">
+                <div>
+                  <label htmlFor="name" className="page-eyebrow mb-2 block">
+                    Name
+                  </label>
+                  <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    required
+                    className={inputBase}
+                    style={fieldStyle}
+                    placeholder="Your name"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="email" className="page-eyebrow mb-2 block">
+                    Email
+                  </label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required
+                    className={inputBase}
+                    style={fieldStyle}
+                    placeholder="you@email.com"
+                  />
+                </div>
+              </div>
+
+              <div className="mt-5">
+                <label htmlFor="subject" className="page-eyebrow mb-2 block">
+                  Subject
+                </label>
+                <input
+                  id="subject"
+                  name="subject"
+                  type="text"
+                  value={formData.subject}
+                  onChange={handleInputChange}
+                  required
+                  className={inputBase}
+                  style={fieldStyle}
+                  placeholder="Role, product, or hello"
+                />
+              </div>
+
+              <div className="mt-5">
+                <label htmlFor="message" className="page-eyebrow mb-2 block">
+                  Message
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  required
+                  rows={7}
+                  className={`${inputBase} resize-y`}
+                  style={fieldStyle}
+                  placeholder="Tell me what you are building or hiring for..."
+                />
+              </div>
+
+              <AnimatePresence>
+                {submitStatus === "success" && (
+                  <motion.p
+                    className="mt-5 text-sm font-medium text-[var(--accent-secondary)]"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                  >
+                    Message sent. I&apos;ll be in touch soon.
+                  </motion.p>
+                )}
+                {submitStatus === "error" && (
+                  <motion.p
+                    className="mt-5 text-sm font-medium text-red-300"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                  >
+                    Something went wrong. Email me directly instead.
+                  </motion.p>
+                )}
+              </AnimatePresence>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="mt-7 inline-flex min-h-[3.35rem] items-center justify-center gap-2 rounded-full border border-cyan-200/30 bg-cyan-200/10 px-5 text-sm font-bold text-white transition hover:-translate-y-1 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {isSubmitting ? "Sending..." : "Send message"}
+                <FiSend aria-hidden />
+              </button>
+            </form>
+          </div>
+        </SectionShell>
       </div>
     </main>
   );

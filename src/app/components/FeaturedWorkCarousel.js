@@ -184,11 +184,11 @@ export default function FeaturedWorkCarousel({ projects }) {
                   </div>
 
                   <Link
-                    href={`/works/${project.id}`}
+                    href="/#projects"
                     className="featured-work-card__btn"
                     onClick={(event) => event.stopPropagation()}
                   >
-                    View case study
+                    View project
                     <FiArrowUpRight aria-hidden />
                   </Link>
                 </div>
