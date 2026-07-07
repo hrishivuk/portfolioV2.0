@@ -3,6 +3,7 @@ import { Space_Grotesk } from "next/font/google";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { LayoutProvider } from "./contexts/LayoutContext";
 import AmbientBackground from "./components/AmbientBackground";
+import CustomCursor from "./components/CustomCursor";
 import RouteCurtainReveal from "./components/RouteCurtainReveal";
 
 // Get site URL from environment variable or use default
@@ -49,6 +50,7 @@ export default function RootLayout({ children }) {
         <ThemeProvider>
           <LayoutProvider>
             <AmbientBackground />
+            <CustomCursor />
             <RouteCurtainReveal />
             {children}
           </LayoutProvider>
