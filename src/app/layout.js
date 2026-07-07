@@ -1,4 +1,5 @@
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 import { Space_Grotesk } from "next/font/google";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { LayoutProvider } from "./contexts/LayoutContext";
@@ -53,6 +54,7 @@ export default function RootLayout({ children }) {
             <CustomCursor />
             <RouteCurtainReveal />
             {children}
+            <Analytics />
           </LayoutProvider>
         </ThemeProvider>
       </body>
