@@ -52,7 +52,11 @@ export const projects = [
         "Grassroots football clubs often run on scattered WhatsApp threads, spreadsheets, informal approvals, and coach memory. That creates friction for onboarding, player management, and match preparation.",
       opportunity:
         "Create a structured club workspace that still feels simple enough for non-technical coaches and players to use every week.",
-      users: ["Club managers", "Football coaches", "Players waiting to join a club"],
+      users: [
+        "Club managers",
+        "Football coaches",
+        "Players waiting to join a club",
+      ],
       productThinking: [
         "Separated coach and player onboarding so each role only sees the decisions that matter to them.",
         "Mapped the app around user state: unauthenticated, profile incomplete, club owner, pending join request, approved player.",
@@ -100,7 +104,7 @@ export const projects = [
     id: "flexsave-smart-savings",
     title: "FlexSave – Smart Savings App",
     category: "UX Design",
-    year: "2024",
+    year: "2025",
     featured: true,
     summary:
       "A 5-day university UI/UX design project: conceptualized a flexible savings app from scratch and delivered a complete mobile interface design focused on making saving feel approachable and motivating.",
@@ -190,7 +194,7 @@ export const projects = [
     id: "brightspace-learning-experience",
     title: "Brightspace – Career Growth Feature Concept",
     category: "UX Design",
-    year: "2023",
+    year: "2025",
     featured: true,
     summary:
       "A graded university UI/UX project that extended the Brightspace student app with career-focused features for resumes, networking, portfolios, and academic references.",
@@ -274,7 +278,6 @@ export const projects = [
         alt: "Before: original Brightspace bottom navigation",
         placement: "process",
         aspect: "banner",
-        size: "large",
         presentation: "comparison",
       },
       {
@@ -282,7 +285,6 @@ export const projects = [
         alt: "After: updated bottom navigation with the new growth area",
         placement: "process",
         aspect: "banner",
-        size: "large",
         presentation: "comparison",
       },
       {
@@ -382,7 +384,7 @@ export const projects = [
     id: "findaside-football-planner",
     title: "Findaside – Football Match Planner",
     category: "Frontend Development",
-    year: "2024",
+    year: "2025",
     featured: true,
     summary:
       "A contract frontend build for a football match-planning web app, covering host dashboards, game creation, player groups, payments, maps, routing, and responsive screens.",

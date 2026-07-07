@@ -2,7 +2,6 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { FiRefreshCw } from "react-icons/fi";
 import Navbar from "./components/navbar";
 import PageContainer from "./components/PageContainer";
@@ -34,12 +33,7 @@ export default function Error({ error, reset }) {
 
         <section className="min-h-screen pt-32 flex items-center">
           <PageContainer>
-            <motion.div
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55, ease: "easeOut" }}
-              className="max-w-5xl"
-            >
+            <div className="max-w-5xl">
               <p className="studio-kicker mb-5">Error</p>
               <h1 className="studio-display">Something slipped in the interface.</h1>
               <p className="studio-subheading mt-7 max-w-2xl">
@@ -59,7 +53,7 @@ export default function Error({ error, reset }) {
                   View work
                 </Link>
               </div>
-            </motion.div>
+            </div>
           </PageContainer>
         </section>
       </div>

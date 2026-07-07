@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { FiArrowUpRight } from "react-icons/fi";
 import Navbar from "./components/navbar";
 import PageContainer from "./components/PageContainer";
@@ -27,12 +26,7 @@ export default function NotFound() {
 
         <section className="min-h-screen pt-32 flex items-center">
           <PageContainer>
-            <motion.div
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55, ease: "easeOut" }}
-              className="max-w-5xl"
-            >
+            <div className="max-w-5xl">
               <p className="studio-kicker mb-5">404</p>
               <h1 className="studio-display">This page moved off the canvas.</h1>
               <p className="studio-subheading mt-7 max-w-2xl">
@@ -48,7 +42,7 @@ export default function NotFound() {
                   Go home
                 </Link>
               </div>
-            </motion.div>
+            </div>
           </PageContainer>
         </section>
       </div>

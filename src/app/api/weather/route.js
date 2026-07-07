@@ -45,7 +45,9 @@ export async function GET() {
     // Step 1: Geocoding - get coordinates for the city
     const geocodeUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(
       cityName
-    )}&count=1&language=en&format=json`;
+    )}&count=1&language=en&format=json&countryCode=${encodeURIComponent(
+      countryCode,
+    )}`;
 
     const geoRes = await fetch(geocodeUrl, {
       next: { revalidate: 3600 }, // Cache for 1 hour
@@ -117,5 +119,4 @@ export async function GET() {
     });
   }
 }
-
 

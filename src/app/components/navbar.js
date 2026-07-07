@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "motion/react";
 import { useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 import { useLayout } from "../contexts/LayoutContext";
@@ -62,26 +62,29 @@ export default function Navbar({
                 key={item.id}
                 type="button"
                 onClick={() => navigate(item.id)}
-                className="rounded-full px-4 py-2 text-sm font-medium transition-colors"
+                className="relative rounded-full px-4 py-2 text-sm font-medium"
                 style={{
                   color:
                     activeSection === item.id
                       ? "var(--text-primary)"
                       : "var(--text-muted)",
-                  backgroundColor:
-                    activeSection === item.id
-                      ? "rgba(255,255,255,0.06)"
-                      : "transparent",
                 }}
               >
-                {item.label}
+                {activeSection === item.id ? (
+                  <motion.span
+                    layoutId="navbar-active-pill"
+                    className="absolute inset-0 rounded-full bg-white/[0.06]"
+                    transition={{ type: "spring", stiffness: 420, damping: 34 }}
+                  />
+                ) : null}
+                <span className="relative z-10">{item.label}</span>
               </button>
             ))}
           </div>
 
           <button
             type="button"
-            className="inline-flex min-h-[40px] min-w-[40px] items-center justify-center rounded-full border transition hover:border-cyan-200/40 hover:text-white"
+            className="inline-flex min-h-[40px] min-w-[40px] items-center justify-center rounded-full border hover:border-cyan-200/40 hover:text-white lg:hidden"
             style={{
               borderColor: "var(--border-primary)",
               color: "var(--text-primary)",
@@ -95,50 +98,48 @@ export default function Navbar({
         </nav>
       </header>
 
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            className="fixed inset-0 z-40 bg-[#050608]/96 px-4 pt-24 backdrop-blur-xl"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
+      {isOpen && (
+        <div className="fixed inset-0 z-40 bg-[#050608]/96 px-4 pt-24 backdrop-blur-xl">
+          <nav
+            className="mx-auto flex max-w-xl flex-col gap-3"
+            aria-label="Menu navigation"
           >
-            <nav className="mx-auto flex max-w-xl flex-col gap-3" aria-label="Menu navigation">
-              {sections.map((item, index) => (
-                <motion.button
-                  key={item.id}
-                  type="button"
-                  onClick={() => navigate(item.id)}
-                  className="group flex min-h-[68px] items-center justify-between rounded-2xl border border-white/10 bg-white/[0.025] px-5 text-left text-2xl font-black text-white transition hover:border-cyan-200/30"
-                  initial={{ opacity: 0, y: 14 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.25, delay: index * 0.04 }}
-                >
-                  <span>{item.label}</span>
-                  <span
-                    className={`font-mono text-sm ${
-                      activeSection === item.id
-                        ? "text-[var(--accent-secondary)]"
-                        : "text-cyan-100/36"
-                    }`}
-                  >
-                    0{index + 1}
-                  </span>
-                </motion.button>
-              ))}
-              <a
-                href="mailto:officialhrishivuk@gmail.com"
-                onClick={() => setIsOpen(false)}
-                className="mt-4 flex min-h-[56px] items-center justify-center rounded-full border border-cyan-200/25 text-sm font-bold text-white"
+            {sections.map((item, index) => (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => navigate(item.id)}
+                className="group relative flex min-h-[68px] items-center justify-between overflow-hidden rounded-2xl border border-white/10 bg-white/[0.025] px-5 text-left text-2xl font-black text-white hover:border-cyan-200/30"
               >
-                Let&apos;s talk
-              </a>
-            </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
+                {activeSection === item.id ? (
+                  <motion.span
+                    layoutId="navbar-mobile-active-pill"
+                    className="absolute inset-0 rounded-2xl bg-white/[0.06]"
+                    transition={{ type: "spring", stiffness: 420, damping: 34 }}
+                  />
+                ) : null}
+                <span className="relative z-10">{item.label}</span>
+                <span
+                  className={`relative z-10 font-mono text-sm ${
+                    activeSection === item.id
+                      ? "text-[var(--accent-secondary)]"
+                      : "text-cyan-100/36"
+                  }`}
+                >
+                  0{index + 1}
+                </span>
+              </button>
+            ))}
+            <a
+              href="mailto:officialhrishivuk@gmail.com"
+              onClick={() => setIsOpen(false)}
+              className="mt-4 flex min-h-[56px] items-center justify-center rounded-full border border-cyan-200/25 text-sm font-bold text-white"
+            >
+              Let&apos;s talk
+            </a>
+          </nav>
+        </div>
+      )}
     </>
   );
 }
