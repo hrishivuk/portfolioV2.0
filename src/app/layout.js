@@ -25,6 +25,11 @@ export const metadata = {
   authors: [{ name: "Hrishikesh Varma" }],
   creator: "Hrishikesh Varma",
   metadataBase: new URL(siteUrl),
+  icons: {
+    icon: [
+      { url: "/icon.svg?v=2", type: "image/svg+xml" },
+    ],
+  },
   openGraph: {
     title: "Hrishikesh Varma - Frontend Engineer & Product Designer",
     description:
