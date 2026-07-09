@@ -6,15 +6,30 @@ import { motion, useReducedMotion } from "motion/react";
 import {
   FiArrowLeft,
   FiArrowUpRight,
-  FiBookOpen,
   FiCheckCircle,
-  FiDownload,
-  FiFileText,
+  FiExternalLink,
+  FiLayers,
 } from "react-icons/fi";
 import PageContainer from "../../components/PageContainer";
 
 function getProjectName(title) {
   return title.split("–")[0].trim();
+}
+
+function Reveal({ children, delay = 0, className = "" }) {
+  const reduceMotion = useReducedMotion();
+
+  return (
+    <motion.div
+      className={className}
+      initial={reduceMotion ? false : { opacity: 0, y: 26, filter: "blur(8px)" }}
+      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+      viewport={{ once: true, amount: 0.28, margin: "-6% 0px" }}
+      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
+    >
+      {children}
+    </motion.div>
+  );
 }
 
 function ShowcaseSection({ eyebrow, title, children, className = "" }) {
@@ -32,22 +47,6 @@ function ShowcaseSection({ eyebrow, title, children, className = "" }) {
       </div>
       {children}
     </section>
-  );
-}
-
-function Reveal({ children, delay = 0, className = "" }) {
-  const reduceMotion = useReducedMotion();
-
-  return (
-    <motion.div
-      className={className}
-      initial={reduceMotion ? false : { opacity: 0, y: 28, filter: "blur(8px)" }}
-      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-      viewport={{ once: true, amount: 0.28, margin: "-6% 0px" }}
-      transition={{ duration: 0.62, delay, ease: [0.22, 1, 0.36, 1] }}
-    >
-      {children}
-    </motion.div>
   );
 }
 
@@ -77,21 +76,11 @@ function TextCard({ title, children }) {
   );
 }
 
-function DocumentIcon({ index }) {
-  const Icon = index === 0 ? FiBookOpen : FiFileText;
-
+function ScreenshotCard({ screenshot, index }) {
   return (
-    <span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-cyan-100/15 bg-cyan-100/10 text-[var(--accent-secondary)]">
-      <Icon className="h-5 w-5" aria-hidden />
-    </span>
-  );
-}
-
-function ScreenshotShowcaseCard({ screenshot, index }) {
-  return (
-    <Reveal delay={index * 0.06}>
+    <Reveal delay={index * 0.05}>
       <article className="group overflow-hidden rounded-[28px] border border-white/10 bg-black/28">
-        <div className="relative aspect-[16/11] bg-[#071014] sm:aspect-[16/10]">
+        <div className="relative aspect-[16/10] bg-[#071014]">
           <Image
             src={screenshot.src}
             alt={screenshot.alt}
@@ -114,10 +103,10 @@ function ScreenshotShowcaseCard({ screenshot, index }) {
   );
 }
 
-export default function CoachCanvasShowcase({ project }) {
+export default function FindasideShowcase({ project }) {
   const reduceMotion = useReducedMotion();
   const projectName = getProjectName(project.title);
-  const primaryTools = (project.technologies || []).slice(0, 6);
+  const primaryTools = (project.technologies || []).slice(0, 7);
 
   return (
     <main className="relative min-h-screen overflow-x-hidden bg-[#050608]">
@@ -151,9 +140,8 @@ export default function CoachCanvasShowcase({ project }) {
                 <p className="mb-5 text-xs font-bold uppercase tracking-[0.2em] text-[var(--accent-secondary)]">
                   Product showcase
                 </p>
-                <h1 className="max-w-5xl text-[clamp(3rem,5.6vw,5.8rem)] font-black uppercase leading-[0.82] tracking-normal text-white">
-                  <span className="block">Coach</span>
-                  <span className="block">Canvas</span>
+                <h1 className="max-w-5xl text-[clamp(3rem,5.6vw,5.8rem)] font-black uppercase leading-[0.84] tracking-normal text-white">
+                  {projectName}
                 </h1>
                 <p className="mt-6 max-w-lg text-sm font-semibold leading-6 text-cyan-50/78 sm:text-[0.95rem] sm:leading-7">
                   {project.summary}
@@ -175,6 +163,17 @@ export default function CoachCanvasShowcase({ project }) {
                     </span>
                   ))}
                 </div>
+
+                {project.liveUrl ? (
+                  <Link
+                    href={project.liveUrl}
+                    target="_blank"
+                    className="mt-8 inline-flex min-h-[3.2rem] items-center justify-center gap-2 rounded-full border border-cyan-200/30 bg-cyan-200/10 px-5 text-sm font-bold text-white shadow-[0_0_30px_rgba(53,214,255,0.12)] transition-transform hover:-translate-y-0.5"
+                  >
+                    View website
+                    <FiExternalLink aria-hidden />
+                  </Link>
+                ) : null}
               </Reveal>
 
               <motion.div
@@ -187,7 +186,7 @@ export default function CoachCanvasShowcase({ project }) {
                 animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
                 transition={{ duration: 0.78, ease: [0.22, 1, 0.36, 1] }}
               >
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_0%,rgba(53,214,255,0.18),transparent_42%),radial-gradient(circle_at_84%_92%,rgba(77,255,181,0.12),transparent_44%)]" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_0%,rgba(53,214,255,0.16),transparent_42%),radial-gradient(circle_at_84%_92%,rgba(77,255,181,0.12),transparent_44%)]" />
                 {project.image ? (
                   <Image
                     src={project.image}
@@ -202,7 +201,7 @@ export default function CoachCanvasShowcase({ project }) {
             </div>
           </section>
 
-          <ShowcaseSection eyebrow="Overview" title="Built for club flow.">
+          <ShowcaseSection eyebrow="Overview" title="Built for game day.">
             <div className="grid gap-5 lg:grid-cols-3">
               <TextCard title="What it is">{project.showcaseOverview}</TextCard>
               <TextCard title="Problem">{project.problem}</TextCard>
@@ -210,7 +209,7 @@ export default function CoachCanvasShowcase({ project }) {
             </div>
           </ShowcaseSection>
 
-          <ShowcaseSection eyebrow="My contributions" title="Designed and built end-to-end.">
+          <ShowcaseSection eyebrow="My contributions" title="Full frontend prototype.">
             <div className="grid gap-5 lg:grid-cols-2">
               {Object.entries(project.contributions || {}).map(
                 ([group, items], groupIndex) => (
@@ -241,9 +240,9 @@ export default function CoachCanvasShowcase({ project }) {
           </ShowcaseSection>
 
           <ShowcaseSection eyebrow="Key features" title="The product at a glance.">
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
               {(project.keyFeatures || []).map((feature, index) => (
-                <Reveal key={feature} delay={index * 0.035}>
+                <Reveal key={feature} delay={index * 0.03}>
                   <article className="flex min-h-[7rem] items-end rounded-[22px] border border-white/10 bg-white/[0.025] p-4 transition-colors hover:border-cyan-100/25 hover:bg-cyan-100/[0.045]">
                     <p className="text-base font-black leading-tight text-white">
                       {feature}
@@ -255,10 +254,10 @@ export default function CoachCanvasShowcase({ project }) {
           </ShowcaseSection>
 
           {project.screenshots?.length ? (
-            <ShowcaseSection eyebrow="Product screens" title="A quick look inside.">
+            <ShowcaseSection eyebrow="Product screens" title="Selected flows.">
               <div className="grid gap-5 lg:grid-cols-2">
                 {project.screenshots.map((screenshot, index) => (
-                  <ScreenshotShowcaseCard
+                  <ScreenshotCard
                     key={screenshot.src}
                     screenshot={screenshot}
                     index={index}
@@ -268,46 +267,46 @@ export default function CoachCanvasShowcase({ project }) {
             </ShowcaseSection>
           ) : null}
 
-          {project.documentLinks?.length ? (
+          {project.websiteLinks?.length ? (
             <ShowcaseSection
-              eyebrow="Learn more"
-              title="Read the full project material."
+              eyebrow="Live product"
+              title="Try the current frontend."
               className="pb-20 sm:pb-28"
             >
-              <div className="grid gap-5 lg:grid-cols-2">
-                {project.documentLinks.map((document, index) => (
-                  <Reveal key={document.href} delay={index * 0.08}>
-                    <Link
-                      href={document.href}
-                      target="_blank"
-                      className="group flex h-full flex-col justify-between rounded-[28px] border border-cyan-100/14 bg-[linear-gradient(140deg,rgba(53,214,255,0.1),rgba(77,255,181,0.045),rgba(255,255,255,0.02))] p-5 transition-transform hover:-translate-y-1 hover:border-cyan-100/30 sm:p-7"
-                    >
-                      <div className="flex items-start justify-between gap-5">
-                        <DocumentIcon index={index} />
-                        <FiArrowUpRight
-                          className="h-5 w-5 text-[var(--accent-secondary)] transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"
-                          aria-hidden
-                        />
-                      </div>
-                      <div className="mt-10">
-                        <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-[var(--text-muted)]">
-                          {document.type}
-                        </p>
-                        <h3 className="text-2xl font-black uppercase leading-none text-white sm:text-4xl">
-                          {document.title}
-                        </h3>
-                        <p className="mt-4 max-w-xl text-base font-semibold leading-7 text-[var(--text-secondary)]">
-                          {document.description}
-                        </p>
-                        <span className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-cyan-50">
-                          View PDF
-                          <FiDownload aria-hidden />
-                        </span>
-                      </div>
-                    </Link>
-                  </Reveal>
-                ))}
-              </div>
+              {project.websiteLinks.map((website, index) => (
+                <Reveal key={website.href} delay={index * 0.08}>
+                  <Link
+                    href={website.href}
+                    target="_blank"
+                    className="group flex min-h-[18rem] flex-col justify-between rounded-[32px] border border-cyan-100/14 bg-[linear-gradient(140deg,rgba(53,214,255,0.12),rgba(77,255,181,0.055),rgba(255,255,255,0.02))] p-5 transition-transform hover:-translate-y-1 hover:border-cyan-100/30 sm:p-8"
+                  >
+                    <div className="flex items-start justify-between gap-5">
+                      <span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-cyan-100/15 bg-cyan-100/10 text-[var(--accent-secondary)]">
+                        <FiLayers className="h-5 w-5" aria-hidden />
+                      </span>
+                      <FiArrowUpRight
+                        className="h-5 w-5 text-[var(--accent-secondary)] transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"
+                        aria-hidden
+                      />
+                    </div>
+                    <div className="mt-10 max-w-3xl">
+                      <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-[var(--text-muted)]">
+                        {website.type}
+                      </p>
+                      <h3 className="text-2xl font-black uppercase leading-none text-white sm:text-4xl">
+                        {website.title}
+                      </h3>
+                      <p className="mt-4 text-base font-semibold leading-7 text-[var(--text-secondary)]">
+                        {website.description}
+                      </p>
+                      <span className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-cyan-50">
+                        Open findaside.app
+                        <FiExternalLink aria-hidden />
+                      </span>
+                    </div>
+                  </Link>
+                </Reveal>
+              ))}
             </ShowcaseSection>
           ) : null}
         </PageContainer>
