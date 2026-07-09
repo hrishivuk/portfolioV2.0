@@ -18,7 +18,7 @@ function DetailList({ title, items = [] }) {
 
   return (
     <section className="border-t border-white/10 pt-8">
-      <p className="mb-6 text-xs font-bold uppercase tracking-[0.18em] text-cyan-100/58">
+      <p className="mb-6 text-xs font-bold uppercase tracking-[0.18em] text-[var(--text-muted)]">
         {title}
       </p>
       <div className="grid gap-4 md:grid-cols-2">
@@ -99,7 +99,7 @@ function ScreenshotCard({ screenshot, index }) {
         />
       </div>
       <div className="border-t border-white/10 p-4">
-        <p className="font-mono text-xs font-bold uppercase tracking-[0.14em] text-cyan-100/42">
+        <p className="font-mono text-xs font-bold uppercase tracking-[0.14em] text-[var(--text-muted)]">
           {String(index + 1).padStart(2, "0")} / {screenshot.placement || "screen"}
         </p>
         <p className="mt-2 text-sm font-semibold leading-6 text-[var(--text-secondary)]">
@@ -123,7 +123,7 @@ function ScreenshotGallery({ screenshots = [] }) {
       {comparisonScreenshots.length ? (
         <div className="rounded-[24px] border border-white/10 bg-white/[0.018] p-4">
           <div className="mb-4">
-            <p className="font-mono text-xs font-bold uppercase tracking-[0.14em] text-cyan-100/42">
+            <p className="font-mono text-xs font-bold uppercase tracking-[0.14em] text-[var(--text-muted)]">
               Before / after
             </p>
             <p className="mt-2 text-sm font-semibold leading-6 text-[var(--text-secondary)]">
@@ -210,7 +210,7 @@ export default async function ProjectDetailPage({ params }) {
           </header>
 
           <section className="py-12 sm:py-16">
-            <div className="grid gap-10 lg:grid-cols-[0.58fr_0.42fr] lg:items-end">
+            <div className="grid gap-10 lg:grid-cols-[minmax(0,0.68fr)_minmax(16rem,0.32fr)] lg:items-end">
               <div>
                 <p className="mb-5 text-xs font-bold uppercase tracking-[0.2em] text-[var(--accent-secondary)]">
                   {caseStudy.eyebrow || project.category}
@@ -219,7 +219,7 @@ export default async function ProjectDetailPage({ params }) {
                   {getProjectName(project.title)}
                 </h1>
                 {descriptor ? (
-                  <p className="mt-4 text-2xl font-bold text-white/58">
+                  <p className="mt-4 text-2xl font-bold text-white/85">
                     {descriptor}
                   </p>
                 ) : null}
@@ -228,7 +228,7 @@ export default async function ProjectDetailPage({ params }) {
                 </p>
               </div>
 
-              <aside className="grid gap-3 rounded-[24px] border border-white/10 bg-white/[0.025] p-5">
+              <aside className="grid gap-3 rounded-[24px] border border-white/10 bg-white/[0.025] p-5 lg:justify-self-end">
                 {[
                   ["Role", project.role],
                   ["Category", project.category],
@@ -241,10 +241,10 @@ export default async function ProjectDetailPage({ params }) {
                       key={label}
                       className="flex items-start justify-between gap-5 border-b border-white/10 py-3 last:border-b-0"
                     >
-                      <p className="text-xs font-bold uppercase tracking-[0.16em] text-cyan-100/42">
+                      <p className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--text-muted)]">
                         {label}
                       </p>
-                      <p className="max-w-[14rem] text-right text-sm font-bold leading-6 text-white/82">
+                      <p className="max-w-[12rem] text-right text-sm font-bold leading-6 text-white/90">
                         {value}
                       </p>
                     </div>
@@ -292,14 +292,14 @@ export default async function ProjectDetailPage({ params }) {
 
           {project.technologies?.length ? (
             <section className="border-t border-white/10 py-10">
-              <p className="mb-5 text-xs font-bold uppercase tracking-[0.18em] text-cyan-100/58">
+              <p className="mb-5 text-xs font-bold uppercase tracking-[0.18em] text-[var(--text-muted)]">
                 Stack
               </p>
               <div className="flex flex-wrap gap-2">
                 {project.technologies.map((tool) => (
                   <span
                     key={tool}
-                    className="rounded-full border border-white/10 px-3 py-1.5 text-xs font-bold text-cyan-100/64"
+                    className="rounded-full border border-white/10 px-3 py-1.5 text-xs font-bold text-cyan-50/90"
                   >
                     {tool}
                   </span>

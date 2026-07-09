@@ -154,7 +154,7 @@ function SectionShell({ id, eyebrow, children, className = "" }) {
       <PageContainer>
         <div>
           <div className="mb-10">
-            <p className="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.18em] text-cyan-100/58">
+            <p className="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.18em] text-[var(--text-muted)]">
               <span className="text-2xl leading-none text-[var(--accent-secondary)]">
                 *
               </span>
@@ -169,8 +169,16 @@ function SectionShell({ id, eyebrow, children, className = "" }) {
 }
 
 function HeroTitle({ roleIndex }) {
+  const roleTitleSize = "clamp(3rem, min(6.8vw, 9vh), 6.4rem)";
+
   return (
-    <h1 className="relative min-h-[calc(clamp(3.6rem,8.4vw,7.25rem)*1.6)] max-w-5xl overflow-hidden text-[clamp(3.6rem,8.4vw,7.25rem)] font-black uppercase leading-[0.8] tracking-[-0.05em] text-white">
+    <h1
+      className="relative max-w-5xl font-black uppercase leading-[0.86] tracking-normal text-white"
+      style={{
+        fontSize: roleTitleSize,
+        minHeight: "2.86em",
+      }}
+    >
       <AnimatePresence mode="wait">
         <motion.span
           key={roleIndex}
@@ -181,7 +189,7 @@ function HeroTitle({ roleIndex }) {
           transition={{ duration: 0.48, ease: "easeOut" }}
         >
           {heroRoles[roleIndex][0]}
-          <span className="block text-transparent [-webkit-text-stroke:1px_rgba(244,247,250,0.88)]">
+          <span className="block text-transparent [-webkit-text-stroke:1px_rgba(244,247,250,0.92)]">
             {heroRoles[roleIndex][1]}
           </span>
         </motion.span>
@@ -267,7 +275,7 @@ function RoadmapPanel({ title, items }) {
     >
       <motion.p
         variants={roadmapItemReveal}
-        className="mb-7 text-sm font-bold uppercase tracking-[0.18em] text-cyan-100/58"
+        className="mb-7 text-sm font-bold uppercase tracking-[0.18em] text-[var(--text-muted)]"
       >
         {title}
       </motion.p>
@@ -306,7 +314,7 @@ function RoadmapPanel({ title, items }) {
                 <h4 className="text-lg font-black leading-tight tracking-[-0.015em] text-white">
                   {item.title}
                 </h4>
-                <p className="shrink-0 font-mono text-xs font-bold uppercase tracking-[0.12em] text-cyan-100/48">
+                <p className="shrink-0 font-mono text-xs font-bold uppercase tracking-[0.12em] text-[var(--text-muted)]">
                   {item.period}
                 </p>
               </div>
@@ -325,7 +333,7 @@ function SkillsStack() {
   return (
     <div className="space-y-12">
       <div>
-        <p className="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.18em] text-cyan-100/58">
+        <p className="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.18em] text-[var(--text-muted)]">
           <span className="text-2xl leading-none text-[var(--accent-secondary)]">
             *
           </span>
@@ -391,7 +399,7 @@ function LiveClock() {
   return (
     <div className="absolute bottom-4 left-1/2 z-20 -translate-x-1/2">
       <motion.div
-        className="flex items-center gap-2 rounded-full border border-cyan-200/12 bg-black/24 px-3 py-2 text-[10px] font-bold text-cyan-100/55 shadow-[0_0_24px_rgba(53,214,255,0.08)] backdrop-blur-md"
+        className="flex items-center gap-2 rounded-full border border-cyan-200/12 bg-black/24 px-3 py-2 text-[10px] font-bold text-cyan-50/90 shadow-[0_0_24px_rgba(53,214,255,0.08)] backdrop-blur-md"
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.9, duration: 0.45 }}
@@ -486,7 +494,7 @@ function FloatingCard({
     >
       <div className="pointer-events-none absolute inset-0 rounded-2xl bg-[radial-gradient(circle_at_18%_0%,rgba(53,214,255,0.14),transparent_52%)]" />
       <div className="relative">
-        <div className="mb-2.5 flex items-center gap-2 text-[9px] font-bold uppercase tracking-[0.16em] text-cyan-100/55 sm:text-[10px]">
+        <div className="mb-2.5 flex items-center gap-2 text-[9px] font-bold uppercase tracking-[0.16em] text-cyan-50/90 sm:text-[10px]">
           {Icon ? (
             <Icon
               className="h-3.5 w-3.5 text-[var(--accent-secondary)]"
@@ -611,7 +619,7 @@ function SpiderHeroArt({ weather }) {
             />
             <p className="text-sm font-bold text-white">Open to Work</p>
           </div>
-          <p className="mt-1 text-xs font-semibold text-cyan-100/58">
+          <p className="mt-1 text-xs font-semibold text-cyan-50/90">
             EU & Remote
           </p>
         </FloatingCard>
@@ -635,7 +643,7 @@ function SpiderHeroArt({ weather }) {
               >
                 Humble
               </motion.p>
-              <p className="mt-1 truncate text-xs font-semibold text-cyan-100/58">
+              <p className="mt-1 truncate text-xs font-semibold text-cyan-50/90">
                 Kendrick Lamar
               </p>
             </div>
@@ -654,7 +662,7 @@ function SpiderHeroArt({ weather }) {
               <p className="text-2xl font-black leading-none text-white">
                 {weather?.main?.temp ?? 14}°C
               </p>
-              <p className="mt-1.5 text-xs font-semibold leading-5 text-cyan-100/58">
+              <p className="mt-1.5 text-xs font-semibold leading-5 text-cyan-50/90">
                 {getWeatherLine(weather)}
               </p>
             </div>
@@ -739,8 +747,8 @@ function ProgressIndicator({ activeSection, onNavigate }) {
   const scaleY = useSpring(scrollYProgress, { stiffness: 120, damping: 28 });
 
   return (
-    <aside className="fixed right-5 top-1/2 z-40 hidden -translate-y-1/2 items-center gap-4 xl:flex">
-      <div className="relative h-32 w-1 overflow-hidden rounded-full bg-white/10">
+    <aside className="fixed right-4 top-1/2 z-40 hidden -translate-y-1/2 items-center gap-3 xl:flex">
+      <div className="relative h-32 w-1 overflow-hidden rounded-full bg-white/20">
         <motion.div
           className="absolute left-0 top-0 h-full w-full origin-top rounded-full bg-[var(--accent-secondary)] shadow-[0_0_18px_rgba(77,255,181,0.75)]"
           style={{ scaleY }}
@@ -752,37 +760,24 @@ function ProgressIndicator({ activeSection, onNavigate }) {
             key={section.id}
             type="button"
             onClick={() => onNavigate(section.id)}
-            className="group relative flex min-h-5 items-center justify-end gap-2 text-right"
+            className="group relative flex h-5 w-6 items-center justify-center"
             aria-label={`Scroll to ${section.label}`}
           >
             {activeSection === section.id ? (
               <motion.span
                 layoutId="progress-active-glow"
-                className="absolute -right-1 h-5 w-12 rounded-full bg-cyan-100/[0.035]"
+                className="absolute h-5 w-6 rounded-full bg-cyan-100/[0.06]"
                 transition={{ type: "spring", stiffness: 430, damping: 36 }}
               />
             ) : null}
             <motion.span
-              className="relative z-10 text-[10px] font-bold uppercase tracking-[0.18em]"
+              className="relative z-10 h-2 rounded-full"
               animate={{
-                color:
-                  activeSection === section.id
-                    ? "rgba(207,250,254,0.8)"
-                    : "rgba(207,250,254,0)",
-                x: activeSection === section.id ? 0 : 6,
-              }}
-              transition={{ type: "spring", stiffness: 380, damping: 32 }}
-            >
-              {section.label}
-            </motion.span>
-            <motion.span
-              className="relative z-10 h-1.5 rounded-full"
-              animate={{
-                width: activeSection === section.id ? 24 : 6,
+                width: activeSection === section.id ? 22 : 8,
                 backgroundColor:
                   activeSection === section.id
                     ? "var(--accent-secondary)"
-                    : "rgba(255,255,255,0.22)",
+                    : "rgba(255,255,255,0.62)",
                 boxShadow:
                   activeSection === section.id
                     ? "0 0 14px rgba(77,255,181,0.75)"
@@ -801,7 +796,7 @@ function EmailRail() {
   return (
     <a
       href="mailto:officialhrishivuk@gmail.com"
-      className="fixed bottom-8 left-5 z-40 hidden origin-left -rotate-90 text-xs font-semibold tracking-[0.18em] text-cyan-100/55 hover:text-cyan-100 lg:block"
+      className="fixed bottom-8 left-5 z-40 hidden origin-left -rotate-90 text-xs font-semibold tracking-[0.18em] text-[var(--text-muted)] hover:text-cyan-100 lg:block"
     >
       officialhrishivuk@gmail.com
     </a>
@@ -1017,10 +1012,10 @@ export default function Home() {
 
         <section
           id="home"
-          className="relative flex min-h-screen scroll-mt-24 items-center pt-28 pb-16"
+          className="relative flex min-h-screen scroll-mt-24 items-center pb-16 pt-28"
         >
           <PageContainer>
-            <div className="grid items-center gap-10 xl:grid-cols-[minmax(0,0.82fr)_minmax(520px,0.88fr)]">
+            <div className="grid items-center gap-10 xl:grid-cols-[minmax(0,0.95fr)_minmax(460px,0.88fr)] 2xl:grid-cols-[minmax(0,0.9fr)_minmax(560px,0.88fr)]">
               <div>
                 <p className="mb-5 text-xs font-bold uppercase tracking-[0.2em] text-[var(--accent-secondary)]">
                   Creative digital product builder
@@ -1043,7 +1038,7 @@ export default function Home() {
                       <FiArrowUpRight />
                     </span>
                   </button>
-                  <div className="flex items-center gap-2 text-sm font-semibold text-cyan-100/62">
+                  <div className="flex items-center gap-2 text-sm font-semibold text-cyan-50/90">
                     <span className="h-2.5 w-2.5 rounded-full bg-white shadow-[0_0_14px_rgba(77,255,181,0.8)]" />
                     Available for full-time opportunities
                   </div>
@@ -1139,7 +1134,7 @@ export default function Home() {
               >
                 <div className="grid gap-5 sm:grid-cols-[56px_1fr]">
                   <motion.p
-                    className="font-mono text-sm font-bold text-cyan-100/42"
+                    className="font-mono text-sm font-bold text-[var(--text-muted)]"
                     initial={reduceMotion ? false : { opacity: 0, x: -12 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ amount: 0.4, once: false }}
@@ -1158,7 +1153,7 @@ export default function Home() {
                       {getProjectName(project.title)}
                     </h3>
                     {getProjectDescriptor(project.title) && (
-                      <p className="mt-3 text-xl font-bold text-white/58">
+                      <p className="mt-3 text-xl font-bold text-white/85">
                         {getProjectDescriptor(project.title)}
                       </p>
                     )}
@@ -1169,7 +1164,7 @@ export default function Home() {
                       {(project.technologies || []).slice(0, 4).map((tool) => (
                         <span
                           key={tool}
-                          className="rounded-full border border-white/10 px-3 py-1 text-xs font-bold text-cyan-100/58"
+                          className="rounded-full border border-white/10 px-3 py-1 text-xs font-bold text-cyan-50/90"
                         >
                           {tool}
                         </span>

@@ -68,7 +68,7 @@ export default function ProjectTransitionLink({
                 ease: [0.76, 0, 0.24, 1],
               }}
             />
-            <div className="absolute inset-x-6 top-1/2 flex -translate-y-1/2 items-center justify-between gap-8 text-xs font-bold uppercase tracking-[0.24em] text-cyan-100/54 sm:inset-x-12">
+            <div className="absolute inset-x-6 top-1/2 flex -translate-y-1/2 items-center justify-between gap-8 text-xs font-bold uppercase tracking-[0.24em] text-[var(--text-muted)] sm:inset-x-12">
               <span>Case study</span>
               <span className="hidden text-[var(--accent-secondary)] sm:block">
                 Loading

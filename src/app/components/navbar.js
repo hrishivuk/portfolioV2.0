@@ -123,7 +123,7 @@ export default function Navbar({
                   className={`relative z-10 font-mono text-sm ${
                     activeSection === item.id
                       ? "text-[var(--accent-secondary)]"
-                      : "text-cyan-100/36"
+                      : "text-[var(--text-muted)]"
                   }`}
                 >
                   0{index + 1}

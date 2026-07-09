@@ -15,11 +15,11 @@ export function LayoutProvider({ children }) {
       const viewportWidth = window.innerWidth;
 
       if (viewportWidth >= 1920) {
-        setMaxWidth("1600px"); // Extra large screens
+        setMaxWidth("1760px"); // Extra large screens
       } else if (viewportWidth >= 1536) {
-        setMaxWidth("1400px"); // 2xl screens
+        setMaxWidth("1560px"); // 2xl screens
       } else if (viewportWidth >= 1280) {
-        setMaxWidth("1200px"); // xl screens
+        setMaxWidth("1320px"); // xl screens
       } else if (viewportWidth >= 1024) {
         setMaxWidth("1000px"); // lg screens
       } else if (viewportWidth >= 768) {
