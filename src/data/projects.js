@@ -14,6 +14,14 @@ export const projects = [
     description:
       "CoachCanvas replaces scattered WhatsApp groups, spreadsheets, and ad-hoc tools with a structured system that still feels simple for non-technical coaches and players. It focuses on clear information hierarchy, multi-role onboarding, club creation and management, and state-aware navigation that always takes users to the right place based on their role and status.",
     image: "/images/coachcanvas/coachcanvas.png",
+    platform: "Android mobile app",
+    timeline: "2025",
+    showcaseOverview:
+      "CoachCanvas is a mobile club management app for grassroots football teams, bringing coach and player onboarding, club setup, member approval, squad information, match preparation, and performance views into one structured Android experience.",
+    problem:
+      "Grassroots clubs often depend on scattered chats, spreadsheets, and informal coach memory, making onboarding, approvals, player information, and match preparation harder to manage consistently.",
+    solution:
+      "CoachCanvas gives coaches and players role-specific flows, branded club spaces, join-code access, approval workflows, and state-aware navigation so each user lands in the right part of the club journey.",
     technologies: [
       "React Native",
       "TypeScript",
@@ -29,6 +37,43 @@ export const projects = [
     liveUrl: "",
     githubUrl: "",
     role: "End-to-end Product Designer & Developer",
+    contributions: {
+      "UI / UX": [
+        "Designed coach and player onboarding as separate guided flows.",
+        "Created club identity, join-code, approval, and role-specific home experiences.",
+        "Designed mobile screens for squads, player profiles, match history, and formation planning.",
+      ],
+      Development: [
+        "Built the Android app with React Native, TypeScript, and React Navigation.",
+        "Implemented Firebase Authentication, Firestore, and Firebase Storage workflows.",
+        "Prepared and debugged the Android release build pipeline.",
+      ],
+    },
+    keyFeatures: [
+      "Coach and player onboarding",
+      "Club creation and branding",
+      "Join-code access",
+      "Player approval workflow",
+      "Role-specific home screens",
+      "Squads and player profiles",
+      "Match and performance views",
+      "Formation planning",
+    ],
+    documentLinks: [
+      {
+        title: "UX Case Study",
+        description: "Explore the research, UX process and design decisions.",
+        href: "/images/coachcanvas/CoachCanvas-CaseStudy.pdf",
+        type: "Concise PDF",
+      },
+      {
+        title: "Final Project Report",
+        description:
+          "Complete academic report covering research, implementation, testing and evaluation.",
+        href: "/images/coachcanvas/CoachCanvas_Major_Project_Report.pdf",
+        type: "Detailed PDF",
+      },
+    ],
     responsibilities: [
       "Designed and implemented multi-step onboarding wizards for coaches and players, capturing rich club and player profiles.",
       "Built club creation and management flows, including visual identity, squads, and member approval workflows.",

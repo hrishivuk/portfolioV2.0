@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FiArrowLeft, FiArrowUpRight } from "react-icons/fi";
 import PageContainer from "../../components/PageContainer";
+import CoachCanvasShowcase from "./CoachCanvasShowcase";
 import { getProjectById, projects } from "../../../data/projects";
 
 function getProjectName(title) {
@@ -179,6 +180,10 @@ export default async function ProjectDetailPage({ params }) {
   const { id } = await params;
   const project = getProjectById(id);
   if (!project) notFound();
+
+  if (project.id === "coach-canvas") {
+    return <CoachCanvasShowcase project={project} />;
+  }
 
   const caseStudy = project.caseStudy || {};
   const descriptor = getProjectDescriptor(project.title);
