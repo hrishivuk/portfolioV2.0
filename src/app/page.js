@@ -1152,6 +1152,13 @@ export default function Home() {
                     <h3 className="text-[clamp(2rem,4.8vw,4.15rem)] font-black leading-[0.9] tracking-[-0.04em] text-white group-hover:text-cyan-100">
                       {getProjectName(project.title)}
                     </h3>
+                    {project.workInProgress ? (
+                      <div className="mt-3 inline-flex overflow-hidden rounded-full border border-yellow-300/80 bg-yellow-300 px-3 py-1.5 shadow-[0_10px_30px_rgba(0,0,0,0.18)]">
+                        <span className="relative z-10 text-[10px] font-black uppercase tracking-[0.16em] text-black">
+                          Work in progress
+                        </span>
+                      </div>
+                    ) : null}
                     {getProjectDescriptor(project.title) && (
                       <p className="mt-3 text-xl font-bold text-white/85">
                         {getProjectDescriptor(project.title)}

@@ -6,6 +6,7 @@ import PageContainer from "../../components/PageContainer";
 import BrightspaceShowcase from "./BrightspaceShowcase";
 import CoachCanvasShowcase from "./CoachCanvasShowcase";
 import FindasideShowcase from "./FindasideShowcase";
+import FlexSaveWipShowcase from "./FlexSaveWipShowcase";
 import { getProjectById, projects } from "../../../data/projects";
 
 function getProjectName(title) {
@@ -193,6 +194,10 @@ export default async function ProjectDetailPage({ params }) {
 
   if (project.id === "brightspace-learning-experience") {
     return <BrightspaceShowcase project={project} />;
+  }
+
+  if (project.id === "flexsave-smart-savings") {
+    return <FlexSaveWipShowcase project={project} />;
   }
 
   const caseStudy = project.caseStudy || {};

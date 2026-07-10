@@ -151,6 +151,8 @@ export const projects = [
     category: "UX Design",
     year: "2025",
     featured: true,
+    workInProgress: true,
+    workInProgressLabel: "Case study rebuild in progress",
     summary:
       "A 5-day university UI/UX design project: conceptualized a flexible savings app from scratch and delivered a complete mobile interface design focused on making saving feel approachable and motivating.",
     description:
