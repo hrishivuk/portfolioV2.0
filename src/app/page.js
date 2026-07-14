@@ -57,51 +57,6 @@ const heroRoles = [
   ["Frontend", "Developer"],
 ];
 
-const skills = [
-  {
-    group: "UX/UI Design",
-    items: [
-      { name: "Figma", icon: "/images/TechIcons/Figma.png" },
-      { name: "User Flows", fallback: "UF" },
-      { name: "Wireframing", fallback: "WF" },
-      { name: "Prototyping", fallback: "PT" },
-      { name: "Interaction Design", fallback: "ID" },
-      { name: "Design Systems", fallback: "DS" },
-      { name: "Accessibility", fallback: "A11Y" },
-    ],
-  },
-  {
-    group: "UX Research",
-    items: [
-      { name: "User Research", fallback: "UR" },
-      { name: "Competitor Analysis", fallback: "CA" },
-      { name: "Usability Testing", fallback: "UT" },
-      { name: "Research Synthesis", fallback: "RS" },
-      { name: "Problem Definition", fallback: "PD" },
-    ],
-  },
-  {
-    group: "Frontend Development",
-    items: [
-      { name: "JavaScript", icon: "/images/TechIcons/JavaScript.png" },
-      { name: "TypeScript", icon: "/images/TechIcons/TypeScript.png" },
-      { name: "React", icon: "/images/TechIcons/React.png" },
-      { name: "Next.js", icon: "/images/TechIcons/Next.js.png" },
-      { name: "Vue.js", icon: "/images/TechIcons/Vue.js.png" },
-      { name: "Responsive Development", fallback: "RD" },
-    ],
-  },
-  {
-    group: "Tools & Technology",
-    items: [
-      { name: "Firebase", icon: "/images/TechIcons/Firebase.png" },
-      { name: "Git", icon: "/images/TechIcons/Git.png" },
-      { name: "GitHub", icon: "/images/TechIcons/GitHub.png" },
-      { name: "Jira", icon: "/images/TechIcons/Jira.png" },
-    ],
-  },
-];
-
 const workItems = [
   {
     title: "Frontend Developer - Contract",
@@ -170,8 +125,17 @@ function SectionShell({ id, eyebrow, children, className = "" }) {
   );
 }
 
-function HeroTitle({ roleIndex }) {
+function HeroTitle() {
+  const [roleIndex, setRoleIndex] = useState(0);
   const roleTitleSize = "clamp(3rem, min(6.8vw, 9vh), 6.4rem)";
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setRoleIndex((current) => (current + 1) % heroRoles.length);
+    }, 3200);
+
+    return () => window.clearInterval(timer);
+  }, []);
 
   return (
     <h1
@@ -200,32 +164,6 @@ function HeroTitle({ roleIndex }) {
   );
 }
 
-const skillGroupReveal = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.065,
-      delayChildren: 0.02,
-    },
-  },
-};
-
-const skillItemReveal = {
-  hidden: {
-    opacity: 0,
-    y: 16,
-    filter: "blur(3px)",
-    transition: { duration: 0.32, ease: "easeIn" },
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: { duration: 0.42, ease: "easeOut" },
-  },
-};
-
 const roadmapPanelReveal = {
   hidden: { opacity: 0 },
   visible: {
@@ -245,26 +183,6 @@ const roadmapItemReveal = {
     transition: { duration: 0.45, ease: "easeOut" },
   },
 };
-
-function SkillIcon({ skill }) {
-  if (skill.icon) {
-    return (
-      <Image
-        src={skill.icon}
-        alt=""
-        width={36}
-        height={36}
-        className="h-8 w-8 object-contain"
-      />
-    );
-  }
-
-  return (
-    <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--accent-secondary)] text-xs font-black leading-none text-[#06100c]">
-      {skill.fallback || skill.name.slice(0, 2)}
-    </span>
-  );
-}
 
 function RoadmapPanel({ title, items }) {
   return (
@@ -328,52 +246,6 @@ function RoadmapPanel({ title, items }) {
         </div>
       </div>
     </motion.div>
-  );
-}
-
-function SkillsStack() {
-  return (
-    <div className="space-y-12">
-      <div>
-        <p className="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.18em] text-[var(--text-muted)]">
-          <span className="text-2xl leading-none text-[var(--accent-secondary)]">
-            *
-          </span>
-          Skills &amp; capabilities
-        </p>
-      </div>
-
-      {skills.map((group) => (
-        <motion.div
-          key={group.group}
-          className="grid gap-5 lg:grid-cols-[0.28fr_0.72fr] lg:items-start"
-          variants={skillGroupReveal}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: false, amount: 0.42, margin: "-8% 0px -12% 0px" }}
-        >
-          <motion.h3
-            variants={skillItemReveal}
-            className="text-[clamp(1.6rem,2.9vw,2.65rem)] font-black uppercase leading-none tracking-normal text-white/70"
-          >
-            {group.group}
-          </motion.h3>
-
-          <div className="grid gap-x-8 gap-y-5 sm:grid-cols-2 xl:grid-cols-3">
-            {group.items.map((skill) => (
-              <motion.div
-                key={skill.name}
-                variants={skillItemReveal}
-                className="flex min-h-10 items-center gap-3 text-base font-semibold leading-tight text-white/82 sm:text-lg"
-              >
-                <SkillIcon skill={skill} />
-                <span>{skill.name}</span>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-      ))}
-    </div>
   );
 }
 
@@ -744,6 +616,43 @@ function SpiderHeroArt({ weather }) {
   );
 }
 
+function HeroVisual() {
+  const [weather, setWeather] = useState(null);
+
+  useEffect(() => {
+    let ignore = false;
+
+    async function loadWeather() {
+      try {
+        const response = await fetch("/api/weather");
+        if (!response.ok) throw new Error("Weather request failed");
+
+        const data = await response.json();
+        if (!ignore) setWeather(data);
+      } catch {
+        if (!ignore) {
+          setWeather({
+            name: "Dublin",
+            main: { temp: 14 },
+            weather: [{ main: "Cloudy" }],
+            _fallback: true,
+          });
+        }
+      }
+    }
+
+    loadWeather();
+    const interval = window.setInterval(loadWeather, 5 * 60 * 1000);
+
+    return () => {
+      ignore = true;
+      window.clearInterval(interval);
+    };
+  }, []);
+
+  return <SpiderHeroArt weather={weather} />;
+}
+
 function ProgressIndicator({ activeSection, onNavigate }) {
   const { scrollYProgress } = useScroll();
   const scaleY = useSpring(scrollYProgress, { stiffness: 120, damping: 28 });
@@ -833,13 +742,7 @@ function getProjectDescriptor(title) {
   return title.split("–").slice(1).join("–").trim();
 }
 
-export default function Home() {
-  const reduceMotion = useReducedMotion();
-  const [activeSection, setActiveSection] = useState("home");
-  const [roleIndex, setRoleIndex] = useState(0);
-  const [weather, setWeather] = useState(null);
-  const pendingSectionRef = useRef(null);
-  const pendingSectionTimerRef = useRef(null);
+function ContactForm() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -848,6 +751,88 @@ export default function Home() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
+
+  const fieldStyle = {
+    backgroundColor: "rgba(255, 255, 255, 0.035)",
+    borderColor: "var(--border-primary)",
+    color: "var(--text-primary)",
+  };
+
+  function handleInputChange(event) {
+    const { name, value } = event.target;
+    setFormData((current) => ({ ...current, [name]: value }));
+    if (submitStatus) setSubmitStatus(null);
+  }
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) throw new Error("Contact request failed");
+
+      setSubmitStatus("success");
+      setFormData({ name: "", email: "", subject: "", message: "" });
+    } catch {
+      setSubmitStatus("error");
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
+
+  return (
+    <form
+      onSubmit={handleSubmit}
+      className="rounded-[28px] border border-white/10 bg-white/[0.025] p-5 shadow-[0_24px_90px_rgba(0,0,0,0.28)] backdrop-blur-xl sm:p-8"
+    >
+      <div className="grid gap-5 sm:grid-cols-2">
+        <div>
+          <label htmlFor="name" className="page-eyebrow mb-2 block">Name</label>
+          <input id="name" name="name" type="text" value={formData.name} onChange={handleInputChange} required className={inputBase} style={fieldStyle} placeholder="Your name" />
+        </div>
+        <div>
+          <label htmlFor="email" className="page-eyebrow mb-2 block">Email</label>
+          <input id="email" name="email" type="email" value={formData.email} onChange={handleInputChange} required className={inputBase} style={fieldStyle} placeholder="you@email.com" />
+        </div>
+      </div>
+
+      <div className="mt-5">
+        <label htmlFor="subject" className="page-eyebrow mb-2 block">Subject</label>
+        <input id="subject" name="subject" type="text" value={formData.subject} onChange={handleInputChange} required className={inputBase} style={fieldStyle} placeholder="Role, product, or hello" />
+      </div>
+
+      <div className="mt-5">
+        <label htmlFor="message" className="page-eyebrow mb-2 block">Message</label>
+        <textarea id="message" name="message" value={formData.message} onChange={handleInputChange} required rows={7} className={`${inputBase} resize-y`} style={fieldStyle} placeholder="Tell me what you are building or hiring for..." />
+      </div>
+
+      {submitStatus === "success" && (
+        <p className="mt-5 text-sm font-medium text-[var(--accent-secondary)]">Message sent. I&apos;ll be in touch soon.</p>
+      )}
+      {submitStatus === "error" && (
+        <p className="mt-5 text-sm font-medium text-red-300">Something went wrong. Email me directly instead.</p>
+      )}
+
+      <button type="submit" disabled={isSubmitting} className="mt-7 inline-flex min-h-[3.35rem] items-center justify-center gap-2 rounded-full border border-cyan-200/30 bg-cyan-200/10 px-5 text-sm font-bold text-white disabled:cursor-not-allowed disabled:opacity-50">
+        {isSubmitting ? "Sending..." : "Send message"}
+        <FiSend aria-hidden />
+      </button>
+    </form>
+  );
+}
+
+export default function Home() {
+  const reduceMotion = useReducedMotion();
+  const [activeSection, setActiveSection] = useState("home");
+  const pendingSectionRef = useRef(null);
+  const pendingSectionTimerRef = useRef(null);
 
   const sortedProjects = useMemo(() => getSortedProjects(projects), []);
   const selectedProjects = useMemo(
@@ -862,45 +847,6 @@ export default function Home() {
         .filter(Boolean),
     [sortedProjects],
   );
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setRoleIndex((current) => (current + 1) % heroRoles.length);
-    }, 3200);
-
-    return () => clearInterval(timer);
-  }, []);
-
-  useEffect(() => {
-    let ignore = false;
-
-    async function loadWeather() {
-      try {
-        const response = await fetch("/api/weather");
-        if (!response.ok) throw new Error("Weather request failed");
-
-        const data = await response.json();
-        if (!ignore) setWeather(data);
-      } catch {
-        if (!ignore) {
-          setWeather({
-            name: "Dublin",
-            main: { temp: 14 },
-            weather: [{ main: "Cloudy" }],
-            _fallback: true,
-          });
-        }
-      }
-    }
-
-    loadWeather();
-    const interval = window.setInterval(loadWeather, 5 * 60 * 1000);
-
-    return () => {
-      ignore = true;
-      window.clearInterval(interval);
-    };
-  }, []);
 
   useEffect(() => {
     const sectionNodes = navSections
@@ -942,43 +888,6 @@ export default function Home() {
       window.clearTimeout(pendingSectionTimerRef.current);
     };
   }, []);
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((current) => ({ ...current, [name]: value }));
-    if (submitStatus) setSubmitStatus(null);
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setIsSubmitting(true);
-    setSubmitStatus(null);
-
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        throw new Error("Contact request failed");
-      }
-
-      setSubmitStatus("success");
-      setFormData({ name: "", email: "", subject: "", message: "" });
-    } catch {
-      setSubmitStatus("error");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const fieldStyle = {
-    backgroundColor: "rgba(255, 255, 255, 0.035)",
-    borderColor: "var(--border-primary)",
-    color: "var(--text-primary)",
-  };
 
   function handleNavigate(id) {
     pendingSectionRef.current = id;
@@ -1022,7 +931,7 @@ export default function Home() {
                 <p className="mb-5 text-xs font-bold uppercase tracking-[0.2em] text-[var(--accent-secondary)]">
                   Designing, researching &amp; building digital products.
                 </p>
-                <HeroTitle roleIndex={roleIndex} />
+                <HeroTitle />
                 <p className="mt-8 max-w-2xl text-lg leading-8 text-[var(--text-secondary)]">
                   I&apos;m Hrishikesh Varma, a Dublin-based UX/UI designer,
                   researcher, and frontend developer. I combine user insight,
@@ -1049,7 +958,7 @@ export default function Home() {
               </div>
 
               <div>
-                <SpiderHeroArt weather={weather} />
+                <HeroVisual />
               </div>
             </div>
           </PageContainer>
@@ -1100,8 +1009,6 @@ export default function Home() {
                 </p>
               </div>
             </div>
-
-            <SkillsStack />
 
             <div className="grid gap-8 lg:grid-cols-2">
               {[
@@ -1261,99 +1168,7 @@ export default function Home() {
               </div>
             </aside>
 
-            <form
-              onSubmit={handleSubmit}
-              className="rounded-[28px] border border-white/10 bg-white/[0.025] p-5 shadow-[0_24px_90px_rgba(0,0,0,0.28)] backdrop-blur-xl sm:p-8"
-            >
-              <div className="grid gap-5 sm:grid-cols-2">
-                <div>
-                  <label htmlFor="name" className="page-eyebrow mb-2 block">
-                    Name
-                  </label>
-                  <input
-                    id="name"
-                    name="name"
-                    type="text"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    required
-                    className={inputBase}
-                    style={fieldStyle}
-                    placeholder="Your name"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="email" className="page-eyebrow mb-2 block">
-                    Email
-                  </label>
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                    className={inputBase}
-                    style={fieldStyle}
-                    placeholder="you@email.com"
-                  />
-                </div>
-              </div>
-
-              <div className="mt-5">
-                <label htmlFor="subject" className="page-eyebrow mb-2 block">
-                  Subject
-                </label>
-                <input
-                  id="subject"
-                  name="subject"
-                  type="text"
-                  value={formData.subject}
-                  onChange={handleInputChange}
-                  required
-                  className={inputBase}
-                  style={fieldStyle}
-                  placeholder="Role, product, or hello"
-                />
-              </div>
-
-              <div className="mt-5">
-                <label htmlFor="message" className="page-eyebrow mb-2 block">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  required
-                  rows={7}
-                  className={`${inputBase} resize-y`}
-                  style={fieldStyle}
-                  placeholder="Tell me what you are building or hiring for..."
-                />
-              </div>
-
-              {submitStatus === "success" && (
-                <p className="mt-5 text-sm font-medium text-[var(--accent-secondary)]">
-                  Message sent. I&apos;ll be in touch soon.
-                </p>
-              )}
-              {submitStatus === "error" && (
-                <p className="mt-5 text-sm font-medium text-red-300">
-                  Something went wrong. Email me directly instead.
-                </p>
-              )}
-
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="mt-7 inline-flex min-h-[3.35rem] items-center justify-center gap-2 rounded-full border border-cyan-200/30 bg-cyan-200/10 px-5 text-sm font-bold text-white disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                {isSubmitting ? "Sending..." : "Send message"}
-                <FiSend aria-hidden />
-              </button>
-            </form>
+            <ContactForm />
           </div>
         </SectionShell>
       </div>

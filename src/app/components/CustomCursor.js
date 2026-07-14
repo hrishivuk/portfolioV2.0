@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useMotionValue, useReducedMotion, useSpring } from "motion/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const INTERACTIVE_SELECTOR = [
   "a",
@@ -24,6 +24,8 @@ export default function CustomCursor() {
   const [visible, setVisible] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
+  const visibleRef = useRef(false);
+  const hoveringRef = useRef(false);
 
   useEffect(() => {
     const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
@@ -49,12 +51,24 @@ export default function CustomCursor() {
     function handlePointerMove(event) {
       cursorX.set(event.clientX);
       cursorY.set(event.clientY);
-      setVisible(true);
-      setIsHovering(Boolean(event.target.closest(INTERACTIVE_SELECTOR)));
+
+      if (!visibleRef.current) {
+        visibleRef.current = true;
+        setVisible(true);
+      }
+
+      const hovering = Boolean(event.target.closest(INTERACTIVE_SELECTOR));
+      if (hovering !== hoveringRef.current) {
+        hoveringRef.current = hovering;
+        setIsHovering(hovering);
+      }
     }
 
     function handlePointerLeave() {
+      visibleRef.current = false;
+      hoveringRef.current = false;
       setVisible(false);
+      setIsHovering(false);
       setIsPressed(false);
     }
 
