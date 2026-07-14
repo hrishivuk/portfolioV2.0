@@ -17,11 +17,11 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata = {
-  title: "Hrishikesh Varma - Frontend Engineer & Product Designer",
+  title: "Hrishikesh Varma — UX/UI Designer, UX Researcher & Frontend Developer",
   description:
-    "Frontend engineer and UX-minded product builder in Dublin designing and building web, mobile, and AI-assisted product experiences.",
+    "Dublin-based UX/UI designer, UX researcher, and frontend developer creating user-centred web and mobile product experiences.",
   keywords:
-    "Frontend Engineer, Product Engineer, UX Engineer, Design Engineer, React, Next.js, React Native, Dublin",
+    "UX/UI Designer, UX Researcher, Frontend Developer, Product Design, User Research, Usability Testing, Figma, React, Next.js, Dublin",
   authors: [{ name: "Hrishikesh Varma" }],
   creator: "Hrishikesh Varma",
   metadataBase: new URL(siteUrl),
@@ -31,18 +31,18 @@ export const metadata = {
     ],
   },
   openGraph: {
-    title: "Hrishikesh Varma - Frontend Engineer & Product Designer",
+    title: "Hrishikesh Varma — UX/UI Designer, UX Researcher & Frontend Developer",
     description:
-      "Frontend engineer and UX-minded product builder in Dublin designing and building web, mobile, and AI-assisted product experiences.",
+      "Dublin-based UX/UI designer, UX researcher, and frontend developer creating user-centred web and mobile product experiences.",
     url: siteUrl,
     siteName: "Hrishikesh Varma Portfolio",
     type: "website",
   },
   twitter: {
     card: "summary",
-    title: "Hrishikesh Varma - Frontend Engineer & Product Designer",
+    title: "Hrishikesh Varma — UX/UI Designer, UX Researcher & Frontend Developer",
     description:
-      "Frontend engineer and UX-minded product builder in Dublin",
+      "Dublin-based UX/UI designer, UX researcher, and frontend developer creating user-centred digital products.",
   },
 };
 

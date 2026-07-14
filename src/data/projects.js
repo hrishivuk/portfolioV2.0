@@ -10,7 +10,7 @@ export const projects = [
     year: "2025",
     featured: true,
     summary:
-      "A mobile app that helps football coaches and players manage their entire club environment in one place — from onboarding and squads, to match preparation and performance reviews.",
+      "A research-informed mobile product designed and developed to help football coaches and players manage onboarding, squads, match preparation, and performance reviews in one structured experience.",
     description:
       "CoachCanvas replaces scattered WhatsApp groups, spreadsheets, and ad-hoc tools with a structured system that still feels simple for non-technical coaches and players. It focuses on clear information hierarchy, multi-role onboarding, club creation and management, and state-aware navigation that always takes users to the right place based on their role and status.",
     image: "/images/coachcanvas/coachcanvas.png",
@@ -36,7 +36,7 @@ export const projects = [
     ],
     liveUrl: "",
     githubUrl: "",
-    role: "UI/UX Designer & Full-Stack Developer",
+    role: "UX/UI Designer · UX Researcher · Full-Stack Developer",
     contributions: {
       "UI / UX": [
         "Designed coach and player onboarding as separate guided flows.",
@@ -154,7 +154,7 @@ export const projects = [
     workInProgress: true,
     workInProgressLabel: "Case study rebuild in progress",
     summary:
-      "A 5-day university UI/UX design project: conceptualized a flexible savings app from scratch and delivered a complete mobile interface design focused on making saving feel approachable and motivating.",
+      "A five-day UX/UI design sprint exploring the frustrations caused by rigid budgeting tools and translating those user pain points into an approachable, motivating mobile savings experience.",
     description:
       "FlexSave was a rapid design sprint completed during university coursework. The challenge was to identify a real user problem, ideate a solution, and design a complete mobile app interface—all within 5 days. I chose to tackle the rigid, overwhelming nature of traditional budgeting apps by designing a savings companion that feels lightweight and flexible. The design emphasizes clear progress visualization, simple goal creation, and a mobile-first experience that makes saving feel achievable rather than restrictive.",
     image: "/images/flexsave/flexsave.png",
@@ -167,7 +167,7 @@ export const projects = [
     ],
     liveUrl: "",
     githubUrl: "",
-    role: "UI/UX Designer",
+    role: "UX/UI Designer",
     responsibilities: [
       "Identified user pain points around rigid budgeting tools and conceptualized a flexible savings approach.",
       "Designed complete mobile app interface including dashboard, goal creation flows, and progress visualization.",
@@ -244,7 +244,7 @@ export const projects = [
     year: "2025",
     featured: true,
     summary:
-      "A team UX concept extending Brightspace Pulse with Growth Hub, a career-growth area for student portfolios, resumes, and academic networking. My primary ownership was the Resume Builder feature.",
+      "A research-led team UX concept extending Brightspace Pulse with career-growth tools, validated through moderated usability testing. I contributed to research and owned the end-to-end Resume Builder design.",
     description:
       "Growth Hub explored how Brightspace Pulse could evolve from a learning companion into a platform that also supports employability and professional development. The team proposed Portfolio, Resume Builder, and Connect features, with my main contribution focused on designing the end-to-end Resume Builder experience.",
     image: "/images/brightspace/brightspace.png",
@@ -269,7 +269,7 @@ export const projects = [
     ],
     liveUrl: "",
     githubUrl: "",
-    role: "UX/UI Designer · Resume Builder Owner",
+    role: "UX/UI Designer · UX Research Contributor",
     contributions: {
       "Research & Strategy": [
         "Participated in user research, market research, competitor analysis, and problem definition.",
@@ -477,7 +477,7 @@ export const projects = [
     year: "2025",
     featured: true,
     summary:
-      "A React-based sports game management web app for organizing casual football games, covering auth, onboarding, dashboards, game creation, discovery, team management, payments, profile, and settings flows.",
+      "A responsive product UI that turns the complex work of organising casual football games into clear flows for onboarding, discovery, game creation, team management, and payments.",
     description:
       "Findaside is a sports game management platform for hosts and players. I built the complete frontend prototype across authentication, onboarding, dashboards, game creation, game discovery, player management, team generation, payments, profile, settings, and reusable UI components.",
     image: "/images/findaside/findaside.png",
@@ -503,7 +503,7 @@ export const projects = [
     ],
     liveUrl: "https://findaside.app/",
     githubUrl: "",
-    role: "Frontend Developer (Contract / Freelance)",
+    role: "Frontend Developer · Product UI Contributor",
     contributions: {
       "Frontend Architecture": [
         "Built the frontend structure across 30+ page-level screens.",

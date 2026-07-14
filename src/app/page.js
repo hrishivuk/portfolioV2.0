@@ -52,50 +52,52 @@ const particles = [
 ];
 
 const heroRoles = [
+  ["UX/UI", "Designer"],
+  ["UX", "Researcher"],
   ["Frontend", "Developer"],
-  ["UI/UX", "Designer"],
-  ["Digital Media", "Analyst"],
 ];
 
 const skills = [
   {
-    group: "Frontend",
+    group: "UX/UI Design",
+    items: [
+      { name: "Figma", icon: "/images/TechIcons/Figma.png" },
+      { name: "User Flows", fallback: "UF" },
+      { name: "Wireframing", fallback: "WF" },
+      { name: "Prototyping", fallback: "PT" },
+      { name: "Interaction Design", fallback: "ID" },
+      { name: "Design Systems", fallback: "DS" },
+      { name: "Accessibility", fallback: "A11Y" },
+    ],
+  },
+  {
+    group: "UX Research",
+    items: [
+      { name: "User Research", fallback: "UR" },
+      { name: "Competitor Analysis", fallback: "CA" },
+      { name: "Usability Testing", fallback: "UT" },
+      { name: "Research Synthesis", fallback: "RS" },
+      { name: "Problem Definition", fallback: "PD" },
+    ],
+  },
+  {
+    group: "Frontend Development",
     items: [
       { name: "JavaScript", icon: "/images/TechIcons/JavaScript.png" },
       { name: "TypeScript", icon: "/images/TechIcons/TypeScript.png" },
       { name: "React", icon: "/images/TechIcons/React.png" },
       { name: "Next.js", icon: "/images/TechIcons/Next.js.png" },
       { name: "Vue.js", icon: "/images/TechIcons/Vue.js.png" },
-      { name: "Vite", icon: "/images/TechIcons/Vite.js.png" },
-      { name: "Tailwind CSS", icon: "/images/TechIcons/Tailwind CSS.png" },
-      { name: "Sass", icon: "/images/TechIcons/Sass.png" },
-      { name: "Bootstrap", icon: "/images/TechIcons/Bootstrap.png" },
+      { name: "Responsive Development", fallback: "RD" },
     ],
   },
   {
-    group: "Backend & Tools",
+    group: "Tools & Technology",
     items: [
       { name: "Firebase", icon: "/images/TechIcons/Firebase.png" },
       { name: "Git", icon: "/images/TechIcons/Git.png" },
       { name: "GitHub", icon: "/images/TechIcons/GitHub.png" },
-      { name: "NPM", icon: "/images/TechIcons/NPM.png" },
       { name: "Jira", icon: "/images/TechIcons/Jira.png" },
-    ],
-  },
-  {
-    group: "Design",
-    items: [
-      { name: "Figma", icon: "/images/TechIcons/Figma.png" },
-      { name: "Ant Design", icon: "/images/TechIcons/Ant Design.png" },
-    ],
-  },
-  {
-    group: "Currently Learning",
-    items: [
-      { name: "Three.js", icon: "/images/TechIcons/Three.js.png" },
-      { name: "GraphQL", icon: "/images/TechIcons/GraphQL.png" },
-      { name: "GSAP", fallback: "GS" },
-      { name: "PostgreSQL", icon: "/images/TechIcons/PostgresSQL.png" },
     ],
   },
 ];
@@ -337,7 +339,7 @@ function SkillsStack() {
           <span className="text-2xl leading-none text-[var(--accent-secondary)]">
             *
           </span>
-          My stack
+          Skills &amp; capabilities
         </p>
       </div>
 
@@ -1018,13 +1020,14 @@ export default function Home() {
             <div className="grid items-center gap-10 xl:grid-cols-[minmax(0,0.95fr)_minmax(460px,0.88fr)] 2xl:grid-cols-[minmax(0,0.9fr)_minmax(560px,0.88fr)]">
               <div>
                 <p className="mb-5 text-xs font-bold uppercase tracking-[0.2em] text-[var(--accent-secondary)]">
-                  Creative digital product builder
+                  Designing, researching &amp; building digital products.
                 </p>
                 <HeroTitle roleIndex={roleIndex} />
                 <p className="mt-8 max-w-2xl text-lg leading-8 text-[var(--text-secondary)]">
-                  I&apos;m Hrishikesh Varma, a Dublin-based builder working
-                  across frontend engineering, UX, and digital media to shape
-                  polished web, mobile, and AI-assisted product experiences.
+                  I&apos;m Hrishikesh Varma, a Dublin-based UX/UI designer,
+                  researcher, and frontend developer. I combine user insight,
+                  thoughtful interface design, and technical understanding to
+                  create useful web and mobile experiences.
                 </p>
                 <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
                   <button
@@ -1083,15 +1086,17 @@ export default function Home() {
               </div>
               <div className="space-y-5 text-lg leading-8 text-[var(--text-secondary)]">
                 <p>
-                  I&apos;m a frontend developer based in Dublin, Ireland,
-                  focused on building thoughtful digital products that combine
-                  clean engineering with great user experience.
+                  I work across UX/UI design, user research, and frontend
+                  development, bringing these disciplines together throughout
+                  the product process.
                 </p>
                 <p>
-                  I enjoy user-facing web applications, AI-powered products, and
-                  SaaS platforms. I like keeping UX research, prototyping, and
-                  design systems close to the product instead of treating them
-                  as separate theatre.
+                  My approach begins with understanding users and defining the
+                  right problem. I translate those insights into user flows,
+                  prototypes, accessible interfaces, and production-ready
+                  experiences. My development background helps me design with
+                  technical constraints in mind and collaborate closely with
+                  engineering teams.
                 </p>
               </div>
             </div>
@@ -1215,8 +1220,8 @@ export default function Home() {
           <div className="grid gap-10 border-t border-white/10 pt-9 lg:grid-cols-[0.38fr_0.62fr]">
             <aside className="space-y-8">
               <p className="text-lg leading-8 text-[var(--text-secondary)]">
-                I&apos;m open to frontend, product, UX engineering, design
-                engineering, and creative technology opportunities.
+                I&apos;m open to UX/UI design, UX research, frontend development,
+                and multidisciplinary digital product opportunities.
               </p>
               <div className="space-y-3">
                 <a
